@@ -1,0 +1,14 @@
+RewriteEngine On
+
+RewriteRule ^inicio/$  					login.php
+RewriteRule ^/$        					dashboard.php
+RewriteRule ^colegio_biologos/?$ 										index.php
+RewriteRule ^colegio_biologos/(\w+)?$ 							index.php?accion=$1
+
+
+
+<Files php_errors.log>
+     Order allow,deny
+     Deny from all
+     Satisfy All
+</Files>
