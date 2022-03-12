@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?php echo PROY_TITULO; ?></title>
+  <title>Listado de Colegiados - <?php echo PROY_TITULO; ?></title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -29,6 +29,10 @@
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+
+    <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
 
@@ -186,8 +190,7 @@
 
   <!-- Main Sidebar Container -->
   <!-- <aside class="main-sidebar sidebar-blue-primary elevation-4"> -->
-
-    <?php include '../mod_menu/menu_dashboard_v.php'; ?>
+  <?php include '../mod_menu/menu_dashboard_v.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -196,12 +199,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">Listado de Colegiados</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
+              <li class="breadcrumb-item active">Listado de colegiados</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -213,67 +216,42 @@
     <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>50</h3>
 
-                <p>Colegiodos Registrados</p>
+                    <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Colegiados registrados en el SISTEMA al <?php echo date("d/m/Y") ?></h3>
               </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">Ver detalle <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>70<sup style="font-size: 20px">%</sup></h3>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="lista_colegiados_id" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>DNI</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>Estado</th>
+                  </tr>
+                  </thead>
+                  <tbody id="lista_colegiados">
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>DNI</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>Estado</th>
 
-                <p>Tasa de Morisidad</p>
+                  </tr>
+                  </tfoot>
+                </table>
               </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">Ver detalle <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.card-body -->
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-                <p>Certificaciones</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">Ver detalle <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>13</h3>
 
-                <p>Solicitudes</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">Ver detalle <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
         <!-- /.row -->
         <!-- Main row -->
 
@@ -334,6 +312,20 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="../dist/js/pages/dashboard.js"></script> -->
 
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../plugins/jszip/jszip.min.js"></script>
+<script src="../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
 
 <script type="text/javascript">
@@ -345,6 +337,78 @@
       return false;
     }
   });
+      // "paging": true,
+      // "processing": true,
+      // "serverSide": true,
+      // "ajax": {
+      //     "url" : "controlador_listado_tablas.php",
+      //     "type": "GET"
+      // },
+      // "language": {
+      //   url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
+      // },
+      // // "dom": 'Bfrtip',
+      // "dom": 'Blfrtip',
+      // "buttons": [
+      //     'csv', 'excel', 'pdf', 'print'
+      // ]
+
+      $( document ).ready(function() {
+        $('#lista_colegiados_id').DataTable({
+          "paging": true,
+          "processing": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+          "dom": 'Blfrtip',
+          "language": {
+              url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
+          },
+        });
+      });
+
+
+      $.get('controller_colegiados.php', function(data) {
+        $('#lista_colegiados').empty().html(data);
+      });
+
+
+
+    // $.ajax({
+    //   url: '/path/to/file',
+    //   type: 'default GET (Other values: POST)',
+    //   dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+    //   data: {param1: 'value1'},
+    // })
+    // .done(function() {
+    //   console.log("success");
+    // })
+    // .fail(function() {
+    //   console.log("error");
+    // })
+    // .always(function() {
+    //   console.log("complete");
+    // });
+
+
+  // $(function () {
+  //   $("#example1").DataTable({
+  //     "responsive": true, "lengthChange": false, "autoWidth": false,
+  //     "buttons": ["csv", "excel", "pdf", "print"]
+  //   }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  //   $('#lista_colegiados_id').DataTable({
+  //     "paging": true,
+  //     "lengthChange": false,
+  //     "searching": true,
+  //     "ordering": true,
+  //     "info": true,
+  //     "autoWidth": false,
+  //     "responsive": true,
+  //   });
+  // });
 
 </script>
 

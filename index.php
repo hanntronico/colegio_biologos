@@ -1,3 +1,7 @@
+<?php
+    include_once 'conf/conf.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -111,7 +115,7 @@
       // console.log("success : " + data);
       if(data == 'exito'){
         // console.log('exitosoooo!!!');
-        document.location.href = 'administrador/view_dashboard.php';
+        document.location.href = "<?php echo ENLACE_WEB;?>administrador/";
       }
 
     })

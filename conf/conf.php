@@ -14,6 +14,7 @@ define('DB_NAME', 'bdcolbiologos');
 define('ENLACE_SERVIDOR', 'C://laragon/www/colegio_biologos/');
 define('ENLACE_WEB', 'http://127.0.0.1/colegio_biologos/');
 define('BOOTSTRAP', 'http://127.0.0.1/colegio_biologos/bootstrap/');
+define('PROY_TITULO', 'SISTEMA COLEGIO DE BIOLOGOS');
 
 
 $dbh = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=UTF8', DB_USERNAME, DB_PASSWORD, array(
