@@ -232,6 +232,7 @@
                     <th>Teléfono</th>
                     <th>Email</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                   </tr>
                   </thead>
                   <tbody id="lista_colegiados">
@@ -244,7 +245,7 @@
                     <th>Teléfono</th>
                     <th>Email</th>
                     <th>Estado</th>
-
+                    <th>Acciones</th>
                   </tr>
                   </tfoot>
                 </table>

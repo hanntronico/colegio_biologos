@@ -75,12 +75,10 @@
 		          <td>".$data->telefono."</td>
 		          <td>".$data->email."</td>
 		          <td>".$estado."</td>
+		          <td><button type='button' class='btn btn-warning btn-sm'><i class='fa fa-edit mr-1'></i>Editar</button></td>
 		         </tr>";
   endwhile;
 
-	// for ($i=0; $i < 50 ; $i++) { 
-	// 	# code...
-	// }
 
 	echo $fila;
 
