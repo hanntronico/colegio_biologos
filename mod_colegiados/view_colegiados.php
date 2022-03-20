@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Listado de Colegiados - <?php echo PROY_TITULO; ?></title>
 
+  <link rel="stylesheet" href="../dist/css/estilos.css">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -22,7 +23,8 @@
   <!-- JQVMap -->
   <link rel="stylesheet" href="../plugins/jqvmap/jqvmap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <!-- <link rel="stylesheet" href="../dist/css/adminlte.min.css"> -->
+  <link rel="stylesheet" href="../dist/css/adminlte.css">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
@@ -30,11 +32,18 @@
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
 
-    <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css"> -->
+
+  <style>
+      .hann {
+        color: white !important;
+      }
+  </style>
+
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
