@@ -38,13 +38,6 @@
 
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css"> -->
 
-  <style>
-      .hann {
-        color: white !important;
-      }
-  </style>
-
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -226,7 +219,7 @@
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
 
-                    <div class="card">
+            <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Colegiados registrados en el SISTEMA al <?php echo date("d/m/Y") ?></h3>
               </div>
@@ -236,6 +229,7 @@
                   <thead>
                   <tr>
                     <th>DNI</th>
+                    <th>CODIGO</th>
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Teléfono</th>
@@ -249,6 +243,7 @@
                   <tfoot>
                   <tr>
                     <th>DNI</th>
+                    <th>CODIGO</th>
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Teléfono</th>
@@ -364,6 +359,7 @@
       // ]
 
       $( document ).ready(function() {
+
         $('#lista_colegiados_id').DataTable({
           "paging": true,
           "processing": true,
@@ -374,10 +370,20 @@
           "autoWidth": false,
           "responsive": true,
           "dom": 'Blfrtip',
+          "buttons": ["copy", "csv", "excel", "pdf", "print",
+            {
+              text: "Nuevo",
+              className: "btn btn-info",
+              action: function ( e, dt, node, config ){
+                location.href='http://127.0.0.1/colegio_biologos/mod_colegiados/nuevo'
+              }
+            }
+          ],
           "language": {
               url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
           },
-        });
+        }).buttons().container().appendTo('#lista_colegiados_id_wrapper .col-md-6:eq(0)');
+
       });
 
 
@@ -385,7 +391,31 @@
         $('#lista_colegiados').empty().html(data);
       });
 
+      function verPagos(idColegiado) {
+        // console.log(idColegiado);
+        location.href="<?php echo ENLACE_WEB;?>mod_colegiados/view_pagos_colegiados.php?idcol=" + idColegiado;
+      }
 
+      function desactivar(idColegiado){
+        console.log("desactivando: " + idColegiado);
+
+        $.ajax({
+          url: 'controller_colegiado.php',
+          type: 'POST',
+          data: {accion: 'desactivar'},
+        })
+        .done(function(data) {
+          console.log("success data:" + data);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+      }
+
+
+      function activar(idColegiado){
+        console.log("activando: " + idColegiado);
+      }
 
     // $.ajax({
     //   url: '/path/to/file',

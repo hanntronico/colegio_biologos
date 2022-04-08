@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?php echo PROY_TITULO; ?></title>
 
+  <link rel="stylesheet" href="../dist/css/estilos.css">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -220,7 +221,7 @@
               <div class="inner">
                 <h3>50</h3>
 
-                <p>Colegiodos Registrados</p>
+                <p>Colegiados Registrados</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>

@@ -29,7 +29,7 @@ if( empty($_POST["usuario"]) && empty($_POST["password"]) ){
 	    // $data = $db->fetch(PDO::FETCH_ASSOC);
 	    $data = $db->fetch(PDO::FETCH_OBJ);
 
-	    // VALID DATA
+
 	    if ($data->idusuario > 0 and !empty($data->idusuario)):
 	        SESSION_START();
 	        $_SESSION['usuario_sistema']      = $data->idusuario;

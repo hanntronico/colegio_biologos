@@ -5,3 +5,5 @@ RewriteRule ^colegio_biologos/(\w+)?$ 		index.php?accion=$1
 RewriteRule ^/?$													index.php
 RewriteRule ^administrador/?$							administrador/view_dashboard.php
 RewriteRule ^mod_colegiados/?$						mod_colegiados/view_colegiados.php
+RewriteRule ^mod_colegiados/nuevo					mod_colegiados/view_nuevo_colegiado.php
+RewriteRule ^login-usuarios/?$						mod_usuarios/view_login_usu.php
