@@ -51,4 +51,95 @@
 			}
 
 
+			if($_POST["accion"] == 'guardar'){
+				// echo "crea con exito " . 
+				// $_POST["inputNombres"] . 
+				// $_POST["inputApePaterno"] . 
+				// $_POST["inputApeMaterno"];
+
+				$sql = "INSERT INTO `colegiados`(`codigo_col`, 
+																				 `nom_colegiado`, 
+																				 `ape_paterno`, 
+																				 `ape_materno`, 
+																				 `dni`, 
+																				 `fec_nac`, 
+																				 `foto`, 
+																				 `telefono`, 
+																				 `email`,
+																				 `password`, 
+																				 `direccion`, 
+																				 `lug_nacim`, 
+																				 `lug_labores`, 
+																				 `info_contacto`, 
+																				 `estado`) 
+								VALUES (:cod_colegiado,
+												:nombres,
+											  :apePaterno,
+											  :apeMaterno,
+											  :dni,
+											  :fec_nac,
+											  :foto,
+											  :telefono,
+											  :email,
+											  :password,
+											  :dirección,
+											  :lug_nacim,
+											  :lug_labores,
+											  :info_contacto,
+											  :estado)";
+
+								echo random_int(100000, 999999);
+
+
+		    $db = $dbh->prepare($sql);
+		    $dbP->bindValue(':cod_colegiado', random_int(100000, 999999), PDO::PARAM_STR);
+		    $dbP->bindValue(':nombres'			, $_POST["inputNombres"], PDO::PARAM_STR);
+		    $dbP->bindValue(':apePaterno'		, $_POST["inputApePaterno"], PDO::PARAM_STR);
+		    $dbP->bindValue(':apeMaterno'		, $_POST["inputApeMaterno"], PDO::PARAM_STR);
+		    $dbP->bindValue(':dni'					, $_POST["inputDni"], PDO::PARAM_STR);
+		    $dbP->bindValue(':fec_nac'			, $_POST["inputFecNac"], PDO::PARAM_STR);
+		    $dbP->bindValue(':foto'					, , PDO::PARAM_STR);
+		    $dbP->bindValue(':telefono'			, $_POST["inputTelefono"], PDO::PARAM_STR);
+		    $dbP->bindValue(':email'				, $_POST["inputEmail"], PDO::PARAM_STR);
+		    $dbP->bindValue(':password'			, , PDO::PARAM_STR);
+		    $dbP->bindValue(':dirección'		, , PDO::PARAM_STR);
+		    $dbP->bindValue(':lug_nacim'		, , PDO::PARAM_INT);
+		    $dbP->bindValue(':lug_labores'	, , PDO::PARAM_INT);
+		    $dbP->bindValue(':info_contacto', , PDO::PARAM_STR);
+		    $dbP->bindValue(':estado'				, 1, PDO::PARAM_INT);
+
+
+
+
+
+
+
+
+
+		    $db->execute();
+
+
+
+      //       $sqlP = "INSERT into  fi_solicitud_revision
+      //       (fk_detalle_solcitud
+      //         , cant_revision
+      //         , fecha_cambio ) values
+      //         ( :rowid
+      //         , :cantidad
+      //         , NOW())";
+      //       $dbP = $this->dbh->prepare($sqlP);
+      //       $dbP->bindValue(':rowid', $cambio["id"], PDO::PARAM_INT);
+      //       $dbP->bindValue(':cantidad', $cambio["cantidad"], PDO::PARAM_STR);
+      //       $result = $dbP->execute();
+
+
+
+		    // echo "exito";
+
+
+
+
+
+			}
+
 ?>
