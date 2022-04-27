@@ -334,7 +334,9 @@
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
 
 <script type="text/javascript">
-  
+
+
+
   $( "#btnSalir" ).click(function() {
     if (confirm("Esta seguro de salir del sistema")) {
       location.href="<?php echo ENLACE_WEB;?>mod_login/logout.php";
@@ -360,7 +362,7 @@
 
       $( document ).ready(function() {
 
-        $('#lista_colegiados_id').DataTable({
+	      $('#lista_colegiados_id').DataTable({
           "paging": true,
           "processing": true,
           "lengthChange": false,
@@ -384,12 +386,29 @@
           },
         }).buttons().container().appendTo('#lista_colegiados_id_wrapper .col-md-6:eq(0)');
 
+  	
       });
 
 
-      $.get('controller_colegiados.php', function(data) {
-        $('#lista_colegiados').empty().html(data);
-      });
+      function cargaListadoColegios() {
+        $.ajax({
+          url: 'controller_colegiados.php',
+          type: 'POST',
+          data: {accion: 'carga_inicial'},
+        })
+        .done(function(data) {
+					$('#lista_colegiados').empty().html(data);
+        })
+        .fail(function() {
+          console.log("error");
+        })
+      }
+
+			cargaListadoColegios();
+
+      // $.get('controller_colegiados.php', function(data) {
+      //   $('#lista_colegiados').empty().html(data);
+      // });
 
       function verPagos(idColegiado) {
         // console.log(idColegiado);
@@ -400,12 +419,13 @@
         console.log("desactivando: " + idColegiado);
 
         $.ajax({
-          url: 'controller_colegiado.php',
+          url: 'controller_colegiados.php',
           type: 'POST',
-          data: {accion: 'desactivar'},
+          data: {accion: 'desactivar', idCol:idColegiado },
         })
         .done(function(data) {
           console.log("success data:" + data);
+          cargaListadoColegios();
         })
         .fail(function() {
           console.log("error");
@@ -414,7 +434,22 @@
 
 
       function activar(idColegiado){
-        console.log("activando: " + idColegiado);
+
+        console.log("desactivando: " + idColegiado);
+
+        $.ajax({
+          url: 'controller_colegiados.php',
+          type: 'POST',
+          data: {accion: 'activar', idCol:idColegiado },
+        })
+        .done(function(data) {
+          console.log("success data:" + data);
+          cargaListadoColegios();
+        })
+        .fail(function() {
+          console.log("error");
+        })
+
       }
 
     // $.ajax({

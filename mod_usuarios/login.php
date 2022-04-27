@@ -1,7 +1,7 @@
 <?php 
 	include_once "../conf/conf.php";
 
-    
+   
 	if(!empty($_POST)){
 		if(isset($_POST["userini"]) &&isset($_POST["claveini"])){
 			if($_POST["userini"]!=""&&$_POST["claveini"]!=""){

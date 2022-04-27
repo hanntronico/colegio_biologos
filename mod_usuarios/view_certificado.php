@@ -1,45 +1,16 @@
 <?php
 session_start();
 
-// echo "variable de sesion: " . $_SESSION['idColegiado'];
-
 if(!isset($_SESSION['idColegiado']) || $_SESSION["idColegiado"]==null ){
 	print "<script>alert('Acceso invalido! - Inicia Sesion para Acceder');window.location='index.php';</script>";
 	exit();
 }
 
 
-// if(!isset($_SESSION["idColegiado"]) || $_SESSION["idColegiado"]==null){
-// 	// print "<script>alert('Acceso invalido! - Inicia Sesion para Acceder');window.location='index.php';</script>";
-// 	echo "llega";
-// 	exit();
-// }
-// include("conexion/config.php");
-
 $datuser 		= $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
 $datnomuser = $_SESSION["nombre"];
 
-// $_SESSION['idColegiado']    		= $data->idColegiado;
-// $_SESSION['nombre']         		= $data->nom_colegiado;
-// $_SESSION['apellido_paterno']   = $data->ape_paterno;
-// $_SESSION['apellido_materno']   = $data->ape_materno;
 
-// $variable = $_GET["key"];
-// $tem = isset($_GET["tema"]);
-// $mensa = isset($_GET["var"]);
-
-//funcion corta palabras en un largo texto
-// function cortar_palabras($texto, $largor = 6, $puntos = "...") 
-// { 
-//    $palabras = explode(' ', $texto); 
-//    if (count($palabras) > $largor) 
-//    { 
-//      return implode(' ', array_slice($palabras, 0, $largor)) ." ". $puntos; 
-//    } else
-//          {
-//            return $texto; 
-//          } 
-// } 
 
 
 //cuenta libros
@@ -163,26 +134,46 @@ $datnomuser = $_SESSION["nombre"];
                 
                  
 
-                 <div class="panel panel-container">
-                  <div class="row" style="height: 600px;" >
+                <div class="panel panel-container">
+                  <div class="row" style="height: 800px;" >
 
 
 
-                  				
+
+                    <div class="card text-center">
+                      <!-- <img src="../dist/img/certificado.jpg" width="40%" style="margin: 0px auto;"> -->
+                      <div class="card-body" style="margin:0px auto; 
+                                                    text-align: center; 
+                                                    background-image: url('../dist/img/certificado.jpg'); 
+                                                    background-repeat: no-repeat;
+                                                    background-position: center center;
+                                                    background-size: cover; width: 560px; border: 1px solid red;">
+                        <!-- <h4 class="card-title">Card title</h4> -->
+                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                          <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" name="" value="Nombre" placeholder="">
+                            </div>
+                            
+                          </div>
+                      </div>
+                    </div>
 
 
-<!--         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-          <div class="card card-statistics">
-            <div class="card-body">
-              <div class="clearfix">
-                 
-              </div>
-            </div>
-          </div>
-				</div> -->
+<!--                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+                          <div class="card card-statistics">
+                            <div class="card-body">
+                              <div class="clearfix">
 
-                 </div>
-                  
+                                <img src="../dist/img/certificado.jpg" width="120%">
+                              
+                              </div>
+                            </div>
+                          </div>
+                				</div> -->
+
+
+                  </div>
                 </div>
                 
               </div>
