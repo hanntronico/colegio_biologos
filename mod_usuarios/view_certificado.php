@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../conf/conf.php");
 
 if(!isset($_SESSION['idColegiado']) || $_SESSION["idColegiado"]==null ){
 	print "<script>alert('Acceso invalido! - Inicia Sesion para Acceder');window.location='index.php';</script>";
@@ -10,7 +11,39 @@ if(!isset($_SESSION['idColegiado']) || $_SESSION["idColegiado"]==null ){
 $datuser 		= $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
 $datnomuser = $_SESSION["nombre"];
 
+// Textos completos  
+// idColegiatura
+// idColegiado
+// fec_colegiatura
+// desc_colegiatura
+// estado_colegiatura
 
+  $sql = "SELECT C.idColegiado, 
+                 C.codigo_col as codigo, 
+                 C.nom_colegiado, 
+                 C.ape_paterno, 
+                 C.ape_materno, 
+                 C.dni, 
+                 C.fec_nac, 
+                 C.foto, 
+                 C.telefono, 
+                 C.email, 
+                 C.lug_nacim, 
+                 C.lug_labores, 
+                 C.info_contacto, 
+                 C.estado,
+                 CA.idColegiatura,
+                 CA.fec_colegiatura as fecha_col
+          FROM colegiados C INNER JOIN colegiatura CA
+          ON CA.idColegiado = C.idColegiado
+          WHERE C.idColegiado = " . $_SESSION['idColegiado'];
+
+  $db = $dbh->prepare($sql);
+  $db->execute();
+  $data = $db->fetch(PDO::FETCH_OBJ);
+
+
+  $sql2 = "SELECT * FROM PAGOS ";
 
 
 //cuenta libros
@@ -147,15 +180,68 @@ $datnomuser = $_SESSION["nombre"];
                                                     background-image: url('../dist/img/certificado.jpg'); 
                                                     background-repeat: no-repeat;
                                                     background-position: center center;
-                                                    background-size: cover; width: 560px; border: 1px solid red;">
+                                                    background-size: cover; width: 560px;">
                         <!-- <h4 class="card-title">Card title</h4> -->
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                          <div class="row">
-                            <div class="col-md-12">
-                                <input type="text" name="" value="Nombre" placeholder="">
+                          <div class="text-left" style="margin-top: 320px; margin-left: 60px;">
+
+                            <div class="row" style="padding: 0px;">
+                              <div class="col-md-6">
+                                  <span style="font-size: 12px;">QUE EL BIÓLOGO</span>
+                              </div>
+                              <div class="col-md-6">
+                                  <span style="font-weight: bolder; font-size: 12px;">
+                                    <?php echo $data->ape_paterno. ' ' . 
+                                               $data->ape_materno . ', ' . 
+                                               $data->nom_colegiado; ?>
+                                  </span>
+                              </div>
                             </div>
-                            
+
+                            <div class="row">
+                              <div class="col-md-6">
+                                <span style="font-size: 12px;">CON FECHA DE COLEGIATURA</span>
+                              </div>
+                              <div class="col-md-6">
+                                <span style="font-weight: bolder; font-size: 12px;"><?php 
+                                      $originalDate = $data->fecha_col;
+                                      $newDate = date("d" . "DE" . "Y", strtotime($originalDate));  
+                                      $dia = date("d", strtotime($originalDate));
+                                      $mes = date("M", strtotime($originalDate));
+                                      $anio = date("Y", strtotime($originalDate));
+                                      echo $dia . " DE " . $mes . " DE " . $anio; 
+                                  ?>
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-6">
+                                <span style="font-size: 12px;">CON REGISTRO</span>
+                              </div>
+                              <div class="col-md-6">
+                                <span style="font-weight: bolder; font-size: 12px;"><?php echo "CBP Nº " . $data->codigo; ?></span>  
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-6">
+                                <span style="font-size: 12px;">HABILITADO AL</span>
+                              </div>
+                              <div class="col-md-6">
+                                <span style="font-weight: bolder; font-size: 12px;"><?php //echo "CBP Nº " . $data->codigo; ?></span>
+                              </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 20px;">
+                              <div class="col-md-12">
+                                <p style="text-align: justify; font-size: 12px;"> DE CONFORMIDAD CON LO DISPUESTO EN EL ARTÍCULO 05 DE LA LEY N° 28847 LEY DEL TRABAJO DEL BIÓLOGO Y DEL ARTÍCULO 06 DE SU REGLAMENTO APROBADO MEDIANTE DECRETO SUPREMO N° 025-2008-SA, SE ENCUENTRA HÁBIL Y EN CONSECUENCIA ESTA AUTORIZADO PARA EJERCER LA PROFESIÓN DE BIÓLOGO.</p>
+                              </div>
+                            </div>
+
+
                           </div>
+
                       </div>
                     </div>
 

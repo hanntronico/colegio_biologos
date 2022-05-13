@@ -5,3 +5,20 @@
 .mt-2 a {
   color: white !important;
 }
+
+.input-file{
+  display:none;  
+}
+.input-btn{
+  background-color:#8c8c8c;
+  color:#fff;
+  border:1px solid #8c8c8c;
+  padding:5px;
+  border-radius:6px;
+  box-shadow:1px 1px 3px #000;
+  margin:10px;
+}
+.input-btn:hover{
+  background-color:#c9cccb;
+}
+

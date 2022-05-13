@@ -201,7 +201,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Listado de Colegiados</h1>
+            <h1 class="m-0">Registro de Colegiados</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -226,48 +226,73 @@
               <!-- /.card-header -->
               <div class="card-body">
 
-                <form id="frmColegiado">
-                  <div class="form-row">
-                    <div class="form-group col-md-3">
-                      <div class="text-center">
-                        <h5>FOTO</h5>
-                        <img src="<?php echo ENLACE_WEB;?>dist/img/sin_imagen_disponible.jpg" style="border: 3px solid gray; width: 120px; height: 120px; border-radius: 50%;">
+                <form id="frmColegiado" enctype="multipart/form-data">
+
+                  <div class="row">
+                    <div class="col-md-2" >
+                      <div style="margin: 0px auto; text-align: center;">
+                        <!-- <h5>FOTO</h5> -->
+                        <img src="<?php echo ENLACE_WEB;?>dist/img/sin_imagen_disponible.jpg" style="border: 3px solid #E8E8E8; width: 120px; height: 120px; border-radius: 50%;">
+                      </div>
+                      <!-- <button type="button" class="btn btn-secondary btn-sm mt-2">Seleccionar imagen</button> -->
+                      <!-- <input type="file" name="foto" id="foto"> -->
+                      <input type='file' class='input-file' id="input_file" name="inputFoto">
+                      <button class='input-btn' id='input_btn' style="width: 90%;">Seleccionar imagen</button>
+                      
+                    </div>
+
+                    <div class="col-md-10">
+
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputNombres">Nombres</label>
+                          <input type="text" class="form-control" name="inputNombres" id="inputNombres" placeholder="Nombres">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputApePaterno">Apellido paterno</label>
+                          <input type="text" class="form-control" name="inputApePaterno" id="inputApePaterno" placeholder="Apellido Paterno">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputApeMaterno">Apellido materno</label>
+                          <input type="text" class="form-control" name="inputApeMaterno" id="inputApeMaterno" placeholder="Apellido Materno">
+                        </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="form-group col-md-2">
+                          <label for="inputDni">DNI</label>
+                          <input type="text" class="form-control" maxlength="8" name="inputDni" id="inputDni" placeholder="Número de DNI">
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label for="inputFecNac">Fecha de Nacim.</label>
+                          <input type="date" class="form-control" name="inputFecNac" id="inputFecNac">
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label for="inputTelefono">Teléfono</label>
+                          <input type="text" class="form-control" name="inputTelefono" id="inputTelefono" placeholder="Teléfono">
+                        </div>
+                        <div class="form-group col-md-5">
+                          <label for="inputEmail">Email</label>
+                          <input type="text" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email">
+                        </div>
+                        <input type="hidden" name="foto" id="foto" value="foto del colegiado">
+                      </div>
+                      
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputDireccion">Dirección</label>
+                          <input type="text" class="form-control" name="inputDireccion" id="inputDireccion" placeholder="Dirección">
+                        </div>
+                        <div class="form-group col-md-6">
+
+                        </div>
                       </div>
 
                     </div>
-                    <div class="form-group col-md-3">
-                      <label for="inputNombres">Nombres</label>
-                      <input type="email" class="form-control" name="inputNombres" id="inputNombres" placeholder="Nombres">
-                    </div>
-                    <div class="form-group col-md-3">
-                      <label for="inputApePaterno">Apellido paterno</label>
-                      <input type="text" class="form-control" name="inputApePaterno" id="inputApePaterno" placeholder="Apellido Paterno">
-                    </div>
-                    <div class="form-group col-md-3">
-                      <label for="inputApeMaterno">Apellido materno</label>
-                      <input type="text" class="form-control" name="inputApeMaterno" id="inputApeMaterno" placeholder="Apellido Materno">
-                    </div>
                   </div>
 
-                  <div class="form-row">
-                    <div class="form-group col-md-2">
-                      <label for="inputDni">DNI</label>
-                      <input type="email" class="form-control" maxlength="8" name="inputDni" id="inputDni" placeholder="Número de DNI">
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label for="inputFecNac">Fecha de Nacim.</label>
-                      <input type="date" class="form-control" name="inputFecNac" id="inputFecNac">
-                    </div>
-                    <div class="form-group col-md-3">
-                      <label for="inputTelefono">Teléfono</label>
-                      <input type="text" class="form-control" name="inputTelefono" id="inputTelefono" placeholder="Teléfono">
-                    </div>
-                    <div class="form-group col-md-5">
-                      <label for="inputEmail">Email</label>
-                      <input type="text" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email">
-                    </div>
-                    <input type="hidden" name="foto" id="foto" value="foto del colegiado">
-                  </div>
+
+
 
 <!--       $sql = "SELECT idColegiado, nom_colegiado, ape_paterno, ape_materno, dni, fec_nac, foto, telefono, email, lug_nacim, lug_labores, info_contacto, estado FROM colegiados"; -->
 
@@ -298,13 +323,37 @@
                     </div>                    
                     <div class="form-group col-md-4">
                       <label for="provincia">Provincia</label>
-                      <select id="provincia" class="form-control">
+                      <select id="provincia" class="form-control" onchange="cargaDistrito(this.value)">
                         <option value="0">Seleccione provincia</option>
                       </select>
                     </div>                    
                     <div class="form-group col-md-4">
                       <label for="distrito">Distrito</label>
-                      <select id="distrito" class="form-control">
+                      <select name="distrito" id="distrito" class="form-control">
+                        <option value="0">Seleccione distrito</option>
+                      </select>
+                    </div>                    
+                  </div>
+
+
+                  <hr>
+                  <label>Lugar de Labores</label>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="departamento_lab">Departamento</label>
+                      <select id="departamento_lab" class="form-control" onchange="cargaProvinLab(this.value)">
+                          <option value="0">Seleccione departamento</option>
+                      </select>
+                    </div>                    
+                    <div class="form-group col-md-4">
+                      <label for="provincia_lab">Provincia</label>
+                      <select id="provincia_lab" class="form-control" onchange="cargaDistritoLab(this.value)">
+                        <option value="0">Seleccione provincia</option>
+                      </select>
+                    </div>                    
+                    <div class="form-group col-md-4">
+                      <label for="distrito_lab">Distrito</label>
+                      <select name="distrito_lab" id="distrito_lab" class="form-control">
                         <option value="0">Seleccione distrito</option>
                       </select>
                     </div>                    
@@ -336,7 +385,7 @@
                       </label>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-success btn-lg" onclick="guardarColegiado()">GUARDAR</button>
+                  <button type="submit" class="btn btn-success btn-lg">GUARDAR</button>
                 </form>
 
               </div>
@@ -420,6 +469,15 @@
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
 
 <script type="text/javascript">
+
+
+
+  $( "#input_btn" ).click(function(event) {
+    event.preventDefault();
+    $( "#input_file" ).click();
+  });
+
+
   
   $( "#btnSalir" ).click(function() {
     if (confirm("Esta seguro de salir del sistema")) {
@@ -449,43 +507,130 @@
     $.get('controller_departamentos.php', function(data) {
       $('#departamento').empty().html(data);
     });
+
+    $.get('controller_departamentos.php', function(data) {
+      $('#departamento_lab').empty().html(data);
+    });
+
   });
 
   function cargaProvin(arg) {
-    // alert(arg);
     $.ajax({
       url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_provincia.php',
       type: 'POST',
       data: {departamento: arg},
     })
     .done(function(data) {
-      console.log('carga provincia: ' + data);
+      // console.log('carga provincia: ' + data);
       $('#provincia').empty().html(data);
     })
     .fail(function() {
       console.log("error");
     });
-  }    
+  }
 
-  function guardarColegiado() {
-  
-    var datosForm = $('#frmColegiado').serialize();
-    // var datosForm = $('#frmColegiado').serializeArray();
-
-    // console.log(datosForm);
-
+  function cargaProvinLab(arg) {
     $.ajax({
-      url: 'controller_colegiados.php',
+      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_provincia.php',
       type: 'POST',
-      data: datosForm,
+      data: {departamento: arg},
     })
     .done(function(data) {
-      console.log("success data: " + data);
-      // location.href="<?php //echo ENLACE_WEB;?>mod_colegiados/view_pagos_colegiados.php?idcol=" + idColegiado;
+      // console.log('carga provincia: ' + data);
+      $('#provincia_lab').empty().html(data);
     })
     .fail(function() {
       console.log("error");
-    })  
+    });
+  }
+
+  function cargaDistrito(arg) {
+    $.ajax({
+      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_distrito.php',
+      type: 'POST',
+      data: {provincia: arg},
+    })
+    .done(function(data) {
+      // console.log('carga provincia: ' + data);
+      $('#distrito').empty().html(data);
+    })
+    .fail(function() {
+      console.log("error");
+    });
+  }
+
+  function cargaDistritoLab(arg) {
+    $.ajax({
+      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_distrito.php',
+      type: 'POST',
+      data: {provincia: arg},
+    })
+    .done(function(data) {
+      // console.log('carga provincia: ' + data);
+      $('#distrito_lab').empty().html(data);
+    })
+    .fail(function() {
+      console.log("error");
+    });
+  }
+
+
+  $("#frmColegiado").on("submit",function(e)
+    {
+      // if($("#clave").val() == $("#clave2").val() ){
+          // console.log('guardar y editar'); 
+        guardaryeditar(e);
+        // return true;
+      // }else{
+      //   alert("Por favor verifique se confirmó bien su clave");
+      //   return false;
+      // }
+  });
+
+  function guardaryeditar(e) {
+  
+    // var datosForm = $('#frmColegiado').serialize();
+    // // var datosForm = $('#frmColegiado').serializeArray();
+
+    // // console.log(datosForm);
+
+    // $.ajax({
+    //   url: 'controller_colegiados.php',
+    //   type: 'POST',
+    //   data: datosForm,
+    // })
+    // .done(function(data) {
+    //   console.log("success data: " + data);
+    //   // location.href="<?php //echo ENLACE_WEB;?>mod_colegiados/view_pagos_colegiados.php?idcol=" + idColegiado;
+    // })
+    // .fail(function() {
+    //   console.log("error");
+    // })  
+
+
+    e.preventDefault();
+
+    var formData = new FormData($("#frmColegiado")[0]);
+
+    $.ajax({
+        url: "controller_colegiados.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+
+        success: function(datos)
+        {                    
+              // bootbox.alert(datos);
+              // mostrarform(false);
+              // tabla.ajax.reload();
+          console.log(datos);
+          location.href="<?php echo ENLACE_WEB;?>mod_colegiados/view_colegiados.php";
+        }
+
+    });
+
+
   
   }
 

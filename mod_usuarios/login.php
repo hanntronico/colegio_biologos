@@ -14,6 +14,7 @@
 				// $sql1 = "SELECT * FROM colegiados WHERE (email='".$_POST["userini"]."' AND password='".$mdcincopass."' AND estado=1)";
 
 				$sql1 = "SELECT * FROM colegiados WHERE (email=:usuario AND password=:password AND estado=1)";
+				// echo $sql1 = "SELECT * FROM colegiados WHERE (email='".$_POST['userini']."' AND password='".$mdcincopass."' AND estado=1)";
 				$db = $dbh->prepare($sql1);
 	    	$db->bindValue(":usuario", $_POST['userini'], PDO::PARAM_STR);
 	    	$db->bindValue(":password", $mdcincopass, PDO::PARAM_STR);
@@ -21,6 +22,7 @@
 	    	// $data = $db->fetch(PDO::FETCH_ASSOC);
 	    	$data = $db->fetch(PDO::FETCH_OBJ);
 
+	    	
 	    	$filas = $db->rowCount();
 
 				if( $filas>0 && !empty($data->idColegiado) ){

@@ -63,6 +63,48 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="javascript:void(0);" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Gestión de pagos
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo ENLACE_WEB;?>mod_pagos/view_pagos.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cuota ordinaria</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="javascript:void(0);" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Exoneraciones</p>
+                </a>
+              </li>
+<!--               <li class="nav-item">
+                <a href="javascript:void(0);" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Otros pagos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="javascript:void(0);" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Asignar financiamientos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="javascript:void(0);" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Planillas</p>
+                </a>
+              </li>  -->             
+            </ul>
+          </li>          
 <!--           <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -73,7 +115,7 @@
             </a>
           </li> -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="javascript:void(0);" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Comprobantes de pago
@@ -83,19 +125,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Facturas</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Boletas</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/boxed.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Notas de crédito</p>
                 </a>
@@ -132,47 +174,8 @@
               </li> -->
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
-              <p>
-                Gestión de pagos
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Cuota ordinaria</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Exoneraciones</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Otros pagos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Asignar financiamientos</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Planillas</p>
-                </a>
-              </li>              
-            </ul>
-          </li>
+
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <!-- <i class="nav-icon fas fa-tree"></i> -->
@@ -185,79 +188,79 @@
 
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/UI/general.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="nav-icon far fa-file"></i>
                   <p>Sector</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/icons.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Centro de labores</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/buttons.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Especialidad</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/sliders.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Resumen de deuda</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/modals.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Estado Habilitación</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/navbar.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Clases</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/timeline.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Sector Profesional</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/ribbons.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Cargo</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/ribbons.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Fecha de Ingreso</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/ribbons.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Usuarios Registrados</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/ribbons.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Padrón por Regiones</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/ribbons.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Comprobantes de Pago</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/UI/ribbons.html" class="nav-link">
+                <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Financiamientos</p>
                 </a>
