@@ -132,7 +132,7 @@
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
-    <h3>hanntronico</h3>
+    
   </aside>
   <!-- /.control-sidebar -->
 </div>

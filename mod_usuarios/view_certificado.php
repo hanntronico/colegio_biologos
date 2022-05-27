@@ -11,13 +11,6 @@ if(!isset($_SESSION['idColegiado']) || $_SESSION["idColegiado"]==null ){
 $datuser 		= $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
 $datnomuser = $_SESSION["nombre"];
 
-// Textos completos  
-// idColegiatura
-// idColegiado
-// fec_colegiatura
-// desc_colegiatura
-// estado_colegiatura
-
   $sql = "SELECT C.idColegiado, 
                  C.codigo_col as codigo, 
                  C.nom_colegiado, 
@@ -37,18 +30,58 @@ $datnomuser = $_SESSION["nombre"];
           FROM colegiados C INNER JOIN colegiatura CA
           ON CA.idColegiado = C.idColegiado
           WHERE C.idColegiado = " . $_SESSION['idColegiado'];
+  // exit();
+
 
   $db = $dbh->prepare($sql);
   $db->execute();
   $data = $db->fetch(PDO::FETCH_OBJ);
 
 
-  $sql2 = "SELECT * FROM PAGOS ";
+  $sql2 = "SELECT `idPagoServ`, `fecha_pago_serv`, `idColegiado`, `monto`, `estado` 
+           FROM `pagos_servicios` 
+           WHERE `idColegiado` = " . $_SESSION['idColegiado'];
+  $db = $dbh->prepare($sql2);
+  $db->execute();
+  $data_servicios = $db->fetch(PDO::FETCH_OBJ);
+
+
+  $sql3 = "SELECT idColegiatura, 
+                  idColegiado, 
+                  fec_colegiatura, 
+                  fecha_registro, 
+                  desc_colegiatura, 
+                  sector_profesional, 
+                  univ_institu, 
+                  idEspecialidad, 
+                  estado_colegiatura 
+           FROM colegiatura WHERE idColegiado=" . $_SESSION['idColegiado'];
+  $db = $dbh->prepare($sql2);
+  $db->execute();
+  $data_colegiatura = $db->fetch(PDO::FETCH_OBJ);  
+
+// idColegiatura
+// idColegiado
+// fec_colegiatura
+// desc_colegiatura
+// estado_colegiatura
+
+
+  //   [idPagoServ] => 2
+  //   [fecha_pago_serv] => 2022-01-31
+  //   [idColegiado] => 4428
+  //   [monto] => 225.00
+  //   [estado] => 1
+
+  // echo "<pre>";
+  // print_r($data_servicios);
+  // echo "</pre>";
+  // exit();
+  
 
 
 //cuenta libros
 	$mensa="";
-
   $totahr = "0";
   $totapre = "0";
   $totarese = "0";
@@ -233,7 +266,7 @@ $datnomuser = $_SESSION["nombre"];
                               </div>
                             </div>
 
-                            <div class="row" style="padding-top: 20px;">
+                            <div class="row" style="padding-top: 15px;">
                               <div class="col-md-12">
                                 <p style="text-align: justify; font-size: 12px;"> DE CONFORMIDAD CON LO DISPUESTO EN EL ARTÍCULO 05 DE LA LEY N° 28847 LEY DEL TRABAJO DEL BIÓLOGO Y DEL ARTÍCULO 06 DE SU REGLAMENTO APROBADO MEDIANTE DECRETO SUPREMO N° 025-2008-SA, SE ENCUENTRA HÁBIL Y EN CONSECUENCIA ESTA AUTORIZADO PARA EJERCER LA PROFESIÓN DE BIÓLOGO.</p>
                               </div>

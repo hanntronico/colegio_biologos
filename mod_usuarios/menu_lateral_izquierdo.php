@@ -6,12 +6,18 @@
                 <div class="profile-image">
                   <img src="../dist/img/faces-clipart/pic-4.png" alt="Perfil del Usuario">
                 </div>
+                <!-- <div style="overflow-wrap: break-word; word-wrap: break-word; hyphens: auto;"> -->
+                <!-- <div style="inline-size: 150px; overflow-wrap: break-word; word-break: break-all;"> -->
+
+                <!-- </div> -->
+
                 <div class="text-wrapper">
                   <p class="profile-name"><?=$datnomuser;?></p>
-                  <div>
-                    <small class="designation text-muted">Usuario: <?=$datuser;?></small>
-                    <span class="status-indicator online"></span>
-                  </div>
+                  <p class="profile-name"><?=$datapepaterno;?></p>
+                  <p class="profile-name"><?=$datapematerno;?></p>
+                    <!-- <small class="designation text-muted">Usuario: <?=$datuser;?></small> -->
+                    <small class="designation text-muted">CBP: <?=$codigo_col;?></small>
+                    <!-- <span class="status-indicator online">hanntronico <br> <br><br></span> -->
                 </div>
               </div>
               <!--<button class="btn btn-success btn-block">New Project
@@ -28,9 +34,8 @@
               </strong>
             </a>
           </li>
+
 <?php 
-
-
 
   // idusuario, nombre, apellidos, dni, correo, celular, usuario, password, idnivel, acceso, fecha_reg, estado
   // idNivel, nivel, descrip_nivel, estado_nivel

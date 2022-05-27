@@ -50,6 +50,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="<?php echo ENLACE_WEB;?>mod_colegiatura/" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Registrar colegiatura</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Emitir certificados</p>
@@ -73,6 +79,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo ENLACE_WEB;?>mod_pagos/view_pagos_servicios.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Pagos de servicios</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="<?php echo ENLACE_WEB;?>mod_pagos/view_pagos.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

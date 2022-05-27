@@ -1,24 +1,13 @@
 <?php 
-  ob_start();
   SESSION_START();
   include_once "../conf/conf.php";
-
-  if (!isset($_SESSION["nombre"]))
-  {
-    header("Location: ../index.php");
-  }
-  else
-  {
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registro de pagos - <?php echo PROY_TITULO; ?></title>
+  <title>Registro de pagos de servicios - <?php echo PROY_TITULO; ?></title>
 
   <?php include_once "../head.php"; ?>
 
@@ -45,12 +34,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Registro de Pagos</h1>
+            <h1 class="m-0">Registro de Pagos de Servicio</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../administrador/">Inicio</a></li>
-              <li class="breadcrumb-item active">Listado de colegiados</li>
+              <li class="breadcrumb-item active">Registro pagos de servicios</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -66,17 +55,17 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                  Ingrese los datos de pago
+                  Ingrese los datos del pago de servicios
                 </h3>
               </div>
 
               <div class="card-body">
                 
-                <form>
+                <form id="frmRegServ" name="frmRegServ" enctype="multipart/form-data" method="POST">
                   <div class="form-row">
                     <div class="col-md-4">
                       <label for="validationServer01">Seleccionar colegiado:</label>
-                      <input type="text" class="form-control" id="colegiado" name="colegiado" placeholder="Colegiado" readonly="true">
+                      <input type="text" class="form-control" id="colegiado" name="colegiado" placeholder="Colegiado" readonly="true" required>
                       <input type="hidden" name="idcolegiado" id="idcolegiado" value="">
                     </div>
 
@@ -87,16 +76,31 @@
                       </button>
                     </div>
 
-                    <div class="col-md-2">
-                      <br>
+<!--                     <div class="col-md-1">
+                      &nbsp;
+                    </div> -->
+
+                    <div class="col-md-2 ml-4">
+                      <label for="fecha_pago_serv">Fecha de pago:</label>
+                      <input type="date" class="form-control" name="fecha_pago_serv" id="fecha_pago_serv" required>
 <!--                       <label for="validationServer02">Nro </label>
                       <input type="text" class="form-control" id="validationServer02" placeholder="Last name" required> -->
-                      <button type="button" class="btn btn-primary mt-2" style="margin-left: 25px;" onclick="buscarPagos()">
+<!--                       <button type="button" class="btn btn-primary mt-2" style="margin-left: 25px;" onclick="buscarPagos()">
                         Buscar Pagos
-                      </button>
-
+                      </button> -->
                     </div>
-                    <div class="col-md-4">
+
+
+                    <div class="col-md-3">
+                      <label for="optServicio">Servicios:</label>
+                      <select class="form-control" name="optServicio" id="optServicio">
+                        <option value="0">Selecciona Servicio</option>
+                      </select>
+
+<!--                       <button type="button" class="btn btn-primary mt-2" style="margin-left: 25px;" onclick="buscarPagos()">
+                        Buscar Pagos
+                      </button> -->
+
 <!--                       <button type="button" class="btn btn-primary mt-2" onclick="buscarPagos()">
                         Buscar Pagos
                       </button> -->
@@ -112,7 +116,16 @@
                         </div>
                       </div> -->
                     </div>
+                    
+                    <div class="col-md-2"><br>
+                      <!-- <button type="submit" class="btn btn-primary mt-2 px-4"> -->
+                      <button type="button" class="btn btn-primary mt-2 px-4" onclick="agregarServicio()">
+                          AGREGAR
+                      </button>    
+                    </div>
+
                   </div>
+
 
 <!--                   <hr>
                   <div class="form-row">
@@ -143,6 +156,16 @@
                       </div>
                     </div>
                   </div> -->
+
+                  <input type="hidden" name="estadoServicio" id="estadoServicio" value="0">
+
+                  <div class="form-row">
+                    <div class="col-md-4">
+                      <button type="submit" class="btn btn-primary mt-2 px-4">GUARDAR</button>
+                    </div>
+                  </div>
+
+
                   <div class="form-group">
                     <div class="form-check">
 <!--                       <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
@@ -162,34 +185,38 @@
             </div>
 
 
-<div class="card">
-  <div class="card-header">
-    <h3 class="card-title">
-      Pagos del colegiado
-    </h3>
-  </div>
+        <div class="card">
 
+          <div class="card-header">
+            <h3 class="card-title">
+              Pagos del colegiado
+              <button type="button" class="btn btn-info btn-sm ml-3" onclick="eliminaFila(0)">Limpiar</button>
+              <!-- <button type="button" class="btn btn-primary btn-sm">Button</button> -->
+              
+              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#pagos_servicios">
+                <i class="fas fa-plus mr-1"></i> SERVICIO
+              </button>
 
-  <div class="card-body">
-                <table id="lista_pagos_id" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Codigo colegiado</th>
-                    <th>Nro cuota</th>
-                    <th>Fecha venci.</th>
-                    <th style="text-align: right;">Mora</th>
-                    <th style="text-align: right;">Deuda</th>
-                    <th>Gen</th>
-                    <th style="text-align: right;">Adelanto</th>
-                    <th style="text-align: right;">Saldo</th>
-                  </tr>
-                  </thead>
-                  <tbody id="lista_pagos">
-                  </tbody>
-                </table>
+            </h3>
+          </div>
 
-  </div>
-</div>
+          <div class="card-body">
+            <table id="lista_servicios_id" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>ITEM</th>
+                  <th>DESCRIPCIÓN</th>
+                  <th>CANTIDAD</th>
+                  <th>P. UNITARIO</th>
+                  <th>IMPORTE</th>
+                </tr>
+              </thead>
+              <tbody id="lista_serv">
+              </tbody>
+            </table>
+          </div>
+
+        </div>
 
 
         <!-- /.row -->
@@ -216,8 +243,6 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
-
 
 
                       <!-- Modal -->
@@ -276,10 +301,143 @@
                         </div>
                       </div>
 
+                     
+              <!-- Modal -->
+              <div class="modal fade" id="pagos_servicios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable|modal-dialog-centered modal-sm|modal-lg|modal-xl" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Especificar datos</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+
+                      <form id="frmServModal">
+                        <fieldset class="form-group">
+                          <label for="formGroupDescripcion">Descripción:</label>
+                          <input type="text" class="form-control" id="formGroupDescripcion" name="formGroupDescripcion" placeholder="Descripción concepto">
+                        </fieldset>
+                        <fieldset class="form-group">
+                          <label for="formGroupCantidad">Cantidad:</label>
+                          <input type="number" class="form-control" id="formGroupCantidad" name="formGroupCantidad" placeholder="Cantidad">
+                        </fieldset>
+                        <fieldset class="form-group">
+                          <label for="formGroupPrecio">Precio:</label>
+                          <input type="number" class="form-control" id="formGroupPrecio" name="formGroupPrecio" placeholder="Precio">
+
+                        </fieldset>                        
+                      </form>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" onclick="agregarServicioModal()">AGREGAR</button>
+                      <button type="button" class="btn btn-dark" data-dismiss="modal" id="cancelar">CANCELAR</button>
+                    </div>
+                  </div>
+                </div>
+              </div>                      
+
 
   <?php include_once "../foot.php"; ?>
 
 <script type="text/javascript">
+
+  $( document ).ready(function() {
+    llenarComboServicios();
+    cargaServicios();
+
+  });
+
+  $("#frmRegServ").on("submit",function(e){
+    e.preventDefault();
+    var formData = new FormData($("#frmRegServ")[0]);
+
+    if($("#colegiado").val() != '' && $("#idcolegiado").val() !=''){
+
+      $.ajax({
+        url: "<?php echo ENLACE_WEB?>mod_servicios/controller_servicios.php?op=registrar_servicios",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+
+          success: function(datos)
+          {                    
+            // bootbox.alert(datos);           
+            // mostrarform(false);
+            // tabla.ajax.reload();
+            console.log(datos);
+            alert("Pago de servicios realizado con éxito");
+            location.reload();
+          }
+      });
+
+    }else{
+      alert("Por favor, ingrese datos válidos");
+    }
+
+
+  });
+
+  function agregarServicioModal() {
+    // console.log('agregar servicio');
+    
+    var formData = new FormData($("#frmServModal")[0]);
+
+    $.ajax({
+      url: "<?php echo ENLACE_WEB?>mod_servicios/controller_servicios.php?op=agregar_servicios2",
+      type: "POST",
+      data: formData,
+      contentType: false,
+      processData: false,
+
+        success: function(datos)
+        {                    
+        //       bootbox.alert(datos);           
+        //       mostrarform(false);
+          tabla.ajax.reload();
+          console.log(datos);
+
+          $('#formGroupDescripcion').val("");
+          $('#formGroupCantidad').val("");
+          $('#formGroupPrecio').val("");
+
+          $("#cancelar").click();
+          $("#estadoServicio").val("2");
+
+        }
+
+    });
+
+
+
+  }
+
+  function eliminaFila(idserv) {
+
+    // alert(idfila);  
+    $.ajax({
+      url: "<?php echo ENLACE_WEB?>mod_servicios/controller_servicios.php?op=elimina_servicios&idserv=" + idserv,
+      type: "POST",
+      contentType: false,
+      processData: false,
+
+        success: function(datos)
+        {                    
+        //       bootbox.alert(datos);           
+        //       mostrarform(false);
+          tabla.ajax.reload();
+          $("#estadoServicio").val("0");
+          // alert(datos);
+          // console.log(datos);
+        }
+
+    });
+
+  }
+
 
   $( "#btnSalir" ).click(function() {
     if (confirm("Esta seguro de salir del sistema")) {
@@ -289,116 +447,99 @@
     }
   });
 
+  function llenarComboServicios() {
+    $.post('<?php echo ENLACE_WEB?>mod_servicios/controller_servicios.php?op=listar_servicios',function(r){
+      $("#optServicio").html(r);
+    });
+  }
 
   function seleccionarColegiado(idColegiado) {
     
-      $.ajax({
-        url: '<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php',
-        type: 'POST',
-        data: {accion: 'carga_datos_cole', idColegiado: idColegiado},
-      })
-      .done(function(data) {
-        alert("Colegiado seleccionado!");
-        var resp = JSON.parse(data);
-
-        // $("#colegiado").val(data);
-
-        console.log(resp.idcolegiado);
-        console.log(resp.datosColegiado);
-
-        $("#idcolegiado").val(resp.idcolegiado);
-        $("#colegiado").val(resp.datosColegiado);
-        $("#lista_colegiados_busca").empty();
-        $("#dni_codigo").val('');
-        $("#cerrar").click();
-        
-      })
-      .fail(function() {
-        console.log("error");
-      })
+    alert("Colegiado seleccionado!");
+    $.ajax({
+      url: '<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php',
+      type: 'POST',
+      data: {accion: 'carga_datos_cole', idColegiado: idColegiado},
+    })
+    .done(function(data) {
+      var resp = JSON.parse(data);
+      // $("#colegiado").val(data);
+      console.log(resp.idcolegiado);
+      console.log(resp.datosColegiado);
+      $("#idcolegiado").val(resp.idcolegiado);
+      $("#colegiado").val(resp.datosColegiado);
+      $("#lista_colegiados_busca").empty();
+      $("#dni_codigo").val('');
+      $("#cerrar").click();
+    })
+    .fail(function() {
+      console.log("error");
+    })
 
   }
 
+  function agregarServicio() {
 
+    var formData = new FormData($("#frmRegServ")[0]);
 
-  // function buscarPagos() {
-  //   $('#content').html('<div class="loading"><img src="../dist/img/loading.gif" alt="loading" width="5%" /><br/>Un momento, por favor...</div>');
+    $.ajax({
+      url: "<?php echo ENLACE_WEB?>mod_servicios/controller_servicios.php?op=agregar_servicios",
+      type: "POST",
+      data: formData,
+      contentType: false,
+      processData: false,
 
-  //   $.ajax({
-  //     url: '<?php //echo ENLACE_WEB?>mod_pagos/controller_pagos.php',
-  //     type: 'POST',
-  //     data: {accion: 'buscar_pagos', idColegiado:$("#idcolegiado").val() },
-  //   })
-  //   .done(function(data) {
-  //     console.log(data);
-  //     if(data != ''){
-  //       $('#lista_pagos').empty().html(data);
-  //     }else{
+        success: function(datos)
+        {                    
+        //       bootbox.alert(datos);           
+        //       mostrarform(false);
+          tabla.ajax.reload();
+        }
 
-  //       if(data == 'vacio'){
-  //         $('#lista_pagos').empty().html('<tr><td colspan="7" class="text-center">Sin pagos</td></tr>');  
-  //       }
-        
-  //     }
-      
-  //   })
-  //   .fail(function() {
-  //     console.log("error");
-  //   })
+    });
+  }
 
-  // }
+  function cargaServicios() {
 
-  function buscarPagos() {
-
-    tabla=$('#lista_pagos_id').dataTable(
+    tabla=$('#lista_servicios_id').dataTable(
     {
-      "lengthMenu": [ 5, 12, 24, 75, 100],
+      "lengthMenu": [ 5, 10, 25, 75, 100],
       "aProcessing": true,
-        "aServerSide": true,
-        "dom": 'Blfrtip',
-        "buttons": ["copy", "csv", "excel", "pdf", "print"],
+      "aServerSide": true,
       "ajax":
           {
-            url: 'controller_pagos.php?op=listar_pagos&idcol=' + $("#idcolegiado").val(),
+            url: '<?php echo ENLACE_WEB?>mod_servicios/controller_servicios.php?op=listar_servicios_seleccionados',
             type : "get",
             dataType : "json",            
             error: function(e){
-              console.log(e.responseText);
+              console.log('respuesta de error: ' + e.responseText);
               if (e.responseText == 'error') {
-                $("#lista_pagos").empty().html('<tr><td colspan="8" class="text-center">Vacio</td></tr>');
-                // alert('sin pagos');
+                // alert("vacio");
+                $("#lista_serv").empty().html('<tr><td colspan="5" class="text-center">Sin servicios registrados</td></tr>');
               }
             }
             // ,
             // success: function(e)
             // { 
-            //   console.log(e.aaData);
+            //   console.log('respuesta de exito: ' + e.aaData);
             // }
           },
         "language": {
           url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
         },
-      "rowCallback": function( row, data, index ) {
-            $(row).addClass('green');
-      },
       "bDestroy": true,
-      "iDisplayLength": 12,
-      "order": [[ 0, "desc" ]],
-      "columnDefs": [
+      "iDisplayLength": 10 
+      ,"order": [[ 0, "desc" ]]
+      ,"columnDefs": [
           {
-            "targets": 0, 
+            "targets": 0, // Tu primera columna
             "className": "dt-body-center"
-            // ,"width": "4%"
-            ,"render": function (data, type, row) {
-                if (row[4] > 0) {
-                  $('td').css('background-color', '#FFC9C9');
-                }
-                return data;
-            }            
+            ,"width": "4%"
          },
          {
             "targets": 1,
-            "className": "dt-body-center"
+            "className": "dt-body-left"
+            ,"width": "40%"
          },
          {
             "targets": 2,
@@ -411,29 +552,10 @@
          {
             "targets": 4,
             "className": "dt-body-right",            
-         },
-         {
-            "targets": 5,
-            "className": "dt-body-right",            
-         },
-         {
-            "targets": 6,
-            "className": "dt-body-right",            
-         },
-         {
-            "targets": 7,
-            "className": "dt-body-right",            
-         }],        
-    }).DataTable();    
+         }]
+    }).DataTable();
 
 
-    // var table = $('#lista_pagos_id').DataTable({
-    // rowCallback: function( row, data, index ) {
-    //   if ( data[4] == "0" ) {$(row).addClass('red');} 
-    //   // else if ( data[3] == "61" ) {$(row).addClass(orange');}
-    //   // else if ( data[3] == "30" ) {$(row).addClass('red');} 
-    // }
-    // });   
 
   }
 
@@ -462,46 +584,12 @@
 
   }
 
-
-
-
-  $( document ).ready(function() {
-
-
-  });
-
-
-      // function cargaListadoColegios() {
-      //   $.ajax({
-      //     url: 'controller_colegiados.php',
-      //     type: 'POST',
-      //     data: {accion: 'carga_inicial'},
-      //   })
-      //   .done(function(data) {
-      //     $('#lista_colegiados').empty().html(data);
-      //   })
-      //   .fail(function() {
-      //     console.log("error");
-      //   })
-      // }
-
-      // cargaListadoColegios();
-
-      // $.get('controller_colegiados.php', function(data) {
-      //   $('#lista_colegiados').empty().html(data);
-      // });
-
-      function verPagos(idColegiado) {
-        // console.log(idColegiado);
-        location.href="<?php echo ENLACE_WEB;?>mod_colegiados/view_pagos_colegiados.php?idcol=" + idColegiado;
-      }
+  // function verPagos(idColegiado) {
+  //   // console.log(idColegiado);
+  //   location.href="<?php //echo ENLACE_WEB;?>mod_colegiados/view_pagos_colegiados.php?idcol=" + idColegiado;
+  // }
 
 </script>
 
 </body>
 </html>
-
-<?php 
-}
-ob_end_flush();
-?>

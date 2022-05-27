@@ -91,7 +91,7 @@
 									// echo "<pre>";
 									// print_r($data_pagosC);
 									// echo "</pre>";
-										$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC;
+										$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC . " ORDER BY idPagoDetalle DESC";
 										$db = $dbh->prepare($sql);
 										$db->execute();
 										$fila = "";
@@ -99,15 +99,19 @@
 										$data= Array();
 
 										while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
+
+											$fechaVence = date("d/m/Y", strtotime($data_pago->fecha_vence));
+
 											$data[]=array(
 
 							         "0"=>$data_pagosC->codigo_colegiado,
 							         "1"=>$data_pago->nro_cuota,
-							         "2"=>$data_pago->fecha_vence,
+							         "2"=>$fechaVence,
 							         "3"=>$data_pago->mora,
-							         "4"=>$data_pago->gen,
-							         "5"=>$data_pago->adelanto,
-							         "6"=>$data_pago->saldo
+							         "4"=>$data_pago->deuda,
+							         "5"=>$data_pago->gen,
+							         "6"=>$data_pago->adelanto,
+							         "7"=>$data_pago->saldo
 											);
 										}
 
@@ -117,7 +121,7 @@
 										 		"iTotalDisplayRecords"=>count($data), 
 										 		"aaData"=>$data);			
 
-										 	echo json_encode($results);					
+										echo json_encode($results);					
 
 								}else{
 									echo "error";

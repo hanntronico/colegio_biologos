@@ -1,6 +1,7 @@
 <?php 
   SESSION_START();
   include_once "../conf/conf.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,13 +65,19 @@
                     <div class="col-md-2" >
                       <div style="margin: 0px auto; text-align: center;">
                         <!-- <h5>FOTO</h5> -->
-                        <img src="<?php echo ENLACE_WEB;?>dist/img/sin_imagen_disponible.jpg" style="border: 3px solid #E8E8E8; width: 120px; height: 120px; border-radius: 50%;">
+
+                        <img id="imgColegiado" src="" style="border: 3px solid #E8E8E8; width: 120px; height: 120px; border-radius: 50%;">
+
+                        <input type="text" id="imgFoto" name="imgFoto" style="font-size: 12px; border: none; width: 100%; margin: 0px auto; text-align: center;">
+
+                        <!-- <inp id='imgFoto' style="font-size: 12px;"></div> -->
+
                       </div>
                       <!-- <button type="button" class="btn btn-secondary btn-sm mt-2">Seleccionar imagen</button> -->
                       <!-- <input type="file" name="foto" id="foto"> -->
                       <input type='file' class='input-file' id="input_file" name="inputFoto">
                       <button class='input-btn' id='input_btn' style="width: 90%;">Seleccionar imagen</button>
-                      
+                      <input type="hidden" name="idcolegiado" id="idcolegiado">
                     </div>
 
                     <div class="col-md-10">
@@ -191,7 +198,7 @@
                     </div>                    
                   </div>
 
-                  <input type="hidden" name="accion" value="guardar">
+                  <input type="hidden" name="accion" value="editar">
 <!--                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="inputCity">City</label>
@@ -218,6 +225,7 @@
                     </div>
                   </div>
                   <button type="submit" class="btn btn-success btn-lg">GUARDAR</button>
+                  <button type="button" class="btn btn-info btn-lg" onclick="restablcerContrasenha()">RESTABLECER CONTRASEÑA</button>
                 </form>
 
               </div>
@@ -292,6 +300,9 @@
     $.get('controller_departamentos.php', function(data) {
       $('#departamento_lab').empty().html(data);
     });
+
+
+    mostrar();
 
   });
 
@@ -394,7 +405,7 @@
     var formData = new FormData($("#frmColegiado")[0]);
 
     $.ajax({
-        url: "controller_colegiados.php",
+        url: "<?php echo ENLACE_WEB?>mod_colegiados/controller_colegiados.php",
         type: "POST",
         data: formData,
         contentType: false,
@@ -406,17 +417,74 @@
               // mostrarform(false);
               // tabla.ajax.reload();
           console.log(datos);
-          location.href="<?php echo ENLACE_WEB;?>mod_colegiados/view_colegiados.php";
+          // location.href="<?php //echo ENLACE_WEB;?>mod_colegiados/view_colegiados.php";
         }
 
     });
-
-
   
   }
 
 
 
+
+function restablcerContrasenha() {
+    // console.log("desactivando: ");
+    // var
+    $.ajax({
+      url: 'controller_colegiados.php',
+      type: 'POST',
+      data: {accion: 'cambiaPass', idCol:$('#idcolegiado').val() },
+    })
+    .done(function(data) {
+      console.log("success data:" + data);
+      // listar();
+      tabla.ajax.reload();
+    })
+    .fail(function() {
+      console.log("error");
+    })
+}
+
+function mostrar(idusuario)
+{
+
+  $.post("<?php echo ENLACE_WEB?>mod_colegiados/controller_colegiados.php?op=mostrar_colegiado",{idcolegiado : "<?php echo $_GET['idcol']?>"}, function(data, status)
+  {
+    data = JSON.parse(data);
+    // console.log(data.ape_paterno);
+    $('#idcolegiado').val(data.idColegiado);
+
+    $('#inputNombres').val(data.nom_colegiado);
+    $('#inputApePaterno').val(data.ape_paterno);
+    $('#inputApeMaterno').val(data.ape_materno);
+    $('#inputDni').val(data.dni);
+    $('#inputFecNac').val(data.fec_nac);
+    $('#inputTelefono').val(data.telefono);
+    $('#inputEmail').val(data.email);
+    $('#inputDireccion').val(data.direccion);
+
+    $('#departamento').val(6);
+    $('#departamento').change();
+    $('#provincia').val(5);
+    $('#provincia').change();
+    $('#distrito').val(data.lug_nacim);
+    $('#distrito').change();
+
+    $("#imgColegiado").attr("src",'<?php echo ENLACE_WEB;?>dist/img/colegiados/'+data.foto);
+    $('#imgFoto').val(data.foto);
+
+// departamento_lab
+// provincia_lab
+// distrito_lab
+
+
+  });
+
+ //   $.post("../ajax/usuario.php?op=permisos&id="+idusuario,function(r){
+  //         $("#permisos").html(r);
+  // });
+
+}
 
 
 

@@ -10,14 +10,12 @@
 					case 'listar':
 						if (!isset($_SESSION["nombre"]))
 						{
-						  header("Location: ../vistas/login.html");//Validamos el acceso solo a los usuarios logueados al sistema.
+						  header("Location: ../vistas/login.html");
 						}
 						else
 						{
-							//Validamos el acceso solo al usuario logueado y autorizado.
 							if (1==1)
 							{
-								// $rspta=$afiliado->listar();
 
 				$sql = "SELECT idColegiado, codigo_col, nom_colegiado, ape_paterno, ape_materno, dni, fec_nac, foto, telefono, email, lug_nacim, lug_labores, info_contacto, estado FROM colegiados ORDER BY idColegiado DESC LIMIT 0, 5000";
 
@@ -26,18 +24,15 @@
 
 
 
-						 		//Vamos a declarar un array
 						 		$data= Array();
 
-						 		// var_dump($rspta);
-						 		// $badge_estado = "";
 						 		while($reg = $db->fetch(PDO::FETCH_OBJ)){
 
 						 			$estado = ($reg->estado == 1) ? "<span class='badge badge-pill badge-success'>Activo</span>" : "<span class='badge badge-pill badge-danger'>Inactivo</span>";
 
 									$btnEstado = ($reg->estado == 1) ? "<button type='button' class='btn btn-danger btn-sm' onclick='desactivar(".$reg->idColegiado.")'><i class='fa fa-minus'></i></button>" : "<button type='button' class='btn btn-primary btn-sm' onclick='activar(".$reg->idColegiado.")'><i class='fa fa-check'></i></button>";
 
-									$acciones = "<button type='button' class='btn btn-warning btn-sm'><i class='fa fa-edit mr-1'></i>Editar</button>";
+									$acciones = "<button type='button' class='btn btn-warning btn-sm' onclick='editar(".$reg->idColegiado.")'><i class='fa fa-edit mr-1'></i>Editar</button>";
 
 									$correo = ( strlen($reg->email) > 30 ) ? substr($reg->email, 0, 30) . "..." : $reg->email;
 
@@ -49,9 +44,8 @@
 						 				"3"=>$reg->nom_colegiado,
 						 			  "4"=>$reg->ape_paterno . " " . $reg->ape_materno,
 						 				"5"=>$reg->telefono,
-						 				"6"=>$correo,
-						 				"7"=>$estado,
-						 				"8"=>$acciones . $btnEstado
+						 				"6"=>$estado,
+						 				"7"=>$acciones . $btnEstado
 						 				
 						 			);
 
@@ -71,6 +65,23 @@
 						  	require 'noacceso.php';
 							}
 						}
+					break;
+
+
+					case 'mostrar_colegiado':
+						// echo $_POST["idcolegiado"];
+
+						$sqlCol = "SELECT idColegiado, codigo_col, nom_colegiado, ape_paterno, ape_materno, dni, fec_nac, foto, telefono, email, direccion, lug_nacim, lug_labores, info_contacto, estado FROM colegiados WHERE idColegiado = " . $_POST["idcolegiado"];
+
+		    		$db = $dbh->prepare($sqlCol);
+		    		$db->execute();
+
+		    		$data = $db->fetch(PDO::FETCH_OBJ);
+
+		    		echo json_encode($data);
+
+
+
 					break;
 
 			}
@@ -113,7 +124,7 @@
 			if ($_POST["accion"]=='carga_busqueda_colegiados') {
 
 
-				$sql = "SELECT idColegiado, codigo_col, nom_colegiado, ape_paterno, ape_materno, dni, fec_nac, foto, telefono, email, lug_nacim, lug_labores, info_contacto, estado FROM colegiados WHERE estado = 1 AND (ape_paterno like '%".$_POST["dni_codigo"]."%' OR dni = '".$_POST["dni_codigo"]."' OR codigo_col = '".$_POST["dni_codigo"]."') LIMIT 0, 100";
+				$sql = "SELECT idColegiado, codigo_col, nom_colegiado, ape_paterno, ape_materno, dni, fec_nac, foto, telefono, email, lug_nacim, lug_labores, info_contacto, estado FROM colegiados WHERE estado = 1 AND (ape_paterno like '%".$_POST["dni_codigo"]."%' OR dni = '".$_POST["dni_codigo"]."' OR codigo_col = '".$_POST["dni_codigo"]."')";
 				
 				// $sql = "SELECT idColegiado, codigo_col, nom_colegiado, ape_paterno, ape_materno, dni, fec_nac, foto, telefono, email, lug_nacim, lug_labores, info_contacto, estado FROM colegiados LIMIT 0, 1500";
 
@@ -140,7 +151,7 @@
 							          <td>".$estado."</td>
 							          <td>
 
-							          	<button type='button' class='btn btn-info btn-sm'><i class='fa fa-check mr-1' onclick='seleccionarColegiado(".$data->idColegiado.")'></i></button>
+							          	<button type='button' class='btn btn-info btn-sm' onclick='seleccionarColegiado(".$data->idColegiado.")'><i class='fa fa-check mr-1'></i></button>
 							          </td>
 						         </tr>";
 					} 
@@ -253,5 +264,92 @@
  
 
 			}
+
+			if($_POST["accion"] == 'editar'){
+
+					if (!isset($_SESSION["nombre"]))
+						{
+						  header("Location: ../mod_login/login.php");//Validamos el acceso solo a los usuarios logueados al sistema.
+						}
+						else
+						{
+
+
+								if (!file_exists($_FILES['inputFoto']['tmp_name']) || !is_uploaded_file($_FILES['inputFoto']['tmp_name']))
+									{
+										
+										if( $_POST["imgFoto"] != "sin_imagen_disponible.jpg" ){
+
+											$imagen = $_POST["imgFoto"];
+
+										}else{
+
+											$imagen = "sin_imagen_disponible.jpg";
+
+										}
+
+
+									}else
+									{
+										$ext = explode(".", $_FILES["inputFoto"]["name"]);
+										if ($_FILES['inputFoto']['type'] == "image/jpg" || $_FILES['inputFoto']['type'] == "image/jpeg" || $_FILES['inputFoto']['type'] == "image/png"){
+												// $imagen = 'col'.round(microtime(true)) . '.' . end($ext);
+												$imagen = 'col' . $_POST["inputDni"] . '.' . end($ext);
+												move_uploaded_file($_FILES["inputFoto"]["tmp_name"], "../dist/img/colegiados/" . $imagen);
+										}
+									}		
+
+
+																		 						 // `foto`						=:foto,
+							 	$sqlEdita = "UPDATE `colegiados` SET `nom_colegiado`	=:nom_colegiado,
+																				 						 `ape_paterno`		=:apePaterno,
+																				 						 `ape_materno`		=:apeMaterno,
+																				 						 `dni`						=:dni,
+																				 						 `fec_nac`				=:fec_nac,
+																				 						 `foto`						=:foto,
+																				 						 `telefono`				=:telefono,
+																				 						 `email`					=:email,
+																				 						 `direccion`			=:direccion,
+																				 						 `lug_nacim`			=:lug_nacim,
+																				 						 `lug_labores`		=:lug_labores,
+																				 						 `info_contacto`	=:info_contacto,
+																				 						 `estado`					=:estado 
+															WHERE `idColegiado` = " . $_POST["idcolegiado"];
+
+							  $db = $dbh->prepare($sqlEdita);
+							  $db->bindValue(':nom_colegiado' , $_POST["inputNombres"], 		PDO::PARAM_STR);
+							  $db->bindValue(':apePaterno'	  , $_POST["inputApePaterno"], 	PDO::PARAM_STR);
+							  $db->bindValue(':apeMaterno'	  , $_POST["inputApeMaterno"], 	PDO::PARAM_STR);
+							  $db->bindValue(':dni'					  , $_POST["inputDni"], 				PDO::PARAM_STR);
+							  $db->bindValue(':fec_nac'			  , $_POST["inputFecNac"], 			PDO::PARAM_STR);
+							  $db->bindValue(':foto'				  , $imagen,	 									PDO::PARAM_STR);
+							  $db->bindValue(':telefono'		  , $_POST["inputTelefono"], 		PDO::PARAM_STR);
+							  $db->bindValue(':email'				  , $_POST["inputEmail"], 			PDO::PARAM_STR);
+							  $db->bindValue(':direccion'		  , $_POST["inputDireccion"], 	PDO::PARAM_STR);
+							  $db->bindValue(':lug_nacim'		  , ($_POST["distrito"]==0) ? null : $_POST["distrito"], 				PDO::PARAM_INT);
+							  $db->bindValue(':lug_labores'	  , ($_POST["distrito_lab"]==0) ? null : $_POST["distrito_lab"], 		PDO::PARAM_INT);
+							  $db->bindValue(':info_contacto' , 'info', 										PDO::PARAM_STR);
+							  $db->bindValue(':estado'				, 1, 													PDO::PARAM_INT);
+							  $result = $db->execute();
+
+						    if ($result) {
+						    	echo $result;
+						    }else {
+						    	echo "error".$result;
+						    }
+
+						}
+
+
+			}
+
+			if ($_POST["accion"] == 'cambiaPass') {
+				
+				// $sql = "UPDATE `colegiados` SET `estado`=1 WHERE idColegiado=" . $_POST["idCol"];
+		  //   $db = $dbh->prepare($sql);
+		  //   $db->execute();
+		  //   echo "exito";
+
+			}			
 
 ?>

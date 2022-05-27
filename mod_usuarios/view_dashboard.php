@@ -16,8 +16,15 @@ if(!isset($_SESSION['idColegiado']) || $_SESSION["idColegiado"]==null ){
 // }
 // include("conexion/config.php");
 
-$datuser 		= $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
-$datnomuser = $_SESSION["nombre"];
+$datuser 		     = $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
+$datnomuser      = $_SESSION["nombre"];
+$datapepaterno   = $_SESSION['apellido_paterno'];
+$datapematerno   = $_SESSION['apellido_materno'];
+$nombre_completo = $_SESSION['nombre'] . ' ' . 
+                   $_SESSION['apellido_paterno'] . ' ' . 
+                   $_SESSION['apellido_materno'];
+$codigo_col      = $_SESSION['codigo_col'];
+
 
 // $_SESSION['idColegiado']    		= $data->idColegiado;
 // $_SESSION['nombre']         		= $data->nom_colegiado;
@@ -102,56 +109,14 @@ $datnomuser = $_SESSION["nombre"];
       <div class="main-panel">
         <div class="content-wrapper">
         
-        <?php if($mensa=="delete"){ ?>
-         <!--<div class="row purchace-popup">-->
-            <div class="col-12">
-              <span class="d-block d-md-flex align-items-center">
-                <p class="text-success"><strong>Mensaje !</strong> Se elimino el registro satisfactoriamente ! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <!--<i class="mdi mdi-close popup-dismiss d-none d-md-block"></i>-->
-              </span>
-            </div>
-          <!--</div>-->
-          <?php } ?>
-           <?php if($mensa=="ok"){ ?>
-         <!--<div class="row purchace-popup">-->
-            <div class="col-12">
-              <span class="d-block d-md-flex align-items-center">
-                <p class="text-success"><strong>Mensaje !</strong> Se modifico el registro satisfactoriamente ! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <!--<i class="mdi mdi-close popup-dismiss d-none d-md-block"></i>-->
-              </span>
-            </div>
-          <!--</div>-->
-          <?php } ?>
-          <?php if($mensa=="vok"){ ?>
-         <!--<div class="row purchace-popup">-->
-            <div class="col-12">
-              <span class="d-block d-md-flex align-items-center">
-                <p class="text-success"><strong>Mensaje !</strong> Se registro satisfactoriamente la visita! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <!--<i class="mdi mdi-close popup-dismiss d-none d-md-block"></i>-->
-              </span>
-            </div>
-          <!--</div>-->
-          <?php } ?>
-          <?php if($mensa=="ok-pass"){ ?>
-            <div class="col-12">
-              <span class="d-block d-md-flex align-items-center">
-                <p class="text-success"><strong>Mensaje !</strong> tu clave se cambio  satisfactoriamente ! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-              </span>
-            </div>
-          <?php } ?>
-          <?php if($mensa=="faild-pass"){ ?>
-            <div class="col-12">
-              <span class="d-block d-md-flex align-items-center">
-                <p class="text-danger"><strong>Mensaje !</strong> tu clave no se cambio  verificalo ! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-              </span>
-            </div>
-          <?php } ?>
+
+
 
          <center><img src="../dist/img/logo-ini.png"></center><br>
           <div class="row purchace-popup">
-            <div class="col-12">
+<!--             <div class="col-12">
               <h1 align="center">Dashboard de colegiado</h1>
-            </div>
+            </div> -->
           </div>
           
           
@@ -164,10 +129,24 @@ $datnomuser = $_SESSION["nombre"];
                  
 
                  <div class="panel panel-container">
-                  <div class="row" style="height: 600px;" >
+                  <div class="row" style="height: 800px;" >
+
+                  <div class="jumbotron" style="background-color: #E4FDFF; margin:0px auto; text-align: center; border: none;">
+                    <h3>Bienvenido a la plataforma!</h3>
+                    <hr class="my-4">
+                    <div>
+                  <!--     <iframe width="560" height="315" src="https://www.youtube.com/embed/y19UG2oopvg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+
+                      <!-- <iframe width="80%" height="350" src="https://www.youtube.com/watch?v=9NeLQ0hdczM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+
+<iframe width="60%" height="500" src="https://www.youtube.com/embed/9NeLQ0hdczM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
+<!-- <iframe src="https://drive.google.com/file/d/1sREtEdtAxmLtl3YWTALG-mChnuQWAN4Z/preview" width="640" height="480" allow="autoplay"></iframe>                       -->
 
+
+                    </div>
+                  </div>
                   				
 
 
@@ -205,7 +184,6 @@ $datnomuser = $_SESSION["nombre"];
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <script src="vendors/js/vendor.bundle.addons.js"></script>
-
 	
 
   <!-- endinject -->

@@ -64,12 +64,11 @@
                     <th>ID</th>
                     <th>DNI</th>
                     <th>CODIGO</th>
-                    <th width="15%">Nombres</th>
-                    <th width="15%">Apellidos</th>
-                    <th width="10%">Teléfono</th>
-                    <th width="10%">Email</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th width="5%">Teléfono</th>
                     <th>Estado</th>
-                    <th width="10%">Acciones</th>
+                    <th>Acciones</th>
                   </tr>
                   </thead>
                   <tbody id="lista_colegiados">
@@ -85,7 +84,6 @@
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Teléfono</th>
-                    <th>Email</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
@@ -162,6 +160,12 @@
     }
   });
 
+  
+  function editar(idColegiado) {
+    console.log(idColegiado);
+    location.href="<?php echo ENLACE_WEB;?>mod_colegiados/view_edit_colegiado.php?idcol="+idColegiado;
+  }
+
       // "paging": true,
       // "processing": true,
       // "serverSide": true,
@@ -209,8 +213,8 @@ function listar()
         url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
       },
     "bDestroy": true,
-    "iDisplayLength": 10,//Paginación
-      "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
+    "iDisplayLength": 10 //Paginación
+    ,"order": [[ 0, "desc" ]]//Ordenar (columna,orden)
   }).DataTable();
 }
 
@@ -237,16 +241,6 @@ listar();
    //    }
 
 			// cargaListadoColegios();
-
-
-
-
-
-
-
-
-
-
 
 
 
