@@ -56,7 +56,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>50</h3>
+                <h3 id="totalColegiados">50</h3>
 
                 <p>Colegiados Registrados</p>
               </div>
@@ -142,6 +142,19 @@
 
 <script type="text/javascript">
   
+  function mostrarTotalColegiados() {
+
+    $.post('<?php echo ENLACE_WEB?>mod_colegiados/controller_colegiados.php?op=total_colegiados',function(r){
+      $('#totalColegiados').empty().html(r);
+    });
+
+
+    
+  }
+
+  mostrarTotalColegiados();
+
+
   $( "#btnSalir" ).click(function() {
     if (confirm("Esta seguro de salir del sistema")) {
       location.href="<?php echo ENLACE_WEB;?>mod_login/logout.php";

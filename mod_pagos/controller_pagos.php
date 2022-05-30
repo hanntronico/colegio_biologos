@@ -132,6 +132,57 @@
 					}
 					break;
 
+					case 'listar_pago_serv':
+							if (!isset($_SESSION["nombre"]))
+								{
+								  header("Location: ".ENLACE_WEB);
+								}
+								else
+								{
+									if (1==1)
+									{
+
+										$sql = "SELECT `idPagoServ`, `fecha_pago_serv`, `idColegiado`, `descripcion`, `monto`, `estado` FROM `pagos_servicios` WHERE idColegiado = " . $_GET["idcol"];
+										$db = $dbh->prepare($sql);
+										$db->execute();
+
+										$data= Array();
+
+										while($data_pagosS = $db->fetch(PDO::FETCH_OBJ)){
+
+											$fechaVence = date("d/m/Y", strtotime($data_pagosS->fecha_pago_serv));
+
+											$descripcion = ($data_pagosS->descripcion == '') ? "PAGOS OTROS" : $data_pagosS->descripcion;
+
+											$data[]=array(
+											     "0"=>$data_pagosS->idColegiado,
+											     "1"=>$fechaVence,
+											     "2"=>$descripcion,
+											     "3"=>$data_pagosS->monto,
+											     "4"=>"<a class='btn btn-info btn-sm' href ='comprobante_pdf.php?id=".$data_pagosS->idPagoServ."' target='_blank'><i class='fas fa-check'></i></a>"
+											);
+										
+										}
+
+										
+										$results = array(
+												"sEcho"=>1, 
+												"iTotalRecords"=>count($data), 
+												"iTotalDisplayRecords"=>count($data), 
+												"aaData"=>$data);			
+	
+										echo json_encode($results);		
+	
+										
+									
+									}
+									
+								}
+
+
+					break;
+
+
 			}
 
 

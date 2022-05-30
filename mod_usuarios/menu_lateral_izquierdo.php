@@ -59,13 +59,22 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="view_lista_pagos.php">
              <strong>
               <i class="menu-icon mdi mdi-account-check"></i>
               <span class="menu-title">Verificar pagos</span>
               </strong>
             </a>
           </li>          
+
+          <li class="nav-item">
+            <a class="nav-link" href="view_lista_deudas.php">
+             <strong>
+              <i class="menu-icon mdi mdi-account-check"></i>
+              <span class="menu-title">Ver estado de deuda</span>
+              </strong>
+            </a>
+          </li>   
 
 <!--           <li class="nav-item">
             <a class="nav-link" href="carreras.php">

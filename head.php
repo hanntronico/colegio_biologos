@@ -25,3 +25,5 @@
   <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

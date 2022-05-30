@@ -55,12 +55,12 @@
                   <p>Registrar colegiatura</p>
                 </a>
               </li>
-              <li class="nav-item">
+<!--               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Emitir certificados</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -80,9 +80,10 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo ENLACE_WEB;?>mod_pagos/view_pagos_servicios.php" class="nav-link">
+                <!-- <a href="<?php //echo ENLACE_WEB;?>mod_pagos/view_pagos_servicios.php" class="nav-link"> -->
+                <a href="<?php echo ENLACE_WEB;?>mod_pagos/view_lista_pagos_servicios.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Pagos de servicios</p>
+                  <p>Listar pagos de servicios</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -136,7 +137,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+<!--               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Facturas</p>
@@ -153,7 +154,7 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Notas de crédito</p>
                 </a>
-              </li>
+              </li> -->
 <!--               <li class="nav-item">
                 <a href="pages/layout/fixed-sidebar.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

@@ -159,6 +159,94 @@
 						// }
 					break;
 
+					case 'listar_pagos_servicios':
+						if (!isset($_SESSION["nombre"]))
+						{
+						  header("Location: ".ENLACE_WEB);
+						}
+						else
+						{
+
+								$sql = "SELECT ps.idPagoServ, ps.fecha_pago_serv, ps.idColegiado, ps.descripcion, ps.monto, 
+															 ps.estado, c.idColegiado, c.codigo_col, c.nom_colegiado, c.ape_paterno, 
+															 c.ape_materno, c.dni
+												FROM pagos_servicios ps INNER JOIN colegiados c
+												ON ps.idColegiado = c.idColegiado";
+
+								$db = $dbh->prepare($sql);
+								$db->execute();
+
+								$data= Array();
+
+								while($data_pagosS = $db->fetch(PDO::FETCH_OBJ)){
+									$fechaPagoServ = date("d/m/Y", strtotime($data_pagosS->fecha_pago_serv));
+
+									$data[]=array(
+					         "0"=>$data_pagosS->idPagoServ,
+					         "1"=>$fechaPagoServ,
+					         "2"=>$data_pagosS->codigo_col,
+					         "3"=>$data_pagosS->nom_colegiado . " " . $data_pagosS->ape_paterno . " " . $data_pagosS->ape_materno,
+					         "4"=>$data_pagosS->monto
+									);
+								}
+
+
+								if(count($data)>0){
+									$results = array(
+											 		"sEcho"=>1, 
+											 		"iTotalRecords"=>count($data), 
+											 		"iTotalDisplayRecords"=>count($data), 
+											 		"aaData"=>$data);			
+
+									echo json_encode($results);	
+								}
+								else{
+									echo "error";
+								}
+
+
+						// 		if ($data_pagosC->idPagosC != "") {
+
+						// 				$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC;
+						// 				$db = $dbh->prepare($sql);
+						// 				$db->execute();
+						// 				$fila = "";
+
+						// 				$data= Array();
+
+						// 				while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
+
+						// 					$fechaVence = date("d/m/Y", strtotime($data_pago->fecha_vence));
+
+						// 					$data[]=array(
+
+						// 	         "0"=>$data_pagosC->codigo_colegiado,
+						// 	         "1"=>$data_pago->nro_cuota,
+						// 	         "2"=>$fechaVence,
+						// 	         "3"=>$data_pago->mora,
+						// 	         "4"=>$data_pago->deuda,
+						// 	         "5"=>$data_pago->gen,
+						// 	         "6"=>$data_pago->adelanto,
+						// 	         "7"=>$data_pago->saldo
+						// 					);
+						// 				}
+
+						// 			 	$results = array(
+						// 				 		"sEcho"=>1, 
+						// 				 		"iTotalRecords"=>count($data), 
+						// 				 		"iTotalDisplayRecords"=>count($data), 
+						// 				 		"aaData"=>$data);			
+
+						// 				echo json_encode($results);					
+
+						// 		}else{
+						// 			echo "error";
+						// 		}
+						}
+
+					break;
+
+
 					case 'agregar_servicios':
 
 						$cant = 0;

@@ -433,7 +433,15 @@
             // mostrarform(false);
             // tabla.ajax.reload();
             console.log(datos);
-            // alert("Pago de servicios realizado con éxito");
+            if( datos == 'exito' ){
+              // alert("Pago de servicios realizado con éxito");
+
+              Swal.fire(
+                'Exito!',
+                'Colegiatura registrada correctamente!',
+                'success'
+              )              
+            }
           }
       });
 

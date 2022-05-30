@@ -7,7 +7,6 @@ if(!isset($_SESSION['idColegiado']) || $_SESSION["idColegiado"]==null ){
 	exit();
 }
 
-
 $datuser 		= $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
 $datnomuser = $_SESSION["nombre"];
 
@@ -30,57 +29,24 @@ $datnomuser = $_SESSION["nombre"];
           FROM colegiados C INNER JOIN colegiatura CA
           ON CA.idColegiado = C.idColegiado
           WHERE C.idColegiado = " . $_SESSION['idColegiado'];
-  // exit();
 
 
   $db = $dbh->prepare($sql);
   $db->execute();
   $data = $db->fetch(PDO::FETCH_OBJ);
 
-
-  $sql2 = "SELECT `idPagoServ`, `fecha_pago_serv`, `idColegiado`, `monto`, `estado` 
-           FROM `pagos_servicios` 
-           WHERE `idColegiado` = " . $_SESSION['idColegiado'];
-  $db = $dbh->prepare($sql2);
-  $db->execute();
-  $data_servicios = $db->fetch(PDO::FETCH_OBJ);
-
-
-  $sql3 = "SELECT idColegiatura, 
-                  idColegiado, 
-                  fec_colegiatura, 
-                  fecha_registro, 
-                  desc_colegiatura, 
-                  sector_profesional, 
-                  univ_institu, 
-                  idEspecialidad, 
-                  estado_colegiatura 
-           FROM colegiatura WHERE idColegiado=" . $_SESSION['idColegiado'];
-  $db = $dbh->prepare($sql2);
-  $db->execute();
-  $data_colegiatura = $db->fetch(PDO::FETCH_OBJ);  
-
-// idColegiatura
-// idColegiado
-// fec_colegiatura
-// desc_colegiatura
-// estado_colegiatura
-
-
-  //   [idPagoServ] => 2
-  //   [fecha_pago_serv] => 2022-01-31
-  //   [idColegiado] => 4428
-  //   [monto] => 225.00
-  //   [estado] => 1
+  // idColegiatura
+  // idColegiado
+  // fec_colegiatura
+  // desc_colegiatura
+  // estado_colegiatura
 
   // echo "<pre>";
   // print_r($data_servicios);
   // echo "</pre>";
   // exit();
   
-
-
-//cuenta libros
+  //cuenta libros
 	$mensa="";
   $totahr = "0";
   $totapre = "0";
@@ -107,11 +73,9 @@ $datnomuser = $_SESSION["nombre"];
   <!-- <link rel="stylesheet" href="css/style.css"> -->
   <link rel="stylesheet" href="../dist/css/style.css?f=87">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <!-- <link rel="shortcut icon" href="images/favicon.png" /> -->
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-
 
   <!-- script para descargar archivos en la misma pagina sin recargar -->
   <script src="js/modernizr.js"></script>
@@ -187,24 +151,26 @@ $datnomuser = $_SESSION["nombre"];
          <center><img src="../dist/img/logo-ini.png"></center><br>
           <div class="row purchace-popup">
             <div class="col-12">
-              <h1 align="center">Dashboard de colegiado</h1>
+              <h3 align="center">Dashboard de colegiado</h3>
             </div>
           </div>
           
-          
+         
           <div class="row">
            
             <div class="col-12 grid-margin">
               <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <a href="certificado_pdf.php" target="_blank" class="btn btn-info btn-sm ml-3">IMPRIMRI PDF</a>
+                  </h3>
+                </div>
+
                 <div class="card-body">
                 
-                 
 
                 <div class="panel panel-container">
                   <div class="row" style="height: 800px;" >
-
-
-
 
                     <div class="card text-center">
                       <!-- <img src="../dist/img/certificado.jpg" width="40%" style="margin: 0px auto;"> -->
@@ -237,12 +203,16 @@ $datnomuser = $_SESSION["nombre"];
                               </div>
                               <div class="col-md-6">
                                 <span style="font-weight: bolder; font-size: 12px;"><?php 
+
+                                      $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
                                       $originalDate = $data->fecha_col;
                                       $newDate = date("d" . "DE" . "Y", strtotime($originalDate));  
                                       $dia = date("d", strtotime($originalDate));
-                                      $mes = date("M", strtotime($originalDate));
+                                      // $mes = date("n", strtotime($originalDate));
+                                      $mes = $meses[date('n', strtotime($originalDate))-1];
                                       $anio = date("Y", strtotime($originalDate));
-                                      echo $dia . " DE " . $mes . " DE " . $anio; 
+                                      echo $dia . " DE " . strtoupper($mes) . " DE " . $anio; 
                                   ?>
                                 </span>
                               </div>
@@ -262,7 +232,7 @@ $datnomuser = $_SESSION["nombre"];
                                 <span style="font-size: 12px;">HABILITADO AL</span>
                               </div>
                               <div class="col-md-6">
-                                <span style="font-weight: bolder; font-size: 12px;"><?php //echo "CBP Nº " . $data->codigo; ?></span>
+                                <span id="habilidad" style="font-weight: bolder; font-size: 12px;"></span>
                               </div>
                             </div>
 
@@ -270,6 +240,8 @@ $datnomuser = $_SESSION["nombre"];
                               <div class="col-md-12">
                                 <p style="text-align: justify; font-size: 12px;"> DE CONFORMIDAD CON LO DISPUESTO EN EL ARTÍCULO 05 DE LA LEY N° 28847 LEY DEL TRABAJO DEL BIÓLOGO Y DEL ARTÍCULO 06 DE SU REGLAMENTO APROBADO MEDIANTE DECRETO SUPREMO N° 025-2008-SA, SE ENCUENTRA HÁBIL Y EN CONSECUENCIA ESTA AUTORIZADO PARA EJERCER LA PROFESIÓN DE BIÓLOGO.</p>
                               </div>
+                              <span style="text-align: justify; font-size: 12px; margin-top: -10px;">LIMA, 19 DE MARZO DE 2022</span>
+                              
                             </div>
 
 
@@ -316,17 +288,15 @@ $datnomuser = $_SESSION["nombre"];
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <script src="vendors/js/vendor.bundle.addons.js"></script>
 
-	
-
-  <!-- endinject -->
+	<!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="<?php ENLACE_WEB;?>mod_usuarios/js/off-canvas.js"></script>
-  <script src="<?php ENLACE_WEB;?>mod_usuarios/js/misc.js"></script>
+  <script src="<?php echo ENLACE_WEB;?>mod_usuarios/js/off-canvas.js"></script>
+  <script src="<?php echo ENLACE_WEB;?>mod_usuarios/js/misc.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="<?php ENLACE_WEB;?>mod_usuarios/js/dashboard.js"></script>
+  <script src="<?php echo ENLACE_WEB;?>mod_usuarios/js/dashboard.js"></script>
   <!-- End custom js for this page-->
 
 		  <?php // if($variable!=""){ ?>
@@ -338,10 +308,23 @@ $datnomuser = $_SESSION["nombre"];
 					</script>
 		 <?php // } ?>
 
+  <script type="text/javascript">
+    
+    function cargaDatosCertificado() {
+      $.post('<?php echo ENLACE_WEB?>mod_usuarios/controller_usuarios.php?op=obtenerFechaHabilidad',function(r){
+        // $("#optEspecialidad").html(r);
+        $("#habilidad").html(r);
+        // console.log(r);
+      });
+    }
+
+    cargaDatosCertificado();
+
+  </script>
 
 	
 	<!-- script para descargar archivos en la misma pagina sin recargar -->
-<script src="<?php ENLACE_WEB;?>mod_usuarios/js/scripts_descarga.js"></script>
+<!-- <script src="<?php //ENLACE_WEB;?>mod_usuarios/js/scripts_descarga.js"></script> -->
 	
 	<?php // mysqli_close($linkdocu); ?>
 </body>

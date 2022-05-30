@@ -370,14 +370,14 @@
             // tabla.ajax.reload();
             console.log(datos);
             alert("Pago de servicios realizado con éxito");
-            location.reload();
+            // location.reload();
+            location.href="<?php echo ENLACE_WEB;?>mod_pagos/view_lista_pagos_servicios.php";
           }
       });
 
     }else{
       alert("Por favor, ingrese datos válidos");
     }
-
 
   });
 

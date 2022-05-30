@@ -84,6 +84,18 @@
 
 					break;
 
+
+					case 'total_colegiados':
+						$sqlConsulta = "SELECT count(*) as total_colegiados FROM colegiados";
+						$db = $dbh->prepare($sqlConsulta);
+		    		$db->execute();
+
+		    		$data = $db->fetch(PDO::FETCH_OBJ);
+
+		    		echo $data->total_colegiados;
+
+					break;
+
 			}
 
 			if ($_POST["accion"]=='carga_inicial') {
