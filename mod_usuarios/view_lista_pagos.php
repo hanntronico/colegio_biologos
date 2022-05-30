@@ -7,8 +7,15 @@ if(!isset($_SESSION['idColegiado']) || $_SESSION["idColegiado"]==null ){
 	exit();
 }
 
-$datuser 		= $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
-$datnomuser = $_SESSION["nombre"];
+$datuser         = $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
+$datnomuser      = $_SESSION["nombre"];
+$datapepaterno   = $_SESSION['apellido_paterno'];
+$datapematerno   = $_SESSION['apellido_materno'];
+$apellidos       = $_SESSION['apellido_paterno'] . ' ' . $_SESSION['apellido_materno'];
+$nombre_completo = $_SESSION['nombre'] . ' ' . 
+                   $_SESSION['apellido_paterno'] . ' ' . 
+                   $_SESSION['apellido_materno'];
+$codigo_col      = $_SESSION['codigo_col'];
 
   $sql = "SELECT C.idColegiado, 
                  C.codigo_col as codigo, 

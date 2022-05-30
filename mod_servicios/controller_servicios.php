@@ -357,9 +357,10 @@
 								// $_SESSION["serv_sel"][$cant]["precio"] = $reg->precio;
 								// $_SESSION["serv_sel"][$cant]["importe"] = number_format((1*$reg->precio), 2);
 
-				    		$precio = number_format($_POST["formGroupPrecio"],2);
-				    		$importe = ($_POST["formGroupCantidad"] * $precio);
-				    		$importe = number_format($importe, 2);
+				    		$precio 	= number_format($_POST["formGroupPrecio"],2, '.','');
+				    		$importe 	= $precio * $_POST["formGroupCantidad"];
+				    		// $importe = (number_format($_POST["formGroupCantidad"], 2) * $precio);
+				    		$importe = number_format($importe, 2, '.', '');
 
 								$_SESSION["serv_sel"][$cant]["idServicio"] 	 	= 4;
 								$_SESSION["serv_sel"][$cant]["nom_servicio"] 	= $_POST["formGroupDescripcion"];

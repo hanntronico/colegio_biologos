@@ -7,8 +7,15 @@ if(!isset($_SESSION['idColegiado']) || $_SESSION["idColegiado"]==null ){
 	exit();
 }
 
-$datuser 		= $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
-$datnomuser = $_SESSION["nombre"];
+$datuser         = $_SESSION["nombre"] . ' ' . $_SESSION['apellido_paterno'];
+$datnomuser      = $_SESSION["nombre"];
+$datapepaterno   = $_SESSION['apellido_paterno'];
+$datapematerno   = $_SESSION['apellido_materno'];
+$apellidos       = $_SESSION['apellido_paterno'] . ' ' . $_SESSION['apellido_materno'];
+$nombre_completo = $_SESSION['nombre'] . ' ' . 
+                   $_SESSION['apellido_paterno'] . ' ' . 
+                   $_SESSION['apellido_materno'];
+$codigo_col      = $_SESSION['codigo_col'];
 
   $sql = "SELECT C.idColegiado, 
                  C.codigo_col as codigo, 
@@ -111,7 +118,7 @@ $datnomuser = $_SESSION["nombre"];
          <center><img src="../dist/img/logo-ini.png"></center><br>
           <div class="row purchace-popup">
             <div class="col-12">
-              <input type="text" name="idcolegiado" id="idcolegiado" value="<?php echo $data->idColegiado; ?>">
+              <input type="hidden" name="idcolegiado" id="idcolegiado" value="<?php echo $data->idColegiado; ?>">
             </div>
           </div>
           
@@ -121,36 +128,30 @@ $datnomuser = $_SESSION["nombre"];
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">
-<!--                     <a href="certificado_pdf.php" target="_blank" class="btn btn-info btn-sm ml-3">IMPRIMRI PDF</a> -->
-                  </h3>
+                  <h2 class="card-title">
+                      ESTADO DE SU DEUDA
+                  </h2>
                 </div>
 
                 <div class="card-body">
-                    
 
-                 
-
-                <table id="lista_pagos_id" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Codigo colegiado</th>
-                    <th>Nro cuota</th>
-                    <th>Fecha venci.</th>
-                    <th style="text-align: right;">Mora</th>
-                    <th style="text-align: right;">Deuda</th>
-                    <th>Gen</th>
-                    <th style="text-align: right;">Adelanto</th>
-                    <th style="text-align: right;">Saldo</th>
-                  </tr>
-                  </thead>
-                  <tbody id="lista_pagos">
-                  </tbody>
-                </table>
-                
-
-
-                
+                  <table id="lista_pagos_id" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Codigo colegiado</th>
+                      <th>Nro cuota</th>
+                      <th>Fecha venci.</th>
+                      <th style="text-align: right;">Mora</th>
+                      <th style="text-align: right;">Deuda</th>
+                      <th>Gen</th>
+                      <th style="text-align: right;">Adelanto</th>
+                      <th style="text-align: right;">Saldo</th>
+                    </tr>
+                    </thead>
+                    <tbody id="lista_pagos">
+                    </tbody>
+                  </table>
+           
                 </div>
             </div>
           </div>

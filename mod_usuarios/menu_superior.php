@@ -73,17 +73,22 @@ if($nivelaxe==1 || $nivelaxe==2){ }else{
           <p>Ingresa tu nueva Clave.</p>
           <form class="forms-sample" method="post" action="update_pass.php">
                        <div class="form-group">
-                          <label for="exampleInputPassword1">Nombre</label>
-                          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Tu Nombre" value="<?=$datnomuser;?>" readonly>
+                          <label for="exampleInputNombre">Nombre</label>
+                          <input type="text" class="form-control" id="exampleInputNombre" placeholder="Tu Nombre" value="<?=$datnomuser;?>" readonly>
                         </div>
+                       <div class="form-group">
+                          <label for="exampleInputApellidos">Apellidos</label>
+                          <input type="text" class="form-control" id="exampleInputApellidos" placeholder="Tu Nombre" value="<?=$apellidos;?>" readonly>
+                        </div>                        
                         <div class="form-group">
                           <label for="exampleInputEmail1">Usuario</label>
                           <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Tu Usuario" value="<?=$datuser;?>" readonly>
-                          <input type="hidden" name="keyllave" class="form-control" id="exampleInputEmail1" placeholder="idusu" value="<?=$_SESSION["idu"];?>" readonly>
+
+                          <input type="text" name="idcolegiado" class="form-control" id="exampleInputEmail1" placeholder="idusu" value="<?=$_SESSION["idColegiado"];?>" readonly>
                         </div>
                         <div class="form-group">
-                          <label for="exampleInputPassword1">Clave Nueva</label>
-                          <input type="password" name="llaveuno" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                          <label for="llaveuno">Clave Nueva</label>
+                          <input type="password" name="llaveuno" class="form-control" id="llaveuno" placeholder="Password" required>
                         </div>
                         <button type="submit" class="btn btn-success mr-2">Cambiar Clave</button>
                     
