@@ -138,7 +138,8 @@ $codigo_col      = $_SESSION['codigo_col'];
                   <table id="lista_pagos_id" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                      <th>Codigo colegiado</th>
+                      <th>ST</th>
+                      <th style="text-align: center;">CBP</th>
                       <th>Nro cuota</th>
                       <th>Fecha venci.</th>
                       <th style="text-align: right;">Mora</th>

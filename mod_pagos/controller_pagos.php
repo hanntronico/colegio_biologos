@@ -69,6 +69,72 @@
 						}
 					break;
 
+
+					case 'total_deuda':
+						if (!isset($_SESSION["nombre"]))
+						{
+						  header("Location: ".ENLACE_WEB);
+						}
+						else
+						{
+							if (1==1)
+							{
+
+								$sql = "SELECT `idPagosC`, `codigo_colegiado` 
+												FROM `pagos_cabecera` 
+												WHERE idColegiado = " . $_GET["idcol"];
+								$db = $dbh->prepare($sql);
+								$db->execute();
+								$data_pagosC = $db->fetch(PDO::FETCH_OBJ);
+
+
+								if ($data_pagosC->idPagosC != "") {
+
+										$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC . " ORDER BY idPagoDetalle DESC";
+										$db = $dbh->prepare($sql);
+										$db->execute();
+										$fila = "";
+
+										// $data= Array();
+										$total_deuda = 0;
+
+										while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
+											$tota_deuda = $tota_deuda + $data_pago->deuda;
+
+											// $fechaVence = date("d/m/Y", strtotime($data_pago->fecha_vence));
+											// $data[]=array(
+							    //      "0"=>$data_pagosC->codigo_colegiado,
+							    //      "1"=>$data_pago->nro_cuota,
+							    //      "2"=>$fechaVence,
+							    //      "3"=>$data_pago->mora,
+							    //      "4"=>$data_pago->deuda,
+							    //      "5"=>$data_pago->gen,
+							    //      "6"=>$data_pago->adelanto,
+							    //      "7"=>$data_pago->saldo,
+							    //      "8"=>"<a href='#' onclick='javascript: alert(\"hann\");'><i class='fas fa-money-bill-wave'></i></a>"
+											// );
+										
+										}
+
+										echo number_format($tota_deuda,2, '.','');
+
+									 // 	$results = array(
+										//  		"sEcho"=>1, 
+										//  		"iTotalRecords"=>count($data), 
+										//  		"iTotalDisplayRecords"=>count($data), 
+										//  		"aaData"=>$data);			
+
+										// echo json_encode($results);
+
+								}else{
+									echo "error";
+								}
+
+						}
+					}
+
+					break;
+
 					case 'listar_pagos':
 						if (!isset($_SESSION["nombre"]))
 						{
@@ -102,16 +168,24 @@
 
 											$fechaVence = date("d/m/Y", strtotime($data_pago->fecha_vence));
 
+											if($data_pago->estado == 1){
+												$flag = "<span class='badge badge-pill badge-danger'><i class='fas fa-times'></i></span>";
+											}else{
+												$flag = "<span class='badge badge-pill badge-success'><i class='fas fa-check'></i></span>";
+											}
+
 											$data[]=array(
 
-							         "0"=>$data_pagosC->codigo_colegiado,
-							         "1"=>$data_pago->nro_cuota,
-							         "2"=>$fechaVence,
-							         "3"=>$data_pago->mora,
-							         "4"=>$data_pago->deuda,
-							         "5"=>$data_pago->gen,
-							         "6"=>$data_pago->adelanto,
-							         "7"=>$data_pago->saldo
+							         "0"=>$flag,
+							         "1"=>$data_pagosC->codigo_colegiado,
+							         "2"=>$data_pago->nro_cuota,
+							         "3"=>$fechaVence,
+							         "4"=>$data_pago->mora,
+							         "5"=>$data_pago->deuda,
+							         "6"=>$data_pago->gen,
+							         "7"=>$data_pago->adelanto,
+							         "8"=>$data_pago->saldo,
+							         "9"=>"<a href='#' onclick='javascript: alert(\"hann\");'><i class='fas fa-money-bill-wave'></i></a>"
 											);
 										}
 
@@ -142,7 +216,10 @@
 									if (1==1)
 									{
 
-										$sql = "SELECT `idPagoServ`, `fecha_pago_serv`, `idColegiado`, `descripcion`, `monto`, `estado` FROM `pagos_servicios` WHERE idColegiado = " . $_GET["idcol"];
+										$sql = "SELECT PS.`idPagoServ`, PS.`fecha_pago_serv`, PS.`idColegiado`, C.`codigo_col`, PS.`descripcion`, PS.`monto`, PS.`estado` 
+														FROM `pagos_servicios` PS LEFT JOIN `colegiados` C
+														ON PS.idColegiado = C.idColegiado
+														WHERE PS.idColegiado = " . $_GET["idcol"];
 										$db = $dbh->prepare($sql);
 										$db->execute();
 
@@ -155,16 +232,15 @@
 											$descripcion = ($data_pagosS->descripcion == '') ? "PAGOS OTROS" : $data_pagosS->descripcion;
 
 											$data[]=array(
-											     "0"=>$data_pagosS->idColegiado,
+											     "0"=>$data_pagosS->codigo_col,
 											     "1"=>$fechaVence,
 											     "2"=>$descripcion,
 											     "3"=>$data_pagosS->monto,
-											     "4"=>"<a class='btn btn-info btn-sm' href ='comprobante_pdf.php?id=".$data_pagosS->idPagoServ."' target='_blank'><i class='fas fa-check'></i></a>"
+											     "4"=>"<a class='btn btn-info btn-sm' href ='comprobante_pdf.php?id=".$data_pagosS->idPagoServ."' target='_blank'><i class='fas fa-print'></i></a>"
 											);
 										
 										}
 
-										
 										$results = array(
 												"sEcho"=>1, 
 												"iTotalRecords"=>count($data), 
@@ -172,8 +248,6 @@
 												"aaData"=>$data);			
 	
 										echo json_encode($results);		
-	
-										
 									
 									}
 									
@@ -184,6 +258,14 @@
 
 
 			}
+
+
+	if ($_POST["accion"]=='pagar_deuda') {
+		$_SESSION["total_deuda"] = $_POST["deudaTotal"];
+		echo "exito";
+		// echo $_POST["idColegiado"] . " " . $_POST["deudaTotal"];
+
+	}		
 
 
 

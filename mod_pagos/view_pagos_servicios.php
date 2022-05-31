@@ -160,6 +160,8 @@
                   <input type="hidden" name="estadoServicio" id="estadoServicio" value="0">
                   <input type="hidden" name="descripcionServ" id="descripcionServ" value="">
 
+                  <input type="hidden" name="financia" id="financia" value="">
+
                   <div class="form-row">
                     <div class="col-md-4">
                       <button type="submit" class="btn btn-primary mt-2 px-4">GUARDAR</button>
@@ -327,7 +329,7 @@
                         <fieldset class="form-group">
                           <label for="formGroupPrecio">Precio:</label>
                           <input type="number" class="form-control" id="formGroupPrecio" name="formGroupPrecio" placeholder="Precio">
-
+                       
                         </fieldset>                        
                       </form>
 
@@ -349,6 +351,26 @@
     llenarComboServicios();
     cargaServicios();
     verificaPagos();
+
+    if("<?php echo $_GET['idcol'];?>" == ""){
+      // alert("sin codigo");
+    }else{
+      // alert("con codigo " + "<?php //echo $_GET['idcol'];?>");
+
+      $("#formGroupCantidad").val(1);
+      $("#formGroupPrecio").val( "<?php echo $_SESSION["total_deuda"];?>" );
+
+      $.post('<?php echo ENLACE_WEB?>mod_servicios/controller_servicios.php?op=limpia_deuda',function(r){
+        console.log(r);
+      });
+
+      $("#financia").val(1);
+
+      $("#btnServicio").click();
+
+    }
+
+
   });
 
   $("#frmRegServ").on("submit",function(e){

@@ -375,7 +375,9 @@
 
 					break;
 					
-
+					case 'limpia_deuda':
+						unset($_SESSION["total_deuda"]);
+					break;
 
 					case 'elimina_servicios':
 							// echo $_GET["idfila"]; 
@@ -470,9 +472,11 @@
 									}else{
 										$descripcionServ = $_POST["descripcionServ"];
 									}
-									
+
 
 									if ($montoTotal > 0) {
+
+
 										
 										$sql = "INSERT INTO `pagos_servicios`(`fecha_pago_serv`, `idColegiado`, `descripcion`, `monto`, `estado`) 
 														VALUES (:fecha_pago_serv, :idColegiado, :descripcion ,:monto, :estado)";
@@ -480,7 +484,7 @@
 									  $db = $dbh->prepare($sql);
 									  $db->bindValue(':fecha_pago_serv' , $_POST["fecha_pago_serv"],	PDO::PARAM_STR);
 									  $db->bindValue(':idColegiado' 		, $_POST["idcolegiado"], 			PDO::PARAM_INT);
-									  $db->bindValue(':descripcion'			, $descripcionServ, 					PDO::PARAM_INT);
+									  $db->bindValue(':descripcion'			, $descripcionServ, 					PDO::PARAM_STR);
 									  $db->bindValue(':monto'			  		, $montoTotal, 								PDO::PARAM_INT);
 									  $db->bindValue(':estado'					, $estadoPagoServ, 						PDO::PARAM_INT);
 									  $result = $db->execute();
@@ -508,6 +512,41 @@
 									  		if($resDetalle > 0 && $resDetalle == count($_SESSION["serv_sel"]) ){
 									  			unset($_SESSION['serv_sel']);
 									  			echo "exito";
+									  		}
+
+ 
+									  		if( $_POST["financia"] == 1 ){
+
+									  			
+
+									  			$sql = "SELECT `idPagosC`, `codigo_colegiado` 
+																	FROM `pagos_cabecera` 
+																	WHERE idColegiado = " . $_POST["idcolegiado"];
+													$db = $dbh->prepare($sql);
+													$db->execute();
+													$data_pagosC = $db->fetch(PDO::FETCH_OBJ);
+
+
+														if ($data_pagosC->idPagosC != "") {
+
+																$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC . " ORDER BY idPagoDetalle DESC";
+																$db = $dbh->prepare($sql);
+																$db->execute();
+																$fila = "";
+
+																while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
+
+
+																}
+
+														}		
+
+
+
+
+
+									  			
+
 									  		}
 
 	

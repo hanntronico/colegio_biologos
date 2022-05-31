@@ -22,6 +22,13 @@
 
   <?php include_once "../head.php"; ?>
 
+  <style type="text/css" media="screen">
+    .hanncolor{
+      background-color: #FFC9C9;
+      /*color: #ff0000;*/
+    }
+  </style>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -167,14 +174,31 @@
     <h3 class="card-title">
       Pagos del colegiado
     </h3>
+
+      <div class="row">
+        <div class="col-md-6">
+          &nbsp;
+        </div>
+        <div class="col-md-6 text-right" style="color: #138AF9">
+          <b>Deuda total:</b> S/
+          <span id="deuda_total">0.00</span>
+
+          <input type="hidden" name="txtDeudaTotal" id="txtDeudaTotal" value="">
+          
+          <button type="button" class="btn btn-success btn-sm ml-3 px-4" onclick="pagarDeudaAmortizacion()">PAGAR</button>
+        </div>        
+      </div>
+
   </div>
+
 
 
   <div class="card-body">
                 <table id="lista_pagos_id" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Codigo colegiado</th>
+                    <th>ST</th>
+                    <th style="text-align: center;">CBP</th>
                     <th>Nro cuota</th>
                     <th>Fecha venci.</th>
                     <th style="text-align: right;">Mora</th>
@@ -182,6 +206,7 @@
                     <th>Gen</th>
                     <th style="text-align: right;">Adelanto</th>
                     <th style="text-align: right;">Saldo</th>
+                    <th style="text-align: center;">&nbsp;</th>
                   </tr>
                   </thead>
                   <tbody id="lista_pagos">
@@ -290,6 +315,82 @@
   });
 
 
+  function cargarTotalDeuda(){
+    $.post('<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php?op=total_deuda&idcol='+$("#idcolegiado").val(),function(r){
+      $("#deuda_total").html(r);
+      $("#txtDeudaTotal").val(r);
+      // console.log(r);
+    });
+  }
+
+  function pagarDeudaAmortizacion() {
+    // $.post('<?php //echo ENLACE_WEB?>mod_pagos/controller_pagos.php?op=pagar_deuda&idcol='+$("#idcolegiado").val(),function(r){
+    //   // $("#deuda_total").html(r);
+    //   console.log(r);
+    // });
+
+
+    Swal.fire({
+      title: '¿Desea realizar el pago de la deuda?',
+      text: "Realizar el pago!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aceptar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire(
+        //   'Deleted!',
+        //   'Your file has been deleted.',
+        //   'success'
+        // )
+            
+            $.ajax({
+              url: '<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php',
+              type: 'POST',
+              data: {accion: 'pagar_deuda', idColegiado: $("#idcolegiado").val(), deudaTotal: $("#txtDeudaTotal").val()},
+            })
+            .done(function(data) {
+              // alert("Colegiado seleccionado!");
+              // var resp = JSON.parse(data);
+              console.log(data);
+              if(data == 'exito'){
+                location.href="<?php echo ENLACE_WEB;?>mod_pagos/view_pagos_servicios.php?idcol=" + $("#idcolegiado").val();
+              }
+
+              // $("#colegiado").val(data);
+
+              // console.log(resp.idcolegiado);
+              // console.log(resp.datosColegiado);
+              // $("#idcolegiado").val(resp.idcolegiado);
+              // $("#colegiado").val(resp.datosColegiado);
+              // $("#lista_colegiados_busca").empty();
+              // $("#dni_codigo").val('');
+              // $("#cerrar").click();
+              
+            })
+            .fail(function() {
+              console.log("error");
+            })
+
+
+
+      }
+    })
+
+
+
+
+
+    // if( confirm('hanntronico') == true ){
+
+    // }
+
+
+
+  }
+
   function seleccionarColegiado(idColegiado) {
     
       $.ajax({
@@ -298,7 +399,26 @@
         data: {accion: 'carga_datos_cole', idColegiado: idColegiado},
       })
       .done(function(data) {
-        alert("Colegiado seleccionado!");
+        // alert("Colegiado seleccionado!");
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Colegiado seleccionado!'
+        })
+
+
         var resp = JSON.parse(data);
 
         // $("#colegiado").val(data);
@@ -318,8 +438,6 @@
       })
 
   }
-
-
 
   // function buscarPagos() {
   //   $('#content').html('<div class="loading"><img src="../dist/img/loading.gif" alt="loading" width="5%" /><br/>Un momento, por favor...</div>');
@@ -391,7 +509,7 @@
             // ,"width": "4%"
             ,"render": function (data, type, row) {
                 if (row[4] > 0) {
-                  $('td').css('background-color', '#FFC9C9');
+                  // $('tr').css('background-color', '#FFC9C9');
                 }
                 return data;
             }            
@@ -422,10 +540,20 @@
          },
          {
             "targets": 7,
-            "className": "dt-body-right",            
+            "className": "dt-body-right",
+         },
+         {
+            "targets": 8,
+            "className": "dt-body-center",
+         },
+         {
+            "targets": 9,
+            "className": "dt-body-center",
          }],        
     }).DataTable();    
 
+
+     cargarTotalDeuda();
 
     // var table = $('#lista_pagos_id').DataTable({
     // rowCallback: function( row, data, index ) {

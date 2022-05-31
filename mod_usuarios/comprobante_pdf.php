@@ -171,8 +171,15 @@ $y= 70;
           // $data_pagoServ = $db->fetch(PDO::FETCH_OBJ);
           $i = 1;
           while ($regd =$db->fetch(PDO::FETCH_OBJ)) {
+
+            if($data_pagoServ->estado == 2){
+              $descripcion = utf8_decode($data_pagoServ->descripcion);
+            }else{
+              $descripcion = utf8_decode("$regd->nom_servicio");
+            }
+
             $line = array( "CODIGO"=> $i,
-                          "DESCRIPCION"=> utf8_decode("$regd->nom_servicio"),
+                          "DESCRIPCION"=> $descripcion,
                           "CANTIDAD"=> "$regd->cantidad",
                           "P.U."=> "$regd->precio",
                           "DSCTO" => 0,
