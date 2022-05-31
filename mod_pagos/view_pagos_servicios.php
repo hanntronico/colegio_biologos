@@ -119,7 +119,7 @@
                     
                     <div class="col-md-2"><br>
                       <!-- <button type="submit" class="btn btn-primary mt-2 px-4"> -->
-                      <button type="button" class="btn btn-primary mt-2 px-4" onclick="agregarServicio()">
+                      <button type="button" class="btn btn-primary mt-2 px-4" onclick="agregarServicio()" id="btnAgregar">
                           AGREGAR
                       </button>    
                     </div>
@@ -158,6 +158,7 @@
                   </div> -->
 
                   <input type="hidden" name="estadoServicio" id="estadoServicio" value="0">
+                  <input type="hidden" name="descripcionServ" id="descripcionServ" value="">
 
                   <div class="form-row">
                     <div class="col-md-4">
@@ -193,7 +194,7 @@
               <button type="button" class="btn btn-info btn-sm ml-3" onclick="eliminaFila(0)">Limpiar</button>
               <!-- <button type="button" class="btn btn-primary btn-sm">Button</button> -->
               
-              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#pagos_servicios">
+              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#pagos_servicios" id="btnServicio">
                 <i class="fas fa-plus mr-1"></i> SERVICIO
               </button>
 
@@ -347,7 +348,7 @@
   $( document ).ready(function() {
     llenarComboServicios();
     cargaServicios();
-
+    verificaPagos();
   });
 
   $("#frmRegServ").on("submit",function(e){
@@ -369,7 +370,12 @@
             // mostrarform(false);
             // tabla.ajax.reload();
             console.log(datos);
-            alert("Pago de servicios realizado con éxito");
+            // alert("Pago de servicios realizado con éxito");
+            Swal.fire(
+                'Exito!',
+                'Pago de servicios realizado con correctamente!',
+                'success'
+            )
             // location.reload();
             location.href="<?php echo ENLACE_WEB;?>mod_pagos/view_lista_pagos_servicios.php";
           }
@@ -381,8 +387,19 @@
 
   });
 
+  function verificaPagos() {
+    if($("#estadoServicio").val() == 0){
+      // alert("vacio");
+      $("#btnServicio").prop("disabled", false);
+      $("#btnAgregar").prop("disabled", false);
+    }else{
+      // alert("lleno");
+      $("#btnServicio").prop("disabled", true);
+      $("#btnAgregar").prop("disabled", true);
+    }
+  }
+
   function agregarServicioModal() {
-    // console.log('agregar servicio');
     
     var formData = new FormData($("#frmServModal")[0]);
 
@@ -399,6 +416,7 @@
         //       mostrarform(false);
           tabla.ajax.reload();
           console.log(datos);
+          $('#descripcionServ').val( $('#formGroupDescripcion').val() );
 
           $('#formGroupDescripcion').val("");
           $('#formGroupCantidad').val("");
@@ -407,11 +425,11 @@
           $("#cancelar").click();
           $("#estadoServicio").val("2");
 
+          verificaPagos();
+
         }
 
     });
-
-
 
   }
 
@@ -430,6 +448,8 @@
         //       mostrarform(false);
           tabla.ajax.reload();
           $("#estadoServicio").val("0");
+          $('#descripcionServ').val("");
+          verificaPagos();
           // alert(datos);
           // console.log(datos);
         }
@@ -455,7 +475,23 @@
 
   function seleccionarColegiado(idColegiado) {
     
-    alert("Colegiado seleccionado!");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Agregado correctamente'
+      })
+
     $.ajax({
       url: '<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php',
       type: 'POST',
@@ -556,7 +592,6 @@
     }).DataTable();
 
 
-
   }
 
 
@@ -584,10 +619,27 @@
 
   }
 
+  function goodbye(e) {
+      if(!e) e = window.event;
+      //e.cancelBubble is supported by IE - this will kill the bubbling process.
+      e.cancelBubble = true;
+      e.returnValue = 'You sure you want to leave?'; //This is displayed on the dialog
+
+      //e.stopPropagation works in Firefox.
+      if (e.stopPropagation) {
+          e.stopPropagation();
+          e.preventDefault();
+      }
+
+      eliminaFila(0);
+  }
+  window.onbeforeunload=goodbye; 
+
   // function verPagos(idColegiado) {
   //   // console.log(idColegiado);
   //   location.href="<?php //echo ENLACE_WEB;?>mod_colegiados/view_pagos_colegiados.php?idcol=" + idColegiado;
   // }
+
 
 </script>
 

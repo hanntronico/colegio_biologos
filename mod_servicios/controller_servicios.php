@@ -359,7 +359,6 @@
 
 				    		$precio 	= number_format($_POST["formGroupPrecio"],2, '.','');
 				    		$importe 	= $precio * $_POST["formGroupCantidad"];
-				    		// $importe = (number_format($_POST["formGroupCantidad"], 2) * $precio);
 				    		$importe = number_format($importe, 2, '.', '');
 
 								$_SESSION["serv_sel"][$cant]["idServicio"] 	 	= 4;
@@ -464,16 +463,24 @@
 
 									// echo "monto total: " . $montoTotal;
 
-									$estadoPagoServ = ($_POST["estadoServicio"]==0) ? 1 : $_POST["estadoServicio"] ;
+									$estadoPagoServ = ($_POST["estadoServicio"]==0) ? 1 : $_POST["estadoServicio"];
+
+									if($_POST["estadoServicio"]==0){
+										$descripcionServ = "";
+									}else{
+										$descripcionServ = $_POST["descripcionServ"];
+									}
+									
 
 									if ($montoTotal > 0) {
 										
-										$sql = "INSERT INTO `pagos_servicios`(`fecha_pago_serv`, `idColegiado`, `monto`, `estado`) 
-														VALUES (:fecha_pago_serv, :idColegiado, :monto, :estado)";
+										$sql = "INSERT INTO `pagos_servicios`(`fecha_pago_serv`, `idColegiado`, `descripcion`, `monto`, `estado`) 
+														VALUES (:fecha_pago_serv, :idColegiado, :descripcion ,:monto, :estado)";
 
 									  $db = $dbh->prepare($sql);
 									  $db->bindValue(':fecha_pago_serv' , $_POST["fecha_pago_serv"],	PDO::PARAM_STR);
 									  $db->bindValue(':idColegiado' 		, $_POST["idcolegiado"], 			PDO::PARAM_INT);
+									  $db->bindValue(':descripcion'			, $descripcionServ, 					PDO::PARAM_INT);
 									  $db->bindValue(':monto'			  		, $montoTotal, 								PDO::PARAM_INT);
 									  $db->bindValue(':estado'					, $estadoPagoServ, 						PDO::PARAM_INT);
 									  $result = $db->execute();
