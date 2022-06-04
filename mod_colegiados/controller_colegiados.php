@@ -96,7 +96,72 @@
 
 					break;
 
+
+
+					case 'listar_rpt_colegiados':
+
+						if (!isset($_SESSION["nombre"]))
+						{
+						  header("Location: ../vistas/login.html");
+						}
+						else
+						{
+							if (1==1)
+							{
+
+// idColegiatura,  idColegiado,  fec_colegiatura,  fecha_registro,  desc_colegiatura,  sector_profesional,  idInstitucion,  idEspecialidad,  estado_colegiatura
+
+								$sql = "SELECT * 
+												FROM colegiados C INNER JOIN colegiatura CA 
+												ON C.idColegiado = CA.idColegiado";
+
+						    $db = $dbh->prepare($sql);
+						    $db->execute();
+
+						 		$data= Array();
+
+						 		while($reg = $db->fetch(PDO::FETCH_OBJ)){
+						 			$data[]=array(
+						 				"0"=>$reg->idColegiado,
+						 				"1"=>$reg->dni,
+						 				"2"=>$reg->codigo_col,
+						 				"3"=>$reg->nom_colegiado,
+						 			  "4"=>$reg->ape_paterno . " " . $reg->ape_materno,
+						 				"5"=>$reg->telefono,
+						 				"6"=>$reg->sector_profesional,
+						 				"7"=>$reg->estado_colegiatura
+						 			);
+						 		}
+						 		$results = array(
+						 			"sEcho"=>1, //Información para el datatables
+						 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+						 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+						 			"aaData"=>$data);
+						 		
+						 		echo json_encode($results);
+
+							//Fin de las validaciones de acceso
+							}
+							else
+							{
+						  	require 'noacceso.php';
+							}
+						}
+
+
+
+
+
+
+					break;
+
+
+
 			}
+
+
+// ********************* Fuera del switch **********************
+
 
 			if ($_POST["accion"]=='carga_inicial') {
 				$sql = "SELECT idColegiado, codigo_col, nom_colegiado, ape_paterno, ape_materno, dni, fec_nac, foto, telefono, email, lug_nacim, lug_labores, info_contacto, estado FROM colegiados LIMIT 0, 4000";

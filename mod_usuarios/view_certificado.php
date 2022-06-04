@@ -247,7 +247,19 @@ $codigo_col      = $_SESSION['codigo_col'];
                               <div class="col-md-12">
                                 <p style="text-align: justify; font-size: 12px;"> DE CONFORMIDAD CON LO DISPUESTO EN EL ARTÍCULO 05 DE LA LEY N° 28847 LEY DEL TRABAJO DEL BIÓLOGO Y DEL ARTÍCULO 06 DE SU REGLAMENTO APROBADO MEDIANTE DECRETO SUPREMO N° 025-2008-SA, SE ENCUENTRA HÁBIL Y EN CONSECUENCIA ESTA AUTORIZADO PARA EJERCER LA PROFESIÓN DE BIÓLOGO.</p>
                               </div>
-                              <span style="text-align: justify; font-size: 12px; margin-top: -10px;">LIMA, 19 DE MARZO DE 2022</span>
+                              <span style="text-align: justify; font-size: 12px; margin-top: -10px;">
+                                LIMA, 
+                                <?php 
+                                      $originalDate = date("Y-m-d");
+                                      $newDate = date("d" . "DE" . "Y", strtotime($originalDate));  
+                                      $dia = date("d", strtotime($originalDate));
+                                      // $mes = date("n", strtotime($originalDate));
+                                      $mes = $meses[date('n', strtotime($originalDate))-1];
+                                      $anio = date("Y", strtotime($originalDate));
+                                      echo $dia . " DE " . strtoupper($mes) . " DE " . $anio; 
+                                ?>
+                                <!-- 19 DE MARZO DE 2022 -->
+                              </span>
                               
                             </div>
 

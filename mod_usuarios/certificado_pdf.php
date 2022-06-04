@@ -72,12 +72,44 @@ $pdf->AddPage();
 //                   utf8_decode("Teléfono: ").$telefono."\n" .
 //                   "Email : ".$email, $logo, $ext_logo);
 
+    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
   $originalDate = $data_colegiado->fecha_col;
   $newDate = date("d" . "DE" . "Y", strtotime($originalDate));  
   $dia = date("d", strtotime($originalDate));
-  $mes = date("M", strtotime($originalDate));
+  // $mes = date("M", strtotime($originalDate));
+  $mes = $meses[date('n', strtotime($originalDate))-1];
   $anio = date("Y", strtotime($originalDate));
   $fechaCol = $dia . " DE " . $mes . " DE " . $anio; 
+
+
+
+      $sql3 = "SELECT `idPagoServ`, `fecha_pago_serv`, `idColegiado`, `monto`, `estado` 
+               FROM `pagos_servicios` 
+               WHERE `idColegiado` = " . $_SESSION['idColegiado'] . " ORDER BY 1 DESC LIMIT 0,1";
+      $db = $dbh->prepare($sql3);
+      $db->execute();
+      $data_servicios = $db->fetch(PDO::FETCH_OBJ);
+
+      $originalDate = $data_servicios->fecha_pago_serv;
+      $newDate = date("d" . "DE" . "Y", strtotime($originalDate));  
+      $dia = date("d", strtotime($originalDate));
+      // $mes = date("M", strtotime($originalDate));
+      $mes = $meses[date('n', strtotime($originalDate))-1];
+      $anio = date("Y", strtotime($originalDate));
+      $fechaHabilitado = $dia . " DE " . strtoupper($mes) . " DE " . $anio;
+
+
+
+      $originalDate = date("Y-m-d");
+      $newDate = date("d" . "DE" . "Y", strtotime($originalDate));  
+      $dia = date("d", strtotime($originalDate));
+      // $mes = date("M", strtotime($originalDate));
+      $mes = $meses[date('n', strtotime($originalDate))-1];
+      $anio = date("Y", strtotime($originalDate));
+      $fechaDocumento = "Lima, " . $dia . " DE " . strtoupper($mes) . " DE " . $anio;
+
+
 
 $block_text_izq = utf8_decode("QUE EL BIÓLOGO") . "\n\n\n\n" . 
                   utf8_decode("CON FECHA DE COLEGIATURA") . "\n\n" .
@@ -88,9 +120,9 @@ $block_text_der = utf8_decode($data_colegiado->ape_paterno) . ' ' . utf8_decode(
                   utf8_decode($data_colegiado->nom_colegiado) . "\n\n" .
                   $fechaCol . "\n\n" . 
                   utf8_decode("CBP Nº ") . $data_colegiado->codigo . "\n\n" . 
-                  "hanntronico" . "\n\n";
+                  $fechaHabilitado . "\n\n";
 
-$cadena_parrafo = utf8_decode("DE CONFORMIDAD CON LO DISPUESTO EN EL ARTÍCULO 05 DE LA LEY N° 28847 \nLEY DEL TRABAJO DEL BIÓLOGO Y DEL ARTÍCULO 06 DE SU REGLAMENTO \nAPROBADO MEDIANTE DECRETO SUPREMO N° 025-2008-SA, SE ENCUENTRA \nHÁBIL Y EN CONSECUENCIA ESTA AUTORIZADO PARA EJERCER LA PROFESIÓN DE \nBIÓLOGO.\n\n" . "LIMA, 22 DE MAYO DE 2022");
+$cadena_parrafo = utf8_decode("DE CONFORMIDAD CON LO DISPUESTO EN EL ARTÍCULO 05 DE LA LEY N° 28847 \nLEY DEL TRABAJO DEL BIÓLOGO Y DEL ARTÍCULO 06 DE SU REGLAMENTO \nAPROBADO MEDIANTE DECRETO SUPREMO N° 025-2008-SA, SE ENCUENTRA \nHÁBIL Y EN CONSECUENCIA ESTA AUTORIZADO PARA EJERCER LA PROFESIÓN DE \nBIÓLOGO.\n\n" . $fechaDocumento);
 
 $pdf->addSociete( $block_text_izq, $block_text_der, $cadena_parrafo,$logo, $ext_logo );
 

@@ -476,8 +476,6 @@
 
 									if ($montoTotal > 0) {
 
-
-										
 										$sql = "INSERT INTO `pagos_servicios`(`fecha_pago_serv`, `idColegiado`, `descripcion`, `monto`, `estado`) 
 														VALUES (:fecha_pago_serv, :idColegiado, :descripcion ,:monto, :estado)";
 
@@ -517,35 +515,134 @@
  
 									  		if( $_POST["financia"] == 1 ){
 
+														$sql = "SELECT PD.`idPagoDetalle`, 
+																					 PD.`idPagoC`, 
+																					 PD.`id_pago`, 
+																					 PD.`nro_cuota`, 
+																					 PD.`fecha_vence`, 
+																					 PD.`mora`, 
+																					 PD.`deuda`, 
+																					 PD.`gen`, 
+																					 PD.`obs`, 
+																					 PD.`adelanto`, 
+																					 PD.`saldo`, 
+																					 PD.`estado`, 
+																					 C.idColegiado, 
+																					 C.codigo_col
+																		FROM pagos_detalle PD LEFT JOIN pagos_cabecera PC
+																		ON PD.idPagoC = PC.idPagosC
+																		INNER JOIN colegiados C
+																		ON C.idColegiado = PC.idColegiado
+																		WHERE C.idColegiado = " . $_POST["idcolegiado"] . "
+																		ORDER BY 1 DESC";
+														$db = $dbh->prepare($sql);
+														$db->execute();
+
+														while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
+															$sqlFinancia = "UPDATE `pagos_detalle` 
+																							SET `deuda` = " . ($data_pago->deuda - $data_pago->deuda) . ", 
+																									`adelanto` = " . ($data_pago->deuda) . ", 
+																									`saldo` = " . ($data_pago->saldo - $data_pago->deuda) . ",
+																									`estado` = 0 
+																									WHERE `idPagoDetalle` = " . $data_pago->idPagoDetalle;
+															$db2 = $dbh->prepare($sqlFinancia);
+															$db2->execute();
+														}
 									  			
+									  		// 	$sql = "SELECT `idPagosC`, `codigo_colegiado` 
+													// 				FROM `pagos_cabecera` 
+													// 				WHERE idColegiado = " . $_POST["idcolegiado"];
+													// $db = $dbh->prepare($sql);
+													// $db->execute();
+													// $data_pagosC = $db->fetch(PDO::FETCH_OBJ);
 
-									  			$sql = "SELECT `idPagosC`, `codigo_colegiado` 
-																	FROM `pagos_cabecera` 
-																	WHERE idColegiado = " . $_POST["idcolegiado"];
-													$db = $dbh->prepare($sql);
-													$db->execute();
-													$data_pagosC = $db->fetch(PDO::FETCH_OBJ);
+													// 	if ($data_pagosC->idPagosC != "") {
+
+													// 			$sql2 = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` 
+													// 							 FROM `pagos_detalle` 
+													// 							 WHERE idPagoC = " . $data_pagosC->idPagosC;
+													// 			$db = $dbh->prepare($sql2);
+													// 			$db->execute();
+													// 			$fila = "";
+
+													// 			while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
+													// 				$sqlFinancia = "UPDATE `pagos_detalle` 
+													// 												SET `deuda` = " . ($data_pago->deuda - $data_pago->deuda) . ", 
+													// 														`adelanto` = " . ($data_pago->deuda) . ", 
+													// 														`saldo` = " . ($data_pago->saldo - $data_pago->deuda) . ",
+													// 														`estado` = 0 
+													// 												WHERE `idPagoDetalle` = " . $data_pago->idPagoDetalle;
+													// 				$db2 = $dbh->prepare($sqlFinancia);
+													// 				$db2->execute();
+													// 			}
+													// 	}		
 
 
-														if ($data_pagosC->idPagosC != "") {
+														if( $montoTotal < $_POST["montoFinancia"] ){
 
-																$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC . " ORDER BY idPagoDetalle DESC";
-																$db = $dbh->prepare($sql);
-																$db->execute();
-																$fila = "";
+																echo " entro con estos datos -> monto total : " . $montoTotal . " - monto parte: " . $_POST["montoFinancia"]; 
 
-																while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
+																$sqlpc = "INSERT INTO `pagos_cabecera`(`idColegiado`, `codigo_colegiado`, `estado`) 
+																				VALUES (:idcolegiado, :codigo_colegiado, :estado)";
 
+															  $db4 = $dbh->prepare($sqlpc);
+															  $db4->bindValue(':idcolegiado' 			, $_POST["idcolegiado"], PDO::PARAM_INT);
+															  $db4->bindValue(':codigo_colegiado'	, "",								 	   PDO::PARAM_STR);
+															  $db4->bindValue(':estado'						, 1, 						   			 PDO::PARAM_INT);
+															  $result = $db4->execute();
 
-																}
+															  $idpago = $dbh->lastInsertId();
 
-														}		
+															  if($result){
+															  	$deuda = ($_POST["montoFinancia"] - $montoTotal);
+															  	$deuda = number_format( $deuda ,2, '.','');
 
+																	$sqlDeuda = "INSERT INTO `pagos_detalle`(`idPagoC`, 
+																																						 `id_pago`, 
+																																						 `nro_cuota`, 
+																																						 `fecha_vence`, 
+																																						 `mora`, 
+																																						 `deuda`, 
+																																						 `gen`, 
+																																						 `obs`, 
+																																						 `adelanto`, 
+																																						 `saldo`, 
+																																						 `estado`) 
+																			 					VALUES (:idpagoc, 
+																			 									:id_pago, 
+																			 									:nro_cuota, 
+																			 									:fecha_vence,
+																			 									:mora,
+																			 									:deuda,
+																			 									:gen,
+																			 									:obs,
+																			 									:adelanto,
+																			 									:saldo,
+																			 									:estado)";
 
+																	$db3 = $dbh->prepare($sqlDeuda);
+																	$db3->bindValue(':idpagoc' 		, $idpago, 												PDO::PARAM_INT);
+																	$db3->bindValue(':id_pago' 		, 1, 															PDO::PARAM_INT);
+																	$db3->bindValue(':nro_cuota'		, 1, 														PDO::PARAM_INT);
+																	$db3->bindValue(':fecha_vence' , date("Y-m-d"), 								PDO::PARAM_STR);
+																	$db3->bindValue(':mora' 				, number_format( 0 ,2, '.',''), PDO::PARAM_INT);
+																	$db3->bindValue(':deuda'				, $deuda, 											PDO::PARAM_INT);
+																	$db3->bindValue(':gen' 				, "FINAN".date("d-m-Y"),					PDO::PARAM_STR);
+																	$db3->bindValue(':obs' 				, "", 														PDO::PARAM_STR);
+																	$db3->bindValue(':adelanto'		, number_format( 0 ,2, '.',''),		PDO::PARAM_INT);
+																	$db3->bindValue(':saldo' 			, $deuda, 												PDO::PARAM_INT);
+																	$db3->bindValue(':estado'			, 1, 															PDO::PARAM_INT);
+																	$result1 = $db3->execute();
 
+																	  // if ($result1) {
+																	  // 	echo "exito";
+																	  // }else{
+																	  // 	echo "error";
+																	  // }
+															  }
 
-
-									  			
+														}
+								  			
 
 									  		}
 

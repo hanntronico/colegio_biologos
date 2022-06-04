@@ -89,7 +89,7 @@
               <li class="nav-item">
                 <a href="<?php echo ENLACE_WEB;?>mod_pagos/view_pagos.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Cuota ordinaria</p>
+                  <p>Gestionar deudas</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -201,7 +201,7 @@
 
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="javascript:void(0);" class="nav-link">
+                <a href="<?php echo ENLACE_WEB;?>mod_colegiados/view_rpt_colegiados.php" class="nav-link">
                   <i class="nav-icon far fa-file"></i>
                   <p>Sector</p>
                 </a>
@@ -218,7 +218,7 @@
                   <p>Especialidad</p>
                 </a>
               </li>
-              <li class="nav-item">
+<!--               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Resumen de deuda</p>
@@ -277,7 +277,7 @@
                   <i class="far fa-file nav-icon"></i>
                   <p>Financiamientos</p>
                 </a>
-              </li>
+              </li> -->
 
             </ul>
           </li>

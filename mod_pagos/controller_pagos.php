@@ -80,55 +80,69 @@
 							if (1==1)
 							{
 
-								$sql = "SELECT `idPagosC`, `codigo_colegiado` 
-												FROM `pagos_cabecera` 
-												WHERE idColegiado = " . $_GET["idcol"];
+
+								$sql = "SELECT SUM(PD.`deuda`) as deuda_total
+												FROM pagos_detalle PD LEFT JOIN pagos_cabecera PC
+												ON PD.idPagoC = PC.idPagosC
+												INNER JOIN colegiados C
+												ON C.idColegiado = PC.idColegiado
+												WHERE C.idColegiado = " . $_GET["idcol"] . "
+												ORDER BY 1 DESC";
 								$db = $dbh->prepare($sql);
 								$db->execute();
-								$data_pagosC = $db->fetch(PDO::FETCH_OBJ);
+								$data_deuda = $db->fetch(PDO::FETCH_OBJ);
+
+								echo number_format($data_deuda->deuda_total,2, '.','');
+
+								// $sql = "SELECT `idPagosC`, `codigo_colegiado` 
+								// 				FROM `pagos_cabecera` 
+								// 				WHERE idColegiado = " . $_GET["idcol"];
+								// $db = $dbh->prepare($sql);
+								// $db->execute();
+								// $data_pagosC = $db->fetch(PDO::FETCH_OBJ);
 
 
-								if ($data_pagosC->idPagosC != "") {
+								// if ($data_pagosC->idPagosC != "") {
 
-										$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC . " ORDER BY idPagoDetalle DESC";
-										$db = $dbh->prepare($sql);
-										$db->execute();
-										$fila = "";
+								// 		$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC . " ORDER BY idPagoDetalle DESC";
+								// 		$db = $dbh->prepare($sql);
+								// 		$db->execute();
+								// 		$fila = "";
 
-										// $data= Array();
-										$total_deuda = 0;
+								// 		// $data= Array();
+								// 		$total_deuda = 0;
 
-										while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
-											$tota_deuda = $tota_deuda + $data_pago->deuda;
+								// 		while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
+								// 			$tota_deuda = $tota_deuda + $data_pago->deuda;
 
-											// $fechaVence = date("d/m/Y", strtotime($data_pago->fecha_vence));
-											// $data[]=array(
-							    //      "0"=>$data_pagosC->codigo_colegiado,
-							    //      "1"=>$data_pago->nro_cuota,
-							    //      "2"=>$fechaVence,
-							    //      "3"=>$data_pago->mora,
-							    //      "4"=>$data_pago->deuda,
-							    //      "5"=>$data_pago->gen,
-							    //      "6"=>$data_pago->adelanto,
-							    //      "7"=>$data_pago->saldo,
-							    //      "8"=>"<a href='#' onclick='javascript: alert(\"hann\");'><i class='fas fa-money-bill-wave'></i></a>"
-											// );
+								// 			// $fechaVence = date("d/m/Y", strtotime($data_pago->fecha_vence));
+								// 			// $data[]=array(
+							 //    //      "0"=>$data_pagosC->codigo_colegiado,
+							 //    //      "1"=>$data_pago->nro_cuota,
+							 //    //      "2"=>$fechaVence,
+							 //    //      "3"=>$data_pago->mora,
+							 //    //      "4"=>$data_pago->deuda,
+							 //    //      "5"=>$data_pago->gen,
+							 //    //      "6"=>$data_pago->adelanto,
+							 //    //      "7"=>$data_pago->saldo,
+							 //    //      "8"=>"<a href='#' onclick='javascript: alert(\"hann\");'><i class='fas fa-money-bill-wave'></i></a>"
+								// 			// );
 										
-										}
+								// 		}
 
-										echo number_format($tota_deuda,2, '.','');
+								// 		echo number_format($tota_deuda,2, '.','');
 
-									 // 	$results = array(
-										//  		"sEcho"=>1, 
-										//  		"iTotalRecords"=>count($data), 
-										//  		"iTotalDisplayRecords"=>count($data), 
-										//  		"aaData"=>$data);			
+								// 	 // 	$results = array(
+								// 		//  		"sEcho"=>1, 
+								// 		//  		"iTotalRecords"=>count($data), 
+								// 		//  		"iTotalDisplayRecords"=>count($data), 
+								// 		//  		"aaData"=>$data);			
 
-										// echo json_encode($results);
+								// 		// echo json_encode($results);
 
-								}else{
-									echo "error";
-								}
+								// }else{
+								// 	echo "error";
+								// }
 
 						}
 					}
@@ -145,19 +159,13 @@
 							if (1==1)
 							{
 
-								$sql = "SELECT `idPagosC`, `codigo_colegiado` 
-												FROM `pagos_cabecera` 
-												WHERE idColegiado = " . $_GET["idcol"];
-								$db = $dbh->prepare($sql);
-								$db->execute();
-								$data_pagosC = $db->fetch(PDO::FETCH_OBJ);
-
-
-								if ($data_pagosC->idPagosC != "") {
-									// echo "<pre>";
-									// print_r($data_pagosC);
-									// echo "</pre>";
-										$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC . " ORDER BY idPagoDetalle DESC";
+										$sql = "SELECT PD.`idPagoDetalle`, PD.`idPagoC`, PD.`id_pago`, PD.`nro_cuota`, PD.`fecha_vence`, PD.`mora`, PD.`deuda`, PD.`gen`, PD.`obs`, PD.`adelanto`, PD.`saldo`, PD.`estado`, C.idColegiado, C.codigo_col
+														FROM pagos_detalle PD LEFT JOIN pagos_cabecera PC
+														ON PD.idPagoC = PC.idPagosC
+														INNER JOIN colegiados C
+														ON C.idColegiado = PC.idColegiado
+														WHERE C.idColegiado = " . $_GET["idcol"] . "
+														ORDER BY 1 DESC";
 										$db = $dbh->prepare($sql);
 										$db->execute();
 										$fila = "";
@@ -177,7 +185,7 @@
 											$data[]=array(
 
 							         "0"=>$flag,
-							         "1"=>$data_pagosC->codigo_colegiado,
+							         "1"=>$data_pago->codigo_col,
 							         "2"=>$data_pago->nro_cuota,
 							         "3"=>$fechaVence,
 							         "4"=>$data_pago->mora,
@@ -195,11 +203,64 @@
 										 		"iTotalDisplayRecords"=>count($data), 
 										 		"aaData"=>$data);			
 
-										echo json_encode($results);					
+										echo json_encode($results);				
 
-								}else{
-									echo "error";
-								}
+
+
+
+								// $sql = "SELECT `idPagosC`, `codigo_colegiado` 
+								// 				FROM `pagos_cabecera` 
+								// 				WHERE idColegiado = " . $_GET["idcol"];
+								// $db = $dbh->prepare($sql);
+								// $db->execute();
+								// $data_pagosC = $db->fetch(PDO::FETCH_OBJ);
+
+
+								// if ($data_pagosC->idPagosC != "") {
+
+								// 		$sql = "SELECT `idPagoDetalle`, `idPagoC`, `id_pago`, `nro_cuota`, `fecha_vence`, `mora`, `deuda`, `gen`, `obs`, `adelanto`, `saldo`, `estado` FROM `pagos_detalle` WHERE idPagoC = " . $data_pagosC->idPagosC . " ORDER BY idPagoDetalle DESC";
+								// 		$db = $dbh->prepare($sql);
+								// 		$db->execute();
+								// 		$fila = "";
+
+								// 		$data= Array();
+
+								// 		while($data_pago = $db->fetch(PDO::FETCH_OBJ)){
+
+								// 			$fechaVence = date("d/m/Y", strtotime($data_pago->fecha_vence));
+
+								// 			if($data_pago->estado == 1){
+								// 				$flag = "<span class='badge badge-pill badge-danger'><i class='fas fa-times'></i></span>";
+								// 			}else{
+								// 				$flag = "<span class='badge badge-pill badge-success'><i class='fas fa-check'></i></span>";
+								// 			}
+
+								// 			$data[]=array(
+
+							 //         "0"=>$flag,
+							 //         "1"=>$data_pagosC->codigo_colegiado,
+							 //         "2"=>$data_pago->nro_cuota,
+							 //         "3"=>$fechaVence,
+							 //         "4"=>$data_pago->mora,
+							 //         "5"=>$data_pago->deuda,
+							 //         "6"=>$data_pago->gen,
+							 //         "7"=>$data_pago->adelanto,
+							 //         "8"=>$data_pago->saldo,
+							 //         "9"=>"<a href='#' onclick='javascript: alert(\"hann\");'><i class='fas fa-money-bill-wave'></i></a>"
+								// 			);
+								// 		}
+
+								// 	 	$results = array(
+								// 		 		"sEcho"=>1, 
+								// 		 		"iTotalRecords"=>count($data), 
+								// 		 		"iTotalDisplayRecords"=>count($data), 
+								// 		 		"aaData"=>$data);			
+
+								// 		echo json_encode($results);					
+
+								// }else{
+								// 	echo "error";
+								// }
 
 
 						}

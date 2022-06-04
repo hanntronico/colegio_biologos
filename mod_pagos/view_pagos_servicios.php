@@ -160,6 +160,8 @@
                   <input type="hidden" name="estadoServicio" id="estadoServicio" value="0">
                   <input type="hidden" name="descripcionServ" id="descripcionServ" value="">
 
+                  <input type="hidden" name="montoFinancia" id="montoFinancia" value="">
+
                   <input type="hidden" name="financia" id="financia" value="">
 
                   <div class="form-row">
@@ -359,14 +361,16 @@
 
       $("#formGroupCantidad").val(1);
       $("#formGroupPrecio").val( "<?php echo $_SESSION["total_deuda"];?>" );
+      $("#montoFinancia").val( "<?php echo $_SESSION["total_deuda"];?>" );
+      
 
       $.post('<?php echo ENLACE_WEB?>mod_servicios/controller_servicios.php?op=limpia_deuda',function(r){
         console.log(r);
       });
 
       $("#financia").val(1);
-
       $("#btnServicio").click();
+      seleccionarColegiado("<?php echo $_GET['idcol'];?>");
 
     }
 

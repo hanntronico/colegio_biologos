@@ -159,8 +159,8 @@ function addSociete( $nom, $adresse, $texto, $logo,$ext_logo )
 	$this->SetFont('Arial','',11);
 	$length = $this->GetStringWidth( $texto );
 	$lignes = $this->sizeOfText( $texto, $length) ;
-	$this->MultiCell($length, 4, $texto);
-
+	// $this->MultiCell($length, 4, $texto);
+	$this->MultiCell($length, 7, $texto, 2, 'L', 0);
 
 	$this->SetXY( $x1 + 115, $y1 - 113 );
 	$this->SetFont('Arial','B',18);
