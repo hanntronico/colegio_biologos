@@ -140,7 +140,7 @@
 						 				"4"=>$fechaColegiatura,
 						 				"5"=>$reg->sector_profesional,
 						 				"6"=>$habilidad,
-						 				"7"=>$reg->sector_profesional
+						 				"7"=>$reg->distritos . " - " . $reg->provincias . " - " . $reg->departamento
 
 						 			);
 						 		}

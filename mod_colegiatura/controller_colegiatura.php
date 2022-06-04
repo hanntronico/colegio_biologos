@@ -40,7 +40,7 @@
 					$fecha_pago_colegiatura = isset($_POST["fecha_pago_colegiatura"])? 	$_POST["fecha_pago_colegiatura"] : "";
 					$fecha_registro					= isset($_POST["fecha_pago_colegiatura"])? 	$_POST["fecha_pago_colegiatura"] : "";
 					$optSector 							= isset($_POST["optSector"])? 							$_POST["optSector"] : "";
-					$univers_instit 				= isset($_POST["univers_instit"])? 					$_POST["univers_instit"] : "";
+					$univers_instit 				= isset($_POST["optUniversidad"])? 					$_POST["optUniversidad"] : "";
 					$optEspecialidad 				= isset($_POST["optEspecialidad"])? 				$_POST["optEspecialidad"] : "";
 
 
@@ -50,9 +50,9 @@
 																						`fecha_registro`, 
 																						`desc_colegiatura`, 
 																						`sector_profesional`, 
-																						`univ_institu`, 
+																						`idInstitucion`, 
 																						`idEspecialidad`, 
-																						`estado_colegiatura`) 
+																						`estado_colegiatura`)
 									VALUES (:idcolegiado, 
 									        :fec_colegiatura,
 									        :fecha_registro,
@@ -68,7 +68,7 @@
 					$db->bindValue(':fecha_registro'		, $fecha_registro, 					PDO::PARAM_STR);
 					$db->bindValue(':desc_colegiatura'	, 'registro conforme', 			PDO::PARAM_STR);
 					$db->bindValue(':sector_profesional', $optSector, 							PDO::PARAM_STR);
-					$db->bindValue(':univ_institu'			, $univers_instit, 					PDO::PARAM_STR);
+					$db->bindValue(':univ_institu'			, $univers_instit, 					PDO::PARAM_INT);
 					$db->bindValue(':idEspecialidad'		, $optEspecialidad, 				PDO::PARAM_INT);
 					$db->bindValue(':estado_colegiatura', 1, 												PDO::PARAM_INT);
 					$result = $db->execute();

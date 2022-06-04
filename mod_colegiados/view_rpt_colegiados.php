@@ -18,7 +18,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registro de pagos - <?php echo PROY_TITULO; ?></title>
+  <title>Reporte de Colegiados - <?php echo PROY_TITULO; ?></title>
 
   <?php include_once "../head.php"; ?>
 
@@ -81,7 +81,7 @@
                 
                 <form>
                   <div class="form-row">
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                       <!-- <label for="validationServer01">Seleccionar sector:</label> -->
                       <!-- <input type="text" class="form-control" id="colegiado" name="colegiado" placeholder="Colegiado"> -->
 <!--                        <select class="form-control" name="optSector" id="optSector">
@@ -91,7 +91,7 @@
                        </select> -->
                       <!-- <input type="hidden" name="idcolegiado" id="idcolegiado" value=""> -->
 
-                      <button type="button" class="btn btn-primary btn-sm form-control px-3 mt-2" onclick="generarReporte()">
+                      <button type="button" class="btn btn-primary btn-sm form-control px-1 mt-2" onclick="generarReporte()">
                         Buscar <i class="fas fa-search ml-2"></i>
                       </button>
 
@@ -207,6 +207,7 @@
                 <th style="text-align: center;">Fec. Colegiatura</th>
                 <th style="text-align: center;">Sector</th>
                 <th style="text-align: center;">Habilidad</th>
+                <th style="text-align: center;">Lugar</th>
               </tr>
               </thead>
               <tbody id="lista_rpt">
@@ -389,6 +390,11 @@
             "targets": 6,
             "className": "dt-body-center"
             ,"width": "6%"
+         },
+         {
+            "targets": 7,
+            "className": "dt-body-center"
+            ,"width": "15%"
          }],        
     }).DataTable();
   }
