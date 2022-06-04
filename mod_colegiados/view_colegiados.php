@@ -196,7 +196,7 @@ function listar()
           text: "Nuevo",
           className: "btn btn-info",
           action: function ( e, dt, node, config ){
-            location.href='http://127.0.0.1/colegio_biologos/mod_colegiados/nuevo'
+            location.href='<?php echo ENLACE_WEB;?>mod_colegiados/nuevo'
           }
         }
       ],

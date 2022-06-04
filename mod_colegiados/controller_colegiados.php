@@ -113,7 +113,13 @@
 
 								$sql = "SELECT * 
 												FROM colegiados C INNER JOIN colegiatura CA 
-												ON C.idColegiado = CA.idColegiado";
+												ON C.idColegiado = CA.idColegiado
+												LEFT JOIN distritos D
+												ON C.lug_nacim = D.iddistrito
+												INNER JOIN provincias P
+												ON D.idprovincia = P.idprovincia
+												INNER JOIN departamentos DEP
+												ON P.iddepartamento = DEP.iddepartamento";
 
 						    $db = $dbh->prepare($sql);
 						    $db->execute();
@@ -121,15 +127,21 @@
 						 		$data= Array();
 
 						 		while($reg = $db->fetch(PDO::FETCH_OBJ)){
+
+						 			$habilidad = ($reg->estado_colegiatura == 1) ? "HABILITADO" : "INHABILITADO" ;
+
+									$fechaColegiatura = date("d/m/Y", strtotime($reg->fec_colegiatura));
+
 						 			$data[]=array(
 						 				"0"=>$reg->idColegiado,
 						 				"1"=>$reg->dni,
 						 				"2"=>$reg->codigo_col,
-						 				"3"=>$reg->nom_colegiado,
-						 			  "4"=>$reg->ape_paterno . " " . $reg->ape_materno,
-						 				"5"=>$reg->telefono,
-						 				"6"=>$reg->sector_profesional,
-						 				"7"=>$reg->estado_colegiatura
+						 			  "3"=>$reg->nom_colegiado . " ".$reg->ape_paterno . " " . $reg->ape_materno,
+						 				"4"=>$fechaColegiatura,
+						 				"5"=>$reg->sector_profesional,
+						 				"6"=>$habilidad,
+						 				"7"=>$reg->sector_profesional
+
 						 			);
 						 		}
 						 		$results = array(

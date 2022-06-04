@@ -203,7 +203,7 @@
               <li class="nav-item">
                 <a href="<?php echo ENLACE_WEB;?>mod_colegiados/view_rpt_colegiados.php" class="nav-link">
                   <i class="nav-icon far fa-file"></i>
-                  <p>Sector</p>
+                  <p>Reporte de colegiados</p>
                 </a>
               </li>
               <li class="nav-item">

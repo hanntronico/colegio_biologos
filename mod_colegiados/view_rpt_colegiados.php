@@ -81,26 +81,27 @@
                 
                 <form>
                   <div class="form-row">
-                    <div class="col-md-2">
-                      <label for="validationServer01">Seleccionar sector:</label>
+                    <div class="col-md-1">
+                      <!-- <label for="validationServer01">Seleccionar sector:</label> -->
                       <!-- <input type="text" class="form-control" id="colegiado" name="colegiado" placeholder="Colegiado"> -->
-                       <select class="form-control" name="optSector" id="optSector">
+<!--                        <select class="form-control" name="optSector" id="optSector">
                          <option value="0">Seleccionar sector</option>
                          <option value="publico">Público</option>
                          <option value="privado">Privado</option>
-                       </select>
+                       </select> -->
                       <!-- <input type="hidden" name="idcolegiado" id="idcolegiado" value=""> -->
-                    </div>
 
-
-
-
-                    <div>
-                      <br>
                       <button type="button" class="btn btn-primary btn-sm form-control px-3 mt-2" onclick="generarReporte()">
                         Buscar <i class="fas fa-search ml-2"></i>
                       </button>
+
+
                     </div>
+
+
+
+
+                    <div></div>
 
                     <div class="col-md-2">
                       <br>
@@ -202,10 +203,10 @@
                 <th>ID</th>
                 <th>DNI</th>
                 <th>CODIGO</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Teléfono</th>
-                <th>Sector</th>
+                <th>Nombres y Apellidos</th>
+                <th style="text-align: center;">Fec. Colegiatura</th>
+                <th style="text-align: center;">Sector</th>
+                <th style="text-align: center;">Habilidad</th>
               </tr>
               </thead>
               <tbody id="lista_rpt">
@@ -227,7 +228,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="#">Grupo Alcedo</a>.</strong>
+    <strong>Copyright &copy; 2022 <a href="#">Grupo Alcedo</a>.</strong>
     Todos los derechos reservados.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 1.0.0
@@ -352,7 +353,7 @@
           {
             "targets": 0, 
             "className": "dt-body-center"
-            // ,"width": "4%"
+            ,"width": "2%"
             ,"render": function (data, type, row) {
                 if (row[4] > 0) {
                   // $('tr').css('background-color', '#FFC9C9');
@@ -363,26 +364,31 @@
          {
             "targets": 1,
             "className": "dt-body-center"
+            ,"width": "2%"
          },
          {
             "targets": 2,
-            "className": "dt-body-center",
+            "className": "dt-body-center"
+            ,"width": "2%"
          },
          {
             "targets": 3,
-            "className": "dt-body-right",            
+            "className": "dt-body-left",            
          },
          {
             "targets": 4,
-            "className": "dt-body-right",            
+            "className": "dt-body-center"
+            ,"width": "10%"            
          },
          {
             "targets": 5,
-            "className": "dt-body-right",            
+            "className": "dt-body-center"
+            ,"width": "6%"            
          },
          {
             "targets": 6,
-            "className": "dt-body-right",            
+            "className": "dt-body-center"
+            ,"width": "6%"
          }],        
     }).DataTable();
   }
