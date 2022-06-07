@@ -19,8 +19,12 @@
 		if( $data->password != md5($_POST["llaveuno"]) ){
 				$sql = "UPDATE `colegiados` SET `password`='" . md5($_POST["llaveuno"]) . "' WHERE idColegiado=" . $_POST["idcolegiado"];
 		    $db = $dbh->prepare($sql);
-		    $db->execute();
+		    $resultado = $db->execute();
 		}
+	}
+
+	if ($resultado) {
+		header("Location: view_dashboard.php");
 	}
 
 	// echo "<pre>";

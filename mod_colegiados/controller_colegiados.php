@@ -17,10 +17,10 @@
 							if (1==1)
 							{
 
-				$sql = "SELECT idColegiado, codigo_col, nom_colegiado, ape_paterno, ape_materno, dni, fec_nac, foto, telefono, email, lug_nacim, lug_labores, info_contacto, estado FROM colegiados ORDER BY idColegiado DESC LIMIT 0, 5000";
+								$sql = "SELECT idColegiado, codigo_col, nom_colegiado, ape_paterno, ape_materno, dni, fec_nac, foto, telefono, email, lug_nacim, lug_labores, info_contacto, estado FROM colegiados ORDER BY idColegiado DESC";
 
-		    $db = $dbh->prepare($sql);
-		    $db->execute();
+		    				$db = $dbh->prepare($sql);
+		    				$db->execute();
 
 
 
@@ -68,6 +68,85 @@
 					break;
 
 
+					case 'listar_exonerados':
+
+						if (!isset($_SESSION["nombre"]))
+						{
+						  header("Location: ../vistas/login.html");
+						}
+						else
+						{
+							if (1==1)
+							{
+
+								$sql = "SELECT idColegiado, 
+															 codigo_col, 
+															 nom_colegiado, 
+															 ape_paterno, 
+															 ape_materno, 
+															 dni, 
+															 fec_nac, 
+															 foto, 
+															 telefono, 
+															 email, 
+															 lug_nacim, 
+															 lug_labores, 
+															 info_contacto, 
+															 estado_exonerado,
+															 estado 
+												FROM colegiados
+												WHERE estado_exonerado = 1
+												ORDER BY idColegiado DESC";
+
+		    				$db = $dbh->prepare($sql);
+		    				$db->execute();
+
+						 		$data= Array();
+
+						 		while($reg = $db->fetch(PDO::FETCH_OBJ)){
+
+						 			$estado = ($reg->estado == 1) ? "<span class='badge badge-pill badge-success'>Activo</span>" : "<span class='badge badge-pill badge-danger'>Inactivo</span>";
+
+									// $btnEstado = ($reg->estado == 1 || $reg->estado == 3) ? "<button type='button' class='btn btn-danger btn-sm' onclick='desactivar(".$reg->idColegiado.")'><i class='fa fa-minus'></i></button>" : "<button type='button' class='btn btn-primary btn-sm' onclick='activar(".$reg->idColegiado.")'><i class='fa fa-check'></i></button>";
+									$btnEstado = "";
+
+									$acciones = "<button type='button' class='btn btn-warning btn-sm' onclick='editar(".$reg->idColegiado.")'><i class='fa fa-edit mr-1'></i>Editar</button>";
+
+									$correo = ( strlen($reg->email) > 30 ) ? substr($reg->email, 0, 30) . "..." : $reg->email;
+
+						 			$data[]=array(
+						 				"0"=>$reg->idColegiado,
+						 				"1"=>$reg->dni,
+						 				"2"=>$reg->codigo_col,
+						 				"3"=>$reg->nom_colegiado,
+						 			  "4"=>$reg->ape_paterno . " " . $reg->ape_materno,
+						 				"5"=>"<span class='badge badge-pill badge-info'>EXONERADO</span>"
+						 			);
+
+						 		}
+						 		$results = array(
+						 			"sEcho"=>1, //Información para el datatables
+						 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+						 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+						 			"aaData"=>$data);
+						 		
+						 		echo json_encode($results);
+
+							//Fin de las validaciones de acceso
+							}
+							else
+							{
+						  	require 'noacceso.php';
+							}
+						}
+
+
+					break;
+
+
+
+
+
 					case 'mostrar_colegiado':
 						// echo $_POST["idcolegiado"];
 
@@ -79,8 +158,6 @@
 		    		$data = $db->fetch(PDO::FETCH_OBJ);
 
 		    		echo json_encode($data);
-
-
 
 					break;
 
@@ -114,6 +191,8 @@
 								$sql = "SELECT * 
 												FROM colegiados C INNER JOIN colegiatura CA 
 												ON C.idColegiado = CA.idColegiado
+												INNER JOIN instituciones I
+												ON CA.idInstitucion = I.idInstitucion
 												LEFT JOIN distritos D
 												ON C.lug_nacim = D.iddistrito
 												INNER JOIN provincias P
@@ -140,8 +219,8 @@
 						 				"4"=>$fechaColegiatura,
 						 				"5"=>$reg->sector_profesional,
 						 				"6"=>$habilidad,
-						 				"7"=>$reg->distritos . " - " . $reg->provincias . " - " . $reg->departamento
-
+						 				"7"=>$reg->institucion,
+						 				"8"=>$reg->distritos . " - " . $reg->provincias . " - " . $reg->departamento
 						 			);
 						 		}
 						 		$results = array(
@@ -161,13 +240,7 @@
 						}
 
 
-
-
-
-
 					break;
-
-
 
 			}
 
@@ -432,12 +505,20 @@
 
 			}
 
-			if ($_POST["accion"] == 'cambiaPass') {
+			if ($_POST["accion"] == 'restablecerPass') {
+
+				$sql = "SELECT idColegiado, codigo_col FROM colegiados WHERE idColegiado = " . $_POST["idCol"];
+		    $db = $dbh->prepare($sql);
+		    $db->execute();
+				$dataCole = $db->fetch(PDO::FETCH_OBJ);
+				$codigo_colegiado = $dataCole->codigo_col;
 				
-				// $sql = "UPDATE `colegiados` SET `estado`=1 WHERE idColegiado=" . $_POST["idCol"];
-		  //   $db = $dbh->prepare($sql);
-		  //   $db->execute();
-		  //   echo "exito";
+				// $sqlUpdPass = "UPDATE `colegiados` SET `estado`=1 WHERE password=" . $_POST["idCol"];
+
+				$sqlUpdPass = "UPDATE `colegiados` SET `password` = MD5('".$codigo_colegiado."') WHERE `colegiados`.`idColegiado` = " . $_POST["idCol"];
+		    $db2 = $dbh->prepare($sqlUpdPass);
+		    $db2->execute();
+		    echo "exito";
 
 			}			
 

@@ -17,25 +17,43 @@ else
 if (1==1)
 {
 
-  $sql = "SELECT C.idColegiado, 
-                 C.codigo_col as codigo, 
-                 C.nom_colegiado, 
-                 C.ape_paterno, 
-                 C.ape_materno, 
-                 C.dni, 
-                 C.fec_nac, 
-                 C.foto, 
-                 C.telefono, 
-                 C.email, 
-                 C.lug_nacim, 
-                 C.lug_labores, 
-                 C.info_contacto, 
-                 C.estado,
-                 CA.idColegiatura,
-                 CA.fec_colegiatura as fecha_col
-          FROM colegiados C INNER JOIN colegiatura CA
-          ON CA.idColegiado = C.idColegiado
-          WHERE C.idColegiado = " . $_SESSION['idColegiado'];
+  // $sql = "SELECT C.idColegiado, 
+  //                C.codigo_col as codigo, 
+  //                C.nom_colegiado, 
+  //                C.ape_paterno, 
+  //                C.ape_materno, 
+  //                C.dni, 
+  //                C.fec_nac, 
+  //                C.foto, 
+  //                C.telefono, 
+  //                C.email, 
+  //                C.lug_nacim, 
+  //                C.lug_labores, 
+  //                C.info_contacto, 
+  //                C.estado,
+  //                CA.idColegiatura,
+  //                CA.fec_colegiatura as fecha_col
+  //         FROM colegiados C INNER JOIN colegiatura CA
+  //         ON CA.idColegiado = C.idColegiado
+  //         WHERE C.idColegiado = " . $_SESSION['idColegiado'];
+
+
+  $sql = "SELECT CE.idCertificado, 
+                 CO.codigo_col as codigo, 
+                 CO.nom_colegiado, 
+                 CO.ape_paterno, 
+                 CO.ape_materno, 
+                 CA.fec_colegiatura as fecha_col,
+                 CE.fechaEmision, CE.estadoCertificado 
+          FROM certificados CE 
+          LEFT JOIN colegiados CO
+          ON CE.idColegiado = CO.idColegiado
+          LEFT JOIN colegiatura CA
+          ON CO.idColegiado = CA.idColegiado
+          LEFT JOIN pagos_servicios PS
+          ON CE.idPagoServ = PS.idPagoServ 
+          WHERE CO.idColegiado = " . $_SESSION['idColegiado'] . "
+          ORDER BY 1 DESC LIMIT 0, 1";
 
 
   $db = $dbh->prepare($sql);
@@ -97,7 +115,8 @@ $pdf->AddPage();
       // $mes = date("M", strtotime($originalDate));
       $mes = $meses[date('n', strtotime($originalDate))-1];
       $anio = date("Y", strtotime($originalDate));
-      $fechaHabilitado = $dia . " DE " . strtoupper($mes) . " DE " . $anio;
+      // $fechaHabilitado = $dia . " DE " . strtoupper($mes) . " DE " . $anio;
+      $fechaHabilitado = strtoupper($mes) . " DE " . $anio;
 
 
 
@@ -122,9 +141,11 @@ $block_text_der = utf8_decode($data_colegiado->ape_paterno) . ' ' . utf8_decode(
                   utf8_decode("CBP Nº ") . $data_colegiado->codigo . "\n\n" . 
                   $fechaHabilitado . "\n\n";
 
+$cod_correlativo = str_pad($data_colegiado->idCertificado, 4, "0", STR_PAD_LEFT) . " - " . date("Y");                   
+
 $cadena_parrafo = utf8_decode("DE CONFORMIDAD CON LO DISPUESTO EN EL ARTÍCULO 05 DE LA LEY N° 28847 \nLEY DEL TRABAJO DEL BIÓLOGO Y DEL ARTÍCULO 06 DE SU REGLAMENTO \nAPROBADO MEDIANTE DECRETO SUPREMO N° 025-2008-SA, SE ENCUENTRA \nHÁBIL Y EN CONSECUENCIA ESTA AUTORIZADO PARA EJERCER LA PROFESIÓN DE \nBIÓLOGO.\n\n" . $fechaDocumento);
 
-$pdf->addSociete( $block_text_izq, $block_text_der, $cadena_parrafo,$logo, $ext_logo );
+$pdf->addSociete( $block_text_izq, $block_text_der, $cod_correlativo, $cadena_parrafo,$logo, $ext_logo );
 
 // $pdf->fact_dev( "$regv->tipo_comprobante ", "$regv->serie_comprobante-$regv->num_comprobante" );
 $pdf->temporaire( "" );

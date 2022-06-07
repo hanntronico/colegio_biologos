@@ -17,30 +17,47 @@ $nombre_completo = $_SESSION['nombre'] . ' ' .
                    $_SESSION['apellido_materno'];
 $codigo_col      = $_SESSION['codigo_col'];
 
-  $sql = "SELECT C.idColegiado, 
-                 C.codigo_col as codigo, 
-                 C.nom_colegiado, 
-                 C.ape_paterno, 
-                 C.ape_materno, 
-                 C.dni, 
-                 C.fec_nac, 
-                 C.foto, 
-                 C.telefono, 
-                 C.email, 
-                 C.lug_nacim, 
-                 C.lug_labores, 
-                 C.info_contacto, 
-                 C.estado,
-                 CA.idColegiatura,
-                 CA.fec_colegiatura as fecha_col
-          FROM colegiados C INNER JOIN colegiatura CA
-          ON CA.idColegiado = C.idColegiado
-          WHERE C.idColegiado = " . $_SESSION['idColegiado'];
+  // $sql = "SELECT C.idColegiado, 
+  //                C.codigo_col as codigo, 
+  //                C.nom_colegiado, 
+  //                C.ape_paterno, 
+  //                C.ape_materno, 
+  //                C.dni, 
+  //                C.fec_nac, 
+  //                C.foto, 
+  //                C.telefono, 
+  //                C.email, 
+  //                C.lug_nacim, 
+  //                C.lug_labores, 
+  //                C.info_contacto, 
+  //                C.estado,
+  //                CA.idColegiatura,
+  //                CA.fec_colegiatura as fecha_col
+  //         FROM colegiados C INNER JOIN colegiatura CA
+  //         ON CA.idColegiado = C.idColegiado
+  //         WHERE C.idColegiado = " . $_SESSION['idColegiado'];
 
-
+  
+  $sql = "SELECT CE.idCertificado, 
+                 CO.codigo_col as codigo, 
+                 CO.nom_colegiado, 
+                 CO.ape_paterno, 
+                 CO.ape_materno, 
+                 CA.fec_colegiatura as fecha_col,
+                 CE.fechaEmision, CE.estadoCertificado 
+          FROM certificados CE 
+          LEFT JOIN colegiados CO
+          ON CE.idColegiado = CO.idColegiado
+          LEFT JOIN colegiatura CA
+          ON CO.idColegiado = CA.idColegiado
+          LEFT JOIN pagos_servicios PS
+          ON CE.idPagoServ = PS.idPagoServ 
+          WHERE CO.idColegiado = " . $_SESSION['idColegiado'] . "
+          ORDER BY 1 DESC LIMIT 0, 1";
   $db = $dbh->prepare($sql);
   $db->execute();
-  $data = $db->fetch(PDO::FETCH_OBJ);
+  $data_certificados = $db->fetch(PDO::FETCH_OBJ);
+
 
   // idColegiatura
   // idColegiado
@@ -49,7 +66,7 @@ $codigo_col      = $_SESSION['codigo_col'];
   // estado_colegiatura
 
   // echo "<pre>";
-  // print_r($data_servicios);
+  // print_r($data_certificados);
   // echo "</pre>";
   // exit();
   
@@ -166,7 +183,7 @@ $codigo_col      = $_SESSION['codigo_col'];
           <div class="row">
            
             <div class="col-12 grid-margin">
-              <div class="card">
+              <div class="card" id="bodyCertificado" style="display: none;">
                 <div class="card-header">
                   <h3 class="card-title">
                     <a href="certificado_pdf.php" target="_blank" class="btn btn-info btn-sm ml-3">IMPRIMRI PDF</a>
@@ -197,9 +214,9 @@ $codigo_col      = $_SESSION['codigo_col'];
                               </div>
                               <div class="col-md-6">
                                   <span style="font-weight: bolder; font-size: 12px;">
-                                    <?php echo $data->ape_paterno. ' ' . 
-                                               $data->ape_materno . ', ' . 
-                                               $data->nom_colegiado; ?>
+                                    <?php echo $data_certificados->ape_paterno. ' ' . 
+                                               $data_certificados->ape_materno . ', ' . 
+                                               $data_certificados->nom_colegiado; ?>
                                   </span>
                               </div>
                             </div>
@@ -213,7 +230,7 @@ $codigo_col      = $_SESSION['codigo_col'];
 
                                       $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 
-                                      $originalDate = $data->fecha_col;
+                                      $originalDate = $data_certificados->fecha_col;
                                       $newDate = date("d" . "DE" . "Y", strtotime($originalDate));  
                                       $dia = date("d", strtotime($originalDate));
                                       // $mes = date("n", strtotime($originalDate));
@@ -230,7 +247,7 @@ $codigo_col      = $_SESSION['codigo_col'];
                                 <span style="font-size: 12px;">CON REGISTRO</span>
                               </div>
                               <div class="col-md-6">
-                                <span style="font-weight: bolder; font-size: 12px;"><?php echo "CBP Nº " . $data->codigo; ?></span>  
+                                <span style="font-weight: bolder; font-size: 12px;"><?php echo "CBP Nº " . $data_certificados->codigo; ?></span>  
                               </div>
                             </div>
 
@@ -250,7 +267,8 @@ $codigo_col      = $_SESSION['codigo_col'];
                               <span style="text-align: justify; font-size: 12px; margin-top: -10px;">
                                 LIMA, 
                                 <?php 
-                                      $originalDate = date("Y-m-d");
+                                      // $originalDate = date("Y-m-d");
+                                      $originalDate = $data_certificados->fechaEmision;
                                       $newDate = date("d" . "DE" . "Y", strtotime($originalDate));  
                                       $dia = date("d", strtotime($originalDate));
                                       // $mes = date("n", strtotime($originalDate));
@@ -329,6 +347,23 @@ $codigo_col      = $_SESSION['codigo_col'];
 
   <script type="text/javascript">
     
+
+  function cargarTotalDeuda(){
+    $.post('<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php?op=total_deuda&idcol='+ '<?php echo $_SESSION['idColegiado']?>',function(r){
+      if( r > 45 ){
+         $("#bodyCertificado").html("<div style='text-align:center; padding: 15px; font-size:18px;'>No se encuentra activo el Certificado de Habilidad <br> Póngase en contacto con personal administrativo</div>");
+         $("#bodyCertificado").prop("style", "display: block");
+      }else{
+         $("#bodyCertificado").prop("style", "display: block");
+      }
+      // console.log(r);
+    });
+  }
+
+  cargarTotalDeuda();
+
+
+
     function cargaDatosCertificado() {
       $.post('<?php echo ENLACE_WEB?>mod_usuarios/controller_usuarios.php?op=obtenerFechaHabilidad',function(r){
         // $("#optEspecialidad").html(r);

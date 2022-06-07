@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include("../conf/conf.php");
 // echo "variable de sesion: " . $_SESSION['idColegiado'];
 
 if(!isset($_SESSION['idColegiado']) || $_SESSION["idColegiado"]==null ){
@@ -103,8 +103,6 @@ $codigo_col      = $_SESSION['codigo_col'];
         <div class="content-wrapper">
         
 
-
-
          <center><img src="../dist/img/logo-ini.png"></center><br>
           <div class="row purchace-popup">
 <!--             <div class="col-12">
@@ -177,17 +175,18 @@ $codigo_col      = $_SESSION['codigo_col'];
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <script src="vendors/js/vendor.bundle.addons.js"></script>
-	
 
+	http://127.0.0.1/colegio_biologos/mod_usuarios/%3Cbr%20/%3E%3Cb%3EWarning%3C/b%3E:%20%20Use%20of%20undefined%20constant%20ENLACE_WEB%20-%20assumed%20'ENLACE_WEB'%20(this%20will%20throw%20an%20Error%20in%20a%20future%20version%20of%20PHP)%20in%20%3Cb%3EC:/laragon/www/colegio_biologos/mod_usuarios/view_dashboard.php%3C/b%3E%20on%20line%20%3Cb%3E186%3C/b%3E%3Cbr%20/%3EENLACE_WEBmod_usuarios/js/off-canvas.js
+  
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="<?php ENLACE_WEB;?>mod_usuarios/js/off-canvas.js"></script>
-  <script src="<?php ENLACE_WEB;?>mod_usuarios/js/misc.js"></script>
+  <script src="<?php echo ENLACE_WEB;?>mod_usuarios/js/off-canvas.js"></script>
+  <script src="<?php echo ENLACE_WEB;?>mod_usuarios/js/misc.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="<?php ENLACE_WEB;?>mod_usuarios/js/dashboard.js"></script>
+  <script src="<?php echo ENLACE_WEB;?>mod_usuarios/js/dashboard.js"></script>
   <!-- End custom js for this page-->
 
 		  <?php // if($variable!=""){ ?>
@@ -202,7 +201,7 @@ $codigo_col      = $_SESSION['codigo_col'];
 
 	
 	<!-- script para descargar archivos en la misma pagina sin recargar -->
-<script src="<?php ENLACE_WEB;?>mod_usuarios/js/scripts_descarga.js"></script>
+<script src="<?php echo ENLACE_WEB;?>mod_usuarios/js/scripts_descarga.js"></script>
 	
 	<?php // mysqli_close($linkdocu); ?>
 </body>

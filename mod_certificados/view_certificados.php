@@ -11,41 +11,23 @@
   {
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reporte de Colegiados - <?php echo PROY_TITULO; ?></title>
+  <title>Registro de pagos - <?php echo PROY_TITULO; ?></title>
 
   <?php include_once "../head.php"; ?>
-
-  <style type="text/css" media="screen">
-    .hanncolor{
-      background-color: #FFC9C9;
-      /*color: #ff0000;*/
-    }
-    .text_size{
-      font-size: 20px;
-    }
-  </style>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader -->
-<!--   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="<?php //echo ENLACE_WEB; ?>dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div> -->
-  
+ 
   <?php include '../mod_menu/menu_dashboard_h.php'; ?>
 
-  <!-- Main Sidebar Container -->
-  <!-- <aside class="main-sidebar sidebar-blue-primary elevation-4"> -->
-  
+ 
     <?php include '../mod_menu/menu_dashboard_v.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -55,12 +37,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Reportes</h1>
+            <h1 class="m-0">Emisión de certificados</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../administrador/">Inicio</a></li>
-              <li class="breadcrumb-item active">Reportes</li>
+              <li class="breadcrumb-item active">Listado de colegiados</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -76,41 +58,35 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                  Ingrese los datos para generar el reporte
+                  Ingrese los datos de colegiado
                 </h3>
               </div>
 
               <div class="card-body">
                 
-                <form>
+                <form id="frmRegCertif">
                   <div class="form-row">
-                    <div class="col-md-2">
-                      <!-- <label for="validationServer01">Seleccionar sector:</label> -->
-                      <!-- <input type="text" class="form-control" id="colegiado" name="colegiado" placeholder="Colegiado"> -->
-<!--                        <select class="form-control" name="optSector" id="optSector">
-                         <option value="0">Seleccionar sector</option>
-                         <option value="publico">Público</option>
-                         <option value="privado">Privado</option>
-                       </select> -->
-                      <!-- <input type="hidden" name="idcolegiado" id="idcolegiado" value=""> -->
-
-                      <button type="button" class="btn btn-primary btn-sm form-control px-1 mt-2 text_size" onclick="generarReporte()">
-                        Buscar <i class="fas fa-search ml-2"></i>
-                      </button>
-
+                    <div class="col-md-4">
+                      <label for="validationServer01">Seleccionar colegiado:</label>
+                      <input type="text" class="form-control" id="colegiado" name="colegiado" placeholder="Colegiado" readonly="true">
+                      <input type="hidden" name="idcolegiado" id="idcolegiado" value="">
+                      <input type="hidden" name="idPagoServ" id="idPagoServ" value="">
 
                     </div>
 
-
-
-
-                    <div></div>
+                    <div>
+                      <br>
+                      <button type="button" class="btn btn-primary btn-sm form-control px-3 mt-2" data-toggle="modal" data-target="#exampleModalLong">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
 
                     <div class="col-md-2">
                       <br>
-
+<!--                       <label for="validationServer02">Nro </label>
+                      <input type="text" class="form-control" id="validationServer02" placeholder="Last name" required> -->
 <!--                       <button type="button" class="btn btn-primary mt-2" style="margin-left: 25px;" onclick="buscarPagos()">
-                        Buscar <i class="fas fa-search"></i>
+                        Buscar Pagos
                       </button> -->
 
                     </div>
@@ -161,6 +137,7 @@
                       </div>
                     </div>
                   </div> -->
+
                   <div class="form-group">
                     <div class="form-check">
 <!--                       <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
@@ -172,7 +149,7 @@
                       </div> -->
                     </div>
                   </div>
-                  <!-- <button class="btn btn-primary btn-xl" type="submit">Submit form</button> -->
+                  <button class="btn btn-primary btn-xl" type="submit">Emitir certificado</button>
                 </form>
 
               </div>              
@@ -180,47 +157,54 @@
             </div>
 
 
-    <div class="card">
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">
+      Certificados
+    </h3>
 
-          <!-- <div class="card-header"> -->
+      <div class="row">
+        <div class="col-md-6">&nbsp;</div>
+        <div class="col-md-6 text-right" style="color: #138AF9">
+          <!-- <b>Deuda total:</b> S/ -->
+          <!-- <span id="deuda_total">0.00</span> -->
+          <input type="hidden" name="txtDeudaTotal" id="txtDeudaTotal" value="" style="border: none; outline: none;">
+          
 
+          <!-- <button type="button" class="btn btn-success btn-sm ml-3 px-4" onclick="pagarDeudaAmortizacion()" id="btnPagar">PAGAR</button> -->
 
-<!--               <div class="row">
-                <div class="col-md-6">
-                  &nbsp;
-                </div>
-                <div class="col-md-6 text-right" style="color: #138AF9">
-                  <b>Deuda total:</b> S/
-                  <span id="deuda_total">0.00</span>
-                  <input type="hidden" name="txtDeudaTotal" id="txtDeudaTotal" value="">
-                  <button type="button" class="btn btn-success btn-sm ml-3 px-4" onclick="pagarDeudaAmortizacion()" id="btnPagar">PAGAR</button>
-                </div>        
-              </div> -->
-
-          <!-- </div> -->
-
-          <div class="card-body">
-            <table id="list_rpt_colegiados" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>DNI</th>
-                <th>CODIGO</th>
-                <th>Nombres y Apellidos</th>
-                <th style="text-align: center;">Fec. Colegiatura</th>
-                <th style="text-align: center;">Sector</th>
-                <th style="text-align: center;">Habilidad</th>
-                <th style="text-align: center;">Univ. Pregrado</th>
-                <th style="text-align: center;">Lugar</th>
-              </tr>
-              </thead>
-              <tbody id="lista_rpt">
-              </tbody>
-            </table>
-          </div>
+          <!-- <button type="button" class="btn btn-info btn-sm ml-3 px-4">Buscar pago</button> -->
+          <button type="button" class="btn btn-info btn-sm ml-3 px-4" data-toggle="modal" data-target="#modalPagocertificado" onclick="cargarPagosCertificados()">
+            Buscar pago
+          </button> 
 
 
+        </div>        
       </div>
+  </div>
+
+  <div class="card-body">
+    <table id="lista_certificados_id" class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>ST</th>
+        <th style="text-align: center;">CBP</th>
+        <th>Colegiado</th>
+        <th>Fecha emisión</th>
+<!--         <th style="text-align: right;">Mora</th>
+        <th style="text-align: right;">Deuda</th>
+        <th>Gen</th>
+        <th style="text-align: right;">Adelanto</th>
+        <th style="text-align: right;">Saldo</th> -->
+      </tr>
+      </thead>
+      <tbody id="lista_certif">
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
 
 
         <!-- /.row -->
@@ -241,9 +225,9 @@
   </footer>
 
   <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
+  <!-- <aside class="control-sidebar control-sidebar-dark"> -->
     <!-- Control sidebar content goes here -->
-  </aside>
+  <!-- </aside> -->
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
@@ -252,7 +236,8 @@
 
 
                       <!-- Modal -->
-<!--                       <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <!-- <div class="modal-dialog modal-dialog-scrollable|modal-dialog-centered modal-sm|modal-lg|modal-xl" role="document"> -->
                         <div class="modal-dialog modal-dialog-scrollable|modal-dialog-centered modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -304,23 +289,162 @@
                             </div>
                           </div>
                         </div>
-                      </div> -->
+                      </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalPagocertificado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable|modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Pagos de certificaciones</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+
+          <div class="row mt-4">
+            <div class="col-md-12">
+              <table id="tabla_pagos_certif" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th style="width: 15%;">COD PAGO</th>
+                  <th>FECHA</th>
+                  <th>DESCRIPCION</th>
+                  <th>MONTO</th>
+                  <th style="width: 10%;">SEL</th>
+                </tr>
+                </thead>
+                <tbody id="lista_pagos_certif">
+                  <tr><td colspan="5">
+                    <div id="content2"></div>
+                  </td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary|secondary|success|danger|warning|info|light|dark">Save changes</button> -->
+        <button type="button" class="btn btn-dark" data-dismiss="modal" id="cerrarModalPagos">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 
   <?php include_once "../foot.php"; ?>
 
 <script type="text/javascript">
 
-  $( "#btnSalir" ).click(function() {
-    if (confirm("Esta seguro de salir del sistema")) {
-      location.href="<?php echo ENLACE_WEB;?>mod_login/logout.php";
+
+  $("#frmRegCertif").on("submit",function(e){
+    e.preventDefault();
+    var formData = new FormData($("#frmRegCertif")[0]);
+
+    if($("#colegiado").val() != '' && $("#idcolegiado").val() !='' && $("#idPagoServ").val() !='' ){
+
+        if ( $("#txtDeudaTotal").val() < 45  ) {
+
+          $.ajax({
+            url: "<?php echo ENLACE_WEB?>mod_certificados/controller_certificados.php?op=registrar_certificado",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+
+              success: function(datos)
+              {                    
+                // bootbox.alert(datos);           
+                // mostrarform(false);
+                tabla.ajax.reload();
+                console.log(datos);
+
+
+                Swal.fire(
+                    'Exito!',
+                    'Pago de servicios realizado con correctamente!',
+                    'success'
+                )
+
+                $('#colegiado').val('');
+                $('#idcolegiado').val('');
+                $('#idPagoServ').val('');
+                
+                // location.reload();
+                // location.href="<?php //echo ENLACE_WEB;?>mod_pagos/view_lista_pagos_servicios.php";
+              }
+          });
+
+        }else{
+
+          Swal.fire(
+              'Deuda!',
+              'El colegiado presenta deuda de S/ ' + $("#txtDeudaTotal").val(),
+              'error'
+          )
+
+        }
+
+
     }else{
-      return false;
+      // alert("Por favor, ingrese colegiado y pago realizado");
+      Swal.fire(
+          '',
+          'Por favor, ingrese colegiado y pago realizado',
+          'error'
+      )
+
     }
+
   });
 
-  function generarReporte() {
-    tabla=$('#list_rpt_colegiados').dataTable(
+  function seleccionarPago(idPagoServ) {
+    $("#idPagoServ").val(idPagoServ);
+    $("#cerrarModalPagos").click();
+
+  }
+
+  function cargarPagosCertificados(){
+
+    $('#content2').html('<div class="loading text-center" style="text-align: center;"><img src="../dist/img/loading.gif" alt="loading" width="5%" /><br/>Un momento, por favor...</div>');
+
+    $.ajax({
+      url: '<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php',
+      type: 'POST',
+      data: {accion: 'carga_pagos_certificados', idcolegiado: $("#idcolegiado").val()},
+    })
+    .done(function(data) {
+      // console.log(data);
+      if(data != ''){
+        $('#lista_pagos_certif').empty().html(data);  
+      }else{
+        $('#lista_pagos_certif').empty().html('<tr><td colspan="5" class="text-center">Vacio</td></tr>');
+      }
+      
+    })
+    .fail(function() {
+      console.log("error");
+    })
+
+
+  }
+
+
+
+  function listar_certificados() {
+
+    tabla=$('#lista_certificados_id').dataTable(
     {
       "lengthMenu": [ 5, 12, 24, 75, 100],
       "aProcessing": true,
@@ -329,13 +453,13 @@
         "buttons": ["copy", "csv", "excel", "pdf", "print"],
       "ajax":
           {
-            url: 'controller_colegiados.php?op=listar_rpt_colegiados&sector=' + 1,
+            url: '<?php echo ENLACE_WEB?>mod_certificados/controller_certificados.php?op=listar_certificados',
             type : "get",
             dataType : "json",            
             error: function(e){
               console.log(e.responseText);
               if (e.responseText == 'error') {
-                $("#lista_rpt").empty().html('<tr><td colspan="8" class="text-center">Vacio</td></tr>');
+                $("#lista_certif").empty().html('<tr><td colspan="9" class="text-center">Vacio</td></tr>');
                 // alert('sin pagos');
               }
             }
@@ -358,7 +482,7 @@
           {
             "targets": 0, 
             "className": "dt-body-center"
-            ,"width": "2%"
+            ,"width": "4%"
             ,"render": function (data, type, row) {
                 if (row[4] > 0) {
                   // $('tr').css('background-color', '#FFC9C9');
@@ -369,45 +493,69 @@
          {
             "targets": 1,
             "className": "dt-body-center"
-            ,"width": "2%"
+            ,"width": "4%"
          },
          {
             "targets": 2,
-            "className": "dt-body-center"
-            ,"width": "2%"
+            "className": "dt-body-left"
+            // ,"width": "8%"
          },
          {
             "targets": 3,
-            "className": "dt-body-left",            
-         },
-         {
-            "targets": 4,
-            "className": "dt-body-center"
-            ,"width": "10%"            
-         },
-         {
-            "targets": 5,
-            "className": "dt-body-center"
-            ,"width": "6%"            
-         },
-         {
-            "targets": 6,
-            "className": "dt-body-center"
-            ,"width": "6%"
-         },
-         {
-            "targets": 7,
-            "className": "dt-body-center"
-            ,"width": "15%"
-         },
-         {
-            "targets": 8,
-            "className": "dt-body-center"
-            ,"width": "15%"
-         }],        
-    }).DataTable();
+            "className": "dt-body-right"
+            // ,"width": "9%"            
+         }
+         // ,
+         // {
+         //    "targets": 4,
+         //    "className": "dt-body-right",            
+         // },
+         // {
+         //    "targets": 5,
+         //    "className": "dt-body-right",            
+         // },
+         // {
+         //    "targets": 6,
+         //    "className": "dt-body-left",            
+         // },
+         // {
+         //    "targets": 7,
+         //    "className": "dt-body-right",
+         // },
+         // {
+         //    "targets": 8,
+         //    "className": "dt-body-right",
+         // }
+         ],        
+    }).DataTable();    
+
   }
 
+  listar_certificados();
+
+
+
+  $( "#btnSalir" ).click(function() {
+    if (confirm("Esta seguro de salir del sistema")) {
+      location.href="<?php echo ENLACE_WEB;?>mod_login/logout.php";
+    }else{
+      return false;
+    }
+  });
+
+
+  function cargarTotalDeuda(){
+    $.post('<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php?op=total_deuda&idcol='+$("#idcolegiado").val(),function(r){
+      // $("#deuda_total").html(r);
+      $("#txtDeudaTotal").val(r);
+      // if( r > 0 ){
+      //    $("#btnPagar").prop("disabled", false);
+      // }else{
+      //    $("#btnPagar").prop("disabled", true);
+      // }
+      // console.log(r);
+    });
+  }
 
   function pagarDeudaAmortizacion() {
     // $.post('<?php //echo ENLACE_WEB?>mod_pagos/controller_pagos.php?op=pagar_deuda&idcol='+$("#idcolegiado").val(),function(r){
@@ -444,6 +592,15 @@
                 location.href="<?php echo ENLACE_WEB;?>mod_pagos/view_pagos_servicios.php?idcol=" + $("#idcolegiado").val();
               }
 
+              // $("#colegiado").val(data);
+
+              // console.log(resp.idcolegiado);
+              // console.log(resp.datosColegiado);
+              // $("#idcolegiado").val(resp.idcolegiado);
+              // $("#colegiado").val(resp.datosColegiado);
+              // $("#lista_colegiados_busca").empty();
+              // $("#dni_codigo").val('');
+              // $("#cerrar").click();
               
             })
             .fail(function() {
@@ -495,6 +652,8 @@
         $("#lista_colegiados_busca").empty();
         $("#dni_codigo").val('');
         $("#cerrar").click();
+
+        cargarTotalDeuda();
         
       })
       .fail(function() {
@@ -505,93 +664,100 @@
 
 
 
-  function buscarPagos() {
+  // function buscarPagos() {
+  //   tabla=$('#lista_pagos_id').dataTable(
+  //   {
+  //     "lengthMenu": [ 5, 12, 24, 75, 100],
+  //     "aProcessing": true,
+  //       "aServerSide": true,
+  //       "dom": 'Blfrtip',
+  //       "buttons": ["copy", "csv", "excel", "pdf", "print"],
+  //     "ajax":
+  //         {
+  //           url: 'controller_pagos.php?op=listar_pagos&idcol=' + $("#idcolegiado").val(),
+  //           type : "get",
+  //           dataType : "json",            
+  //           error: function(e){
+  //             console.log(e.responseText);
+  //             if (e.responseText == 'error') {
+  //               $("#lista_pagos").empty().html('<tr><td colspan="8" class="text-center">Vacio</td></tr>');
+  //               // alert('sin pagos');
+  //             }
+  //           }
+  //           // ,
+  //           // success: function(e)
+  //           // { 
+  //           //   console.log(e.aaData);
+  //           // }
+  //         },
+  //       "language": {
+  //         url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
+  //       },
+  //     "rowCallback": function( row, data, index ) {
+  //           $(row).addClass('green');
+  //     },
+  //     "bDestroy": true,
+  //     "iDisplayLength": 12,
+  //     "order": [[ 0, "desc" ]],
+  //     "columnDefs": [
+  //         {
+  //           "targets": 0, 
+  //           "className": "dt-body-center"
+  //           // ,"width": "4%"
+  //           ,"render": function (data, type, row) {
+  //               if (row[4] > 0) {
+  //                 // $('tr').css('background-color', '#FFC9C9');
+  //               }
+  //               return data;
+  //           }            
+  //        },
+  //        {
+  //           "targets": 1,
+  //           "className": "dt-body-center"
+  //           ,"width": "4%"
+  //        },
+  //        {
+  //           "targets": 2,
+  //           "className": "dt-body-center"
+  //           ,"width": "8%"
+  //        },
+  //        {
+  //           "targets": 3,
+  //           "className": "dt-body-right"
+  //           ,"width": "9%"            
+  //        },
+  //        {
+  //           "targets": 4,
+  //           "className": "dt-body-right",            
+  //        },
+  //        {
+  //           "targets": 5,
+  //           "className": "dt-body-right",            
+  //        },
+  //        {
+  //           "targets": 6,
+  //           "className": "dt-body-left",            
+  //        },
+  //        {
+  //           "targets": 7,
+  //           "className": "dt-body-right",
+  //        },
+  //        {
+  //           "targets": 8,
+  //           "className": "dt-body-right",
+  //        }
+  //        // ,
+  //        // {
+  //        //    "targets": 9,
+  //        //    "className": "dt-body-center",
+  //        // }
+  //        ],        
+  //   }).DataTable();    
 
-    tabla=$('#lista_pagos_id').dataTable(
-    {
-      "lengthMenu": [ 5, 12, 24, 75, 100],
-      "aProcessing": true,
-        "aServerSide": true,
-        "dom": 'Blfrtip',
-        "buttons": ["copy", "csv", "excel", "pdf", "print"],
-      "ajax":
-          {
-            url: 'controller_pagos.php?op=listar_pagos&idcol=' + $("#idcolegiado").val(),
-            type : "get",
-            dataType : "json",            
-            error: function(e){
-              console.log(e.responseText);
-              if (e.responseText == 'error') {
-                $("#lista_pagos").empty().html('<tr><td colspan="8" class="text-center">Vacio</td></tr>');
-                // alert('sin pagos');
-              }
-            }
-            // ,
-            // success: function(e)
-            // { 
-            //   console.log(e.aaData);
-            // }
-          },
-        "language": {
-          url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
-        },
-      "rowCallback": function( row, data, index ) {
-            $(row).addClass('green');
-      },
-      "bDestroy": true,
-      "iDisplayLength": 12,
-      "order": [[ 0, "desc" ]],
-      "columnDefs": [
-          {
-            "targets": 0, 
-            "className": "dt-body-center"
-            // ,"width": "4%"
-            ,"render": function (data, type, row) {
-                if (row[4] > 0) {
-                  // $('tr').css('background-color', '#FFC9C9');
-                }
-                return data;
-            }            
-         },
-         {
-            "targets": 1,
-            "className": "dt-body-center"
-         },
-         {
-            "targets": 2,
-            "className": "dt-body-center",
-         },
-         {
-            "targets": 3,
-            "className": "dt-body-right",            
-         },
-         {
-            "targets": 4,
-            "className": "dt-body-right",            
-         },
-         {
-            "targets": 5,
-            "className": "dt-body-right",            
-         },
-         {
-            "targets": 6,
-            "className": "dt-body-right",            
-         },
-         {
-            "targets": 7,
-            "className": "dt-body-right",
-         },
-         {
-            "targets": 8,
-            "className": "dt-body-center",
-         },
-         {
-            "targets": 9,
-            "className": "dt-body-center",
-         }],        
-    }).DataTable();    
 
-  }
+  //    cargarTotalDeuda();
+
+  // }
 
 
   function buscarColegiado() {
@@ -627,9 +793,30 @@
   });
 
 
-  function verPagos(idColegiado) {
-    location.href="<?php echo ENLACE_WEB;?>mod_colegiados/view_pagos_colegiados.php?idcol=" + idColegiado;
-  }
+      // function cargaListadoColegios() {
+      //   $.ajax({
+      //     url: 'controller_colegiados.php',
+      //     type: 'POST',
+      //     data: {accion: 'carga_inicial'},
+      //   })
+      //   .done(function(data) {
+      //     $('#lista_colegiados').empty().html(data);
+      //   })
+      //   .fail(function() {
+      //     console.log("error");
+      //   })
+      // }
+
+      // cargaListadoColegios();
+
+      // $.get('controller_colegiados.php', function(data) {
+      //   $('#lista_colegiados').empty().html(data);
+      // });
+
+      function verPagos(idColegiado) {
+        // console.log(idColegiado);
+        location.href="<?php echo ENLACE_WEB;?>mod_colegiados/view_pagos_colegiados.php?idcol=" + idColegiado;
+      }
 
 </script>
 

@@ -24,7 +24,8 @@
       // $mes = date("M", strtotime($originalDate));
       $mes = $meses[date('n', strtotime($originalDate))-1];
       $anio = date("Y", strtotime($originalDate));
-			echo $dia . " DE " . strtoupper($mes) . " DE " . $anio; 
+			// echo $dia . " DE " . strtoupper($mes) . " DE " . $anio; 
+			echo strtoupper($mes) . " DE " . $anio; 
 
 
 		break;

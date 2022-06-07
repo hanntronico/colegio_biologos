@@ -47,7 +47,7 @@ include("../conf/conf.php");
                 <div class="form-group">
                   <label class="label">Usuario</label>
                   <div class="input-group">
-                    <input type="email" name="userini" class="form-control" placeholder="Usuario / Correo" required>
+                    <input type="text" name="userini" class="form-control" placeholder="Usuario / Correo" required>
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="mdi mdi-check-circle-outline"></i>

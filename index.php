@@ -79,9 +79,10 @@
       </div> -->
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
+<!--       <p class="mb-1">
         <a href="forgot-password.html">Olvide mi contraseña</a>
-      </p>
+      </p> -->
+      
     </div>
     <!-- /.login-card-body -->
   </div>

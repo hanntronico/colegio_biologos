@@ -55,12 +55,12 @@
                   <p>Registrar colegiatura</p>
                 </a>
               </li>
-<!--               <li class="nav-item">
-                <a href="javascript:void(0);" class="nav-link">
+              <li class="nav-item">
+                <a href="<?php echo ENLACE_WEB;?>mod_certificados/view_certificados.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Emitir certificados</p>
                 </a>
-              </li> -->
+              </li>
               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -93,7 +93,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="javascript:void(0);" class="nav-link">
+                <a href="<?php echo ENLACE_WEB;?>mod_colegiados/view_coleg_exonerados.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Exoneraciones</p>
                 </a>
@@ -128,15 +128,16 @@
             </a>
           </li> -->
           <li class="nav-item">
-            <a href="javascript:void(0);" class="nav-link">
+<!--             <a href="javascript:void(0);" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Comprobantes de pago
-                <i class="fas fa-angle-left right"></i>
+                <i class="fas fa-angle-left right"></i> -->
                 <!-- <span class="badge badge-info right">6</span> -->
-              </p>
-            </a>
+<!--               </p>
+            </a> -->
             <ul class="nav nav-treeview">
+
 <!--               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -206,18 +207,18 @@
                   <p>Reporte de colegiados</p>
                 </a>
               </li>
-              <li class="nav-item">
+<!--               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Centro de labores</p>
                 </a>
-              </li>
-              <li class="nav-item">
+              </li> -->
+<!--               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>
                   <p>Especialidad</p>
                 </a>
-              </li>
+              </li> -->
 <!--               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
                   <i class="far fa-file nav-icon"></i>

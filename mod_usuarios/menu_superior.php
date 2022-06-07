@@ -5,20 +5,22 @@ if($nivelaxe==1 || $nivelaxe==2){ }else{
 	print "<script>alert('Acceso invalido! - Nivel de acceso no permitido');window.location='../';</script>";
 }
 ?>
+
      <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-        <a class="navbar-brand brand-logo" href="dasboard.php">
+        <a class="navbar-brand brand-logo" href="view_dashboard.php">
           <!--<img src="images/logo.svg" alt="logo" />-->
           <img src="../dist/img/logo-ini.png" width="126px" height="17px" alt="logo" />
         </a>
-        <a class="navbar-brand brand-logo-mini" href="dasboard.php">
-          <img src="images/favicon.png" width="16px" height="17px" alt="logo" />
+        <a class="navbar-brand brand-logo-mini" href="view_dashboard.php">
+          <!-- <img src="images/favicon.png" width="16px" height="17px" alt="logo" /> -->
+          <img src="../dist/img/logo_colbiolima.png" width="16px" height="17px" alt="logo" />
         </a>
       </div>
+
       <div class="navbar-menu-wrapper d-flex align-items-center">
 
         <ul class="navbar-nav navbar-nav-right">
-
           <li class="nav-item dropdown d-none d-xl-inline-block">
             <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <span class="profile-text">Bienvenido, <?=$datnomuser;?> !</span>
@@ -55,9 +57,11 @@ if($nivelaxe==1 || $nivelaxe==2){ }else{
             </div>
           </li>
         </ul>
+
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
           <span class="mdi mdi-menu"></span>
         </button>
+
       </div>
     </nav>
     

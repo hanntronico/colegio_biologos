@@ -349,6 +349,8 @@
 
 <script type="text/javascript">
 
+  let decripServ = "";
+
   $( document ).ready(function() {
     llenarComboServicios();
     cargaServicios();
@@ -475,6 +477,7 @@
           tabla.ajax.reload();
           $("#estadoServicio").val("0");
           $('#descripcionServ').val("");
+          decripServ = "";
           verificaPagos();
           // alert(datos);
           // console.log(datos);
@@ -542,6 +545,9 @@
 
   function agregarServicio() {
 
+    decripServ = decripServ + $('select[name="optServicio"] option:selected').text() + ' - ';
+    $('#descripcionServ').val( decripServ );
+
     var formData = new FormData($("#frmRegServ")[0]);
 
     $.ajax({
@@ -556,9 +562,11 @@
         //       bootbox.alert(datos);           
         //       mostrarform(false);
           tabla.ajax.reload();
+
         }
 
     });
+
   }
 
   function cargaServicios() {

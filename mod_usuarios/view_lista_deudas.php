@@ -236,7 +236,9 @@ function buscarPagos() {
     {
       "lengthMenu": [ 5, 12, 24, 75, 100],
       "aProcessing": true,
-        "aServerSide": true,
+      "aServerSide": true,
+      "dom": 'Blfrtip',
+      "buttons": ["copy", "csv", "excel", "pdf", "print"],
       "ajax":
           {
             url: '<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php?op=listar_pagos&idcol=' + $("#idcolegiado").val(),
@@ -302,6 +304,10 @@ function buscarPagos() {
          },
          {
             "targets": 7,
+            "className": "dt-body-right",            
+         },
+         {
+            "targets": 8,
             "className": "dt-body-right",            
          }],        
     }).DataTable();    

@@ -134,48 +134,89 @@ function sizeOfText( $texte, $largeur )
 }
 
 // Company
-function addSociete( $nom, $adresse, $cod_correlativo, $texto, $logo,$ext_logo )
+function addSociete( $nom, $adresse, $codigo_col, $idpagoserv, $logo,$ext_logo )
 {
 	$x1 = 35;
-	$y1 = 132;
-
+	$y1 = 128.5;
 
 	//Positionnement en bas
-	$this->Image($logo , 0 , 0, 210 , 297 , $ext_logo);
-	$this->SetXY( $x1, $y1 );
-	$this->SetFont('Arial','',12);
+	$this->Image($logo , 0 , 0, 210 , 138 , $ext_logo);
+	$this->SetXY( $x1 - 12, $y1 - 89.5 );
+	$this->SetFont('Arial','',10);
 	$length = $this->GetStringWidth( $nom );
-	// $this->Cell( $length, 2, $nom);
-	$this->MultiCell($length, 4, $nom);
+	$this->Cell( $length, 2, $nom);
+	// $this->MultiCell($length, 4, $nom);
 
-	$this->SetXY( $x1 + 75, $y1);
-	$this->SetFont('Arial','B',12);
-
+	$this->SetXY( $x1 - 12, $y1 - 85 );
+	$this->SetFont('Arial','',10);
 	$length = $this->GetStringWidth( $adresse );
 	$lignes = $this->sizeOfText( $adresse, $length) ;
-	$this->MultiCell($length, 4, $adresse);
+	$this->Cell( $length, 2, $adresse);
+	// $this->MultiCell($length, 4, $adresse);
 
-	$this->SetXY( $x1, $y1 + 46);
-	$this->SetFont('Arial','',11);
-	$length = $this->GetStringWidth( $texto );
-	$lignes = $this->sizeOfText( $texto, $length) ;
-	// $this->MultiCell($length, 4, $texto);
-	$this->MultiCell($length, 7, $texto, 2, 'L', 0);
+	$this->SetXY( $x1 + 130, $y1 - 85);
+	$this->SetFont('Arial','B',12);
+	$length = $this->GetStringWidth( $codigo_col );
+	$lignes = $this->sizeOfText( $codigo_col, $length);
+	$this->Cell( $length, 2, $codigo_col);
+	// $this->MultiCell($length, 4, $codigo_col);	
 
-	$this->SetXY( $x1 + 115, $y1 - 113 );
-	$this->SetFont('Arial','B',18);
-	$length = $this->GetStringWidth( $cod_correlativo );
-	$this->Cell( $length, 2, $cod_correlativo);
-
-	$this->SetLineWidth(0.1);
-  $this->SetFillColor(255,255,255, 0.5);
-	$r1  = $this->w - 68;
-  $r2  = $r1 + 48;
-  $y1  = 12;
-  $y2  = $y1 + 2;
-	$this->RoundedRect($r1, $y1, ($r2 - $r1), $y2, 2.5, 'D');
+	$this->SetXY( $x1 + 145, $y1 - 106.5 );
+	$this->SetFont('Arial','B',16);
+	$this->SetTextColor(255,0,0);
+	$length = $this->GetStringWidth( $idpagoserv );
+	$this->Cell( $length, 2, $idpagoserv);
 
 }
+
+function addFechaRecibo($fecha)
+{
+ 	$x1 = 145;
+	$y1 = 38.5;
+
+	//Positionnement en bas
+	$this->SetTextColor(0,0,0);
+	$this->SetXY( $x1, $y1 );
+	$this->SetFont('Arial','',10);
+	$length = $this->GetStringWidth( $fecha );
+	$this->Cell( $length, 2, $fecha);
+} 
+
+function addFechaFirma()
+{
+ 	$x1 = 90;
+	$y1 = 200;
+
+ 	$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+	$originalDate = date("Y-m-d");
+  $dia = date("d", strtotime($originalDate));
+  $mes = $meses[date('n', strtotime($originalDate))-1];
+  $anio = date("Y", strtotime($originalDate));
+  $fechaFin = "Lima " . $dia . " de " . $mes . " de " . $anio;
+
+	//Positionnement en bas
+	$this->SetTextColor(0,0,0);
+	$this->SetXY( $x1, $y1 );
+	$this->SetFont('Arial','',10);
+	$length = $this->GetStringWidth( $fechaFin );
+	$this->Cell( $length, 2, $fechaFin);
+
+	$textoFecheFirma = "    CONSEJO REGIONAL VII LIMA \nCOLEGIO DE BIÃ“LOGOS DEL PERÃš";
+
+	$this->SetTextColor(0,0,0);
+	$this->SetXY( $x1 - 10, $y1 + 10 );
+	$this->SetFont('Arial','',10);
+	$length = $this->GetStringWidth( $textoFecheFirma );
+	// $this->Cell( $length, 2, $fechaFin);
+	$this->MultiCell($length, 4, $textoFecheFirma);
+
+	$this->SetLineWidth(0.1);
+	$this->Line( 150, 208, 70, 208);
+
+} 
+
+
 
 // Label and number of invoice/estimate
 function fact_dev( $libelle, $num )
@@ -237,8 +278,6 @@ function addDate( $date )
 	$this->SetFont( "Arial", "", 10);
 	$this->Cell(10,5,$date, 0,0, "C");
 }
-
-
 
 
 function addClient( $ref )
@@ -345,7 +384,7 @@ function addNumTVA($tva)
 	$this->RoundedRect($r1, $y1, ($r2 - $r1), ($y2-$y1), 2.5, 'D');
 	$this->Line( $r1, $mid, $r2, $mid);
 	$this->SetXY( $r1 + 16 , $y1+1 );
-	$this->Cell(40, 4, "DIRECCIÓN", '', '', "C");
+	$this->Cell(40, 4, "DIRECCIÃ“N", '', '', "C");
 	$this->SetFont( "Arial", "", 10);
 	$this->SetXY( $r1 + 16 , $y1+5 );
 	$this->Cell(40, 5, $tva, '', '', "C");
@@ -354,13 +393,13 @@ function addNumTVA($tva)
 function addReference($ref)
 {
 	$this->SetFont( "Arial", "", 10);
-	$length = $this->GetStringWidth( "Références : " . $ref );
+	$length = $this->GetStringWidth( "RÃ©fÃ©rences : " . $ref );
 	$r1  = 10;
 	$r2  = $r1 + $length;
 	$y1  = 92;
 	$y2  = $y1+5;
 	$this->SetXY( $r1 , $y1 );
-	$this->Cell($length,4, "Références : " . $ref);
+	$this->Cell($length,4, "RÃ©fÃ©rences : " . $ref);
 }
 
 function addCols( $tab )
@@ -369,8 +408,9 @@ function addCols( $tab )
 	
 	$r1  = 10;
 	$r2  = $this->w - ($r1 * 2) ;
-	$y1  = 79;
-	$y2  = $this->h - 50 - $y1;
+	// $y1  = 79;
+	$y1  = 59;
+	$y2  = $this->h - 130 - $y1;
 	$this->SetXY( $r1, $y1 );
 	$this->Rect( $r1, $y1, $r2, $y2, "D");
 	$this->Line( $r1, $y1+6, $r1+$r2, $y1+6);
@@ -498,8 +538,8 @@ function addCadreEurosFrancs($impuesto)
 {
 	$r1  = $this->w - 70;
 	$r2  = $r1 + 60;
-	$y1  = $this->h - 40;
-	$y2  = $y1+20;
+	$y1  = $this->h - 125;
+	$y2  = $y1 + 20;
 	$this->RoundedRect($r1, $y1, ($r2 - $r1), ($y2-$y1), 2.5, 'D');
 	$this->Line( $r1+20,  $y1, $r1+20, $y2); // avant EUROS
 	//$this->Line( $r1+20, $y1+4, $r2, $y1+4); // Sous Euros & Francs
@@ -513,9 +553,11 @@ function addCadreEurosFrancs($impuesto)
 	$this->SetFont( "Arial", "B", 6);
 	$this->SetXY( $r1, $y1+5 );
 	$this->Cell(20,4, "SUBTOTAL", 0, 0, "C");
+	// $this->SetXY( $r1, $y1+10 );
+	// $this->Cell(20,4, $impuesto, 0, 0, "C");
+	// $this->SetXY( $r1, $y1+15 );
+	// $this->Cell(20,4, "TOTAL A PAGAR", 0, 0, "C");
 	$this->SetXY( $r1, $y1+10 );
-	$this->Cell(20,4, $impuesto, 0, 0, "C");
-	$this->SetXY( $r1, $y1+15 );
 	$this->Cell(20,4, "TOTAL A PAGAR", 0, 0, "C");
 }
 
@@ -544,13 +586,15 @@ function addTVAs( $igv, $total,$moneda )
 
 	$re  = $this->w - 30;
 	$rf  = $this->w - 29;
-	$y1  = $this->h - 40;
-	$this->SetFont( "Arial", "", 8);
+	$y1  = $this->h - 125;
+	$this->SetFont( "Arial", "", 10);
 	$this->SetXY( $re, $y1+5 );
 	$this->Cell( 17,4, $moneda.sprintf("%0.2F", $total-($total*$igv/($igv+100))), '', '', 'R');
+	// $this->SetXY( $re, $y1+10 );
+	// $this->Cell( 17,4, $moneda.sprintf("%0.2F", ($total*$igv/($igv+100))), '', '', 'R');
+	// $this->SetXY( $re, $y1+14.8 );
+	// $this->Cell( 17,4, $moneda.sprintf("%0.2F", $total), '', '', 'R');
 	$this->SetXY( $re, $y1+10 );
-	$this->Cell( 17,4, $moneda.sprintf("%0.2F", ($total*$igv/($igv+100))), '', '', 'R');
-	$this->SetXY( $re, $y1+14.8 );
 	$this->Cell( 17,4, $moneda.sprintf("%0.2F", $total), '', '', 'R');
 	
 }
@@ -559,7 +603,8 @@ function addTVAs( $igv, $total,$moneda )
 // call this method first
 function temporaire( $texte )
 {
-	$this->SetFont('Arial','B',50);
+	// $this->SetFont('Arial','B',50);
+	$this->SetFont('Arial','B',10);
 	$this->SetTextColor(203,203,203);
 	$this->Rotate(45,55,190);
 	$this->Text(55,190,$texte);

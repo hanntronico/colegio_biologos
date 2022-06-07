@@ -308,7 +308,7 @@
 
   function cargaProvin(arg) {
     $.ajax({
-      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_provincia.php',
+      url: '<?php echo ENLACE_WEB;?>mod_colegiados/controller_provincia.php',
       type: 'POST',
       data: {departamento: arg},
     })
@@ -323,7 +323,7 @@
 
   function cargaProvinLab(arg) {
     $.ajax({
-      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_provincia.php',
+      url: '<?php echo ENLACE_WEB;?>mod_colegiados/controller_provincia.php',
       type: 'POST',
       data: {departamento: arg},
     })
@@ -338,7 +338,7 @@
 
   function cargaDistrito(arg) {
     $.ajax({
-      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_distrito.php',
+      url: '<?php echo ENLACE_WEB;?>mod_colegiados/controller_distrito.php',
       type: 'POST',
       data: {provincia: arg},
     })
@@ -353,7 +353,7 @@
 
   function cargaDistritoLab(arg) {
     $.ajax({
-      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_distrito.php',
+      url: '<?php echo ENLACE_WEB;?>mod_colegiados/controller_distrito.php',
       type: 'POST',
       data: {provincia: arg},
     })
@@ -433,12 +433,12 @@ function restablcerContrasenha() {
     $.ajax({
       url: 'controller_colegiados.php',
       type: 'POST',
-      data: {accion: 'cambiaPass', idCol:$('#idcolegiado').val() },
+      data: {accion: 'restablecerPass', idCol:$('#idcolegiado').val() },
     })
     .done(function(data) {
       console.log("success data:" + data);
       // listar();
-      tabla.ajax.reload();
+      // tabla.ajax.reload();
     })
     .fail(function() {
       console.log("error");

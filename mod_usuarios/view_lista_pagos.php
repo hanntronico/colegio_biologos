@@ -127,33 +127,27 @@ $codigo_col      = $_SESSION['codigo_col'];
            
             <div class="col-12 grid-margin">
               <div class="card">
-                <div class="card-header">
+<!--                 <div class="card-header">
                   <h3 class="card-title">
-<!--                     <a href="certificado_pdf.php" target="_blank" class="btn btn-info btn-sm ml-3">IMPRIMRI PDF</a> -->
+                    <a href="certificado_pdf.php" target="_blank" class="btn btn-info btn-sm ml-3">IMPRIMRI PDF</a>
                   </h3>
-                </div>
+                </div> -->
 
-                <div class="card-body">
+                <div class="card-body" style="overflow: auto;">
                     
-
-                 
-
-                <table id="lista_pagos_id" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>CBP</th>
-                    <th>Fecha de pago</th>
-                    <th>Descripcion</th>
-                    <th style="text-align: right;">Monto</th>
-                    <th style="text-align: center;">ACCION</th>
-                  </tr>
-                  </thead>
-                  <tbody id="lista_pagos">
-                  </tbody>
-                </table>
-                
-
-
+                  <table id="lista_pagos_id" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>CBP</th>
+                      <th>Fecha de pago</th>
+                      <th>Descripcion</th>
+                      <th style="text-align: right;">Monto</th>
+                      <th style="text-align: center;">ACCION</th>
+                    </tr>
+                    </thead>
+                    <tbody id="lista_pagos">
+                    </tbody>
+                  </table>
                 
                 </div>
             </div>

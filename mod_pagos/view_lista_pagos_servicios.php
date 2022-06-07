@@ -80,7 +80,9 @@
                   <th>FECHA PAGO</th>
                   <th style="text-align: center;">CBP</th>
                   <th>COLEGIADO</th>
+                  <th>DESCRIPCION</th>
                   <th>IMPORTE</th>
+                  <th>RECIBO</th>
                 </tr>
               </thead>
               <tbody id="lista_pago_serv">
@@ -319,11 +321,20 @@
          {
             "targets": 3,
             "className": "dt-body-left"
-            ,"width": "60%"
+            ,"width": "30%"
          },
          {
             "targets": 4,
-            "className": "dt-body-right",            
+            "className": "dt-body-left"
+            ,"width": "30%"
+         },
+         {
+            "targets": 5,
+            "className": "dt-body-center",
+         },
+         {
+            "targets": 6,
+            "className": "dt-body-center",
          }]
     }).DataTable();
 

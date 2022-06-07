@@ -169,6 +169,7 @@
 										$db = $dbh->prepare($sql);
 										$db->execute();
 										$fila = "";
+										$deuda = 0;
 
 										$data= Array();
 
@@ -182,6 +183,10 @@
 												$flag = "<span class='badge badge-pill badge-success'><i class='fas fa-check'></i></span>";
 											}
 
+											$deuda = $deuda + $data_pago->deuda;
+											$deuda = number_format($deuda,2, '.','');
+
+
 											$data[]=array(
 
 							         "0"=>$flag,
@@ -192,10 +197,26 @@
 							         "5"=>$data_pago->deuda,
 							         "6"=>$data_pago->gen,
 							         "7"=>$data_pago->adelanto,
-							         "8"=>$data_pago->saldo,
-							         "9"=>"<a href='#' onclick='javascript: alert(\"hann\");'><i class='fas fa-money-bill-wave'></i></a>"
+							         "8"=>$data_pago->saldo
+							         // ,
+							         // "9"=>"<a href='#' onclick='javascript: alert(\"hann\");'><i class='fas fa-money-bill-wave'></i></a>"
 											);
 										}
+
+
+										array_push($data, array(
+							         "0"=>"",
+							         "1"=>"",
+							         "2"=>"",
+							         "3"=>"",
+							         "4"=>"",
+							         "5"=>"",
+							         "6"=>"",
+							         "7"=>"<b>TOTAL : </b>",
+							         "8"=>"<b>".$deuda."</b>"
+										));
+
+
 
 									 	$results = array(
 										 		"sEcho"=>1, 
@@ -280,7 +301,7 @@
 										$sql = "SELECT PS.`idPagoServ`, PS.`fecha_pago_serv`, PS.`idColegiado`, C.`codigo_col`, PS.`descripcion`, PS.`monto`, PS.`estado` 
 														FROM `pagos_servicios` PS LEFT JOIN `colegiados` C
 														ON PS.idColegiado = C.idColegiado
-														WHERE PS.idColegiado = " . $_GET["idcol"];
+														WHERE PS.idColegiado = " . $_GET["idcol"] . " ORDER BY 1 DESC";
 										$db = $dbh->prepare($sql);
 										$db->execute();
 
@@ -410,7 +431,45 @@
 	}
 
 
+	if ($_POST["accion"]=='carga_pagos_certificados') {
 
+// idPagoServ
+// fecha_pago_serv
+// idColegiado
+// codigo_col
+// descripcion
+// monto
+// estado
+
+// SELECT PS.`idPagoServ`, PS.`fecha_pago_serv`, PS.`idColegiado`, C.`codigo_col`, PS.`descripcion`, PS.`monto`, PS.`estado` 
+// 						 FROM `pagos_servicios` PS LEFT JOIN `colegiados` C
+// 						 ON PS.idColegiado = C.idColegiado
+// 						 WHERE PS.idColegiado = 4342
+
+
+		$sql = "SELECT PS.`idPagoServ`, PS.`fecha_pago_serv`, PSD.`idServicio`, PS.`idColegiado`, C.`codigo_col`, PS.`descripcion`, PS.`monto`, PS.`estado` 
+						FROM `pagos_servicios` PS LEFT JOIN `colegiados` C
+						ON PS.idColegiado = C.idColegiado
+						LEFT JOIN pagos_servicios_detalle PSD
+						ON PSD.idPagoServ = PS.idPagoServ
+						WHERE PS.estado = 1 AND PSD.idServicio = 3 AND PS.idColegiado = " . $_POST["idcolegiado"];
+		$db = $dbh->prepare($sql);
+		$db->execute();
+		$fila = "";
+			while($dataPagos = $db->fetch(PDO::FETCH_OBJ)):
+				$fechaVence = date("d/m/Y", strtotime($dataPagos->fecha_pago_serv));
+				$acciones = "<button type='button' class='btn btn-warning btn-sm' onclick='seleccionarPago(".$dataPagos->idPagoServ.")'><i class='fa fa-check mr-1'></i></button>";
+				$fila .= "<tr>
+				          <td style='text-align:center;'>".$dataPagos->idPagoServ."</td>
+				          <td>".$fechaVence."</td>
+				          <td>"."CERTIFICADO DE HABILIDAD"."</td>
+				          <td>".$dataPagos->monto."</td>
+				          <td style='text-align:center;'>".$acciones."</td>
+				         </tr>";
+			endwhile;
+		echo $fila;
+
+	}
 
 
 

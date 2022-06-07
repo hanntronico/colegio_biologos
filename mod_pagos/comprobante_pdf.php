@@ -1,5 +1,7 @@
 <?php
-//Activamos el almacenamiento en el buffer
+
+// echo $_GET["id"];
+
 
 ob_start();
 if (strlen(session_id()) < 1) 
@@ -36,17 +38,18 @@ if (1==1)
                  CA.fec_colegiatura as fecha_col
           FROM colegiados C INNER JOIN colegiatura CA
           ON CA.idColegiado = C.idColegiado
-          WHERE C.idColegiado = " . $_SESSION['idColegiado'];
+          WHERE C.idColegiado = " . $_GET["idcol"];
 
   $db = $dbh->prepare($sql);
   $db->execute();
   $data_colegiado = $db->fetch(PDO::FETCH_OBJ);
 
+
 //Incluímos el archivo Factura.php
 require('Recibo.php');
 
 //Establecemos los datos de la empresa
-$logo = "recibo_A_OK.jpg";
+$logo = ENLACE_WEB . "mod_usuarios/recibo_A_OK.jpg";
 $ext_logo = "jpg";
 // $empresa = "Soluciones Innovadoras Perú S.A.C.";
 // $documento = "20477157772";
@@ -97,7 +100,7 @@ $codigo_colegiado = $data_colegiado->codigo;
                  `monto`, 
                  `estado` 
           FROM `pagos_servicios`
-          WHERE idPagoServ=". $_GET["id"] ." AND idColegiado = " . $_SESSION['idColegiado'];
+          WHERE idPagoServ=". $_GET["id"] ." AND idColegiado = " . $_GET["idcol"];
 
   $db = $dbh->prepare($sqlpagoServ);
   $db->execute();
@@ -228,4 +231,6 @@ else
 
 }
 ob_end_flush();
+
+
 ?>

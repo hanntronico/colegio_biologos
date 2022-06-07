@@ -7,9 +7,9 @@
 	$db->execute();
 
 	$fila = "";
+	$fila = "<option value='0'>Seleccione distrito</option>";
 
 	while($data = $db->fetch(PDO::FETCH_OBJ)):
-
 		$fila .= "<option value='".$data->iddistrito."'>". $data->distritos ."</option>";
   endwhile;
 

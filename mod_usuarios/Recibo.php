@@ -134,7 +134,7 @@ function sizeOfText( $texte, $largeur )
 }
 
 // Company
-function addSociete( $nom, $adresse, $codigo_col, $logo,$ext_logo )
+function addSociete( $nom, $adresse, $codigo_col, $idpagoserv, $logo,$ext_logo )
 {
 	$x1 = 35;
 	$y1 = 128.5;
@@ -164,8 +164,8 @@ function addSociete( $nom, $adresse, $codigo_col, $logo,$ext_logo )
 	$this->SetXY( $x1 + 145, $y1 - 106.5 );
 	$this->SetFont('Arial','B',16);
 	$this->SetTextColor(255,0,0);
-	$length = $this->GetStringWidth( "1001" );
-	$this->Cell( $length, 2, "1001");
+	$length = $this->GetStringWidth( $idpagoserv );
+	$this->Cell( $length, 2, $idpagoserv);
 
 }
 

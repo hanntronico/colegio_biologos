@@ -186,7 +186,9 @@
 					         "1"=>$fechaPagoServ,
 					         "2"=>$data_pagosS->codigo_col,
 					         "3"=>$data_pagosS->nom_colegiado . " " . $data_pagosS->ape_paterno . " " . $data_pagosS->ape_materno,
-					         "4"=>$data_pagosS->monto
+					         "4"=>$data_pagosS->descripcion,
+					         "5"=>$data_pagosS->monto,
+					         "6"=>"<a class='btn btn-info btn-sm' href='".ENLACE_WEB."mod_pagos/comprobante_pdf.php?id=".$data_pagosS->idPagoServ."&idcol=".$data_pagosS->idColegiado."' target='_blank'><i class='fas fa-print'></i></a>"
 									);
 								}
 
@@ -468,7 +470,7 @@
 									$estadoPagoServ = ($_POST["estadoServicio"]==0) ? 1 : $_POST["estadoServicio"];
 
 									if($_POST["estadoServicio"]==0){
-										$descripcionServ = "";
+										$descripcionServ = $_POST["descripcionServ"];
 									}else{
 										$descripcionServ = $_POST["descripcionServ"];
 									}

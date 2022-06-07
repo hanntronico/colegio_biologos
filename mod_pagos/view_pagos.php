@@ -52,7 +52,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Registro de Pagos</h1>
+            <h1 class="m-0">Gestión de deudas</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -206,7 +206,7 @@
                     <th>Gen</th>
                     <th style="text-align: right;">Adelanto</th>
                     <th style="text-align: right;">Saldo</th>
-                    <th style="text-align: center;">&nbsp;</th>
+                    <!-- <th style="text-align: center;">&nbsp;</th> -->
                   </tr>
                   </thead>
                   <tbody id="lista_pagos">
@@ -227,7 +227,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="#">Grupo Alcedo</a>.</strong>
+    <strong>Copyright &copy; 2022 <a href="#">Grupo Alcedo</a>.</strong>
     Todos los derechos reservados.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 1.0.0
@@ -522,14 +522,17 @@
          {
             "targets": 1,
             "className": "dt-body-center"
+            ,"width": "4%"
          },
          {
             "targets": 2,
-            "className": "dt-body-center",
+            "className": "dt-body-center"
+            ,"width": "8%"
          },
          {
             "targets": 3,
-            "className": "dt-body-right",            
+            "className": "dt-body-right"
+            ,"width": "9%"            
          },
          {
             "targets": 4,
@@ -541,7 +544,7 @@
          },
          {
             "targets": 6,
-            "className": "dt-body-right",            
+            "className": "dt-body-left",            
          },
          {
             "targets": 7,
@@ -549,12 +552,14 @@
          },
          {
             "targets": 8,
-            "className": "dt-body-center",
-         },
-         {
-            "targets": 9,
-            "className": "dt-body-center",
-         }],        
+            "className": "dt-body-right",
+         }
+         // ,
+         // {
+         //    "targets": 9,
+         //    "className": "dt-body-center",
+         // }
+         ],        
     }).DataTable();    
 
 

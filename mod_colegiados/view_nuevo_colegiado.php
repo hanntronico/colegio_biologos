@@ -297,7 +297,7 @@
 
   function cargaProvin(arg) {
     $.ajax({
-      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_provincia.php',
+      url: '<?php echo ENLACE_WEB;?>mod_colegiados/controller_provincia.php',
       type: 'POST',
       data: {departamento: arg},
     })
@@ -312,7 +312,7 @@
 
   function cargaProvinLab(arg) {
     $.ajax({
-      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_provincia.php',
+      url: '<?php echo ENLACE_WEB;?>mod_colegiados/controller_provincia.php',
       type: 'POST',
       data: {departamento: arg},
     })
@@ -327,7 +327,7 @@
 
   function cargaDistrito(arg) {
     $.ajax({
-      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_distrito.php',
+      url: '<?php echo ENLACE_WEB;?>mod_colegiados/controller_distrito.php',
       type: 'POST',
       data: {provincia: arg},
     })
@@ -342,7 +342,7 @@
 
   function cargaDistritoLab(arg) {
     $.ajax({
-      url: 'http://127.0.0.1/colegio_biologos/mod_colegiados/controller_distrito.php',
+      url: '<?php echo ENLACE_WEB;?>mod_colegiados/controller_distrito.php',
       type: 'POST',
       data: {provincia: arg},
     })
