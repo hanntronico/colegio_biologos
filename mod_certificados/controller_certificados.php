@@ -30,12 +30,12 @@
 // idPagoServ, fecha_pago_serv, idColegiado, descripcion, monto, estado
 
 
-							$sql = "SELECT CE.idCertificado, CO.codigo_col, CO.nom_colegiado, CO.ape_paterno, CO.ape_materno, CE.fechaEmision, CE.estadoCertificado 
+							$sql = "SELECT CE.idCertificado, CO.idColegiado, CO.codigo_col, CO.nom_colegiado, CO.ape_paterno, CO.ape_materno, CE.fechaEmision, CE.estadoCertificado 
 											FROM certificados CE 
 											LEFT JOIN colegiados CO
 											ON CE.idColegiado = CO.idColegiado
 											LEFT JOIN pagos_servicios PS
-											ON CE.idPagoServ = PS.idPagoServ";
+											ON CE.idPagoServ = PS.idPagoServ WHERE CE.estadoCertificado = 1";
 							$db = $dbh->prepare($sql);
 							$db->execute();
 							$fila = "";
@@ -52,7 +52,8 @@
 							       "0"=>$data_cert->idCertificado,
 							       "1"=>$data_cert->codigo_col,
 							       "2"=>$data_cert->nom_colegiado . " " . $data_cert->ape_paterno . " " . $data_cert->ape_materno,
-							       "3"=>$fechaEmision
+							       "3"=>$fechaEmision,
+							       "4"=>"<a class='btn btn-info btn-sm' href='".ENLACE_WEB."mod_certificados/certificado_pdf.php?idColegiado=".$data_cert->idColegiado."&id=".$data_cert->idCertificado."' target='_blank'><i class='fas fa-print'></i></a>"
 									);
 								}
 

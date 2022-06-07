@@ -191,6 +191,7 @@
         <th style="text-align: center;">CBP</th>
         <th>Colegiado</th>
         <th>Fecha emisión</th>
+        <th>Acción</th>
 <!--         <th style="text-align: right;">Mora</th>
         <th style="text-align: right;">Deuda</th>
         <th>Gen</th>
@@ -503,13 +504,15 @@
          {
             "targets": 3,
             "className": "dt-body-right"
-            // ,"width": "9%"            
+            // ,"width": "9%"
+         }
+         ,
+         {
+            "targets": 4,
+            "className": "dt-body-center"
+            ,"width": "6%"            
          }
          // ,
-         // {
-         //    "targets": 4,
-         //    "className": "dt-body-right",            
-         // },
          // {
          //    "targets": 5,
          //    "className": "dt-body-right",            
