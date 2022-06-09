@@ -29,7 +29,8 @@ if (1==1)
                  C.fec_nac, 
                  C.foto, 
                  C.telefono, 
-                 C.email, 
+                 C.email,
+                 C.direccion,
                  C.lug_nacim, 
                  C.lug_labores, 
                  C.info_contacto, 
@@ -89,9 +90,9 @@ $pdf->AddPage();
 
 $datos_colegiado = utf8_decode($data_colegiado->ape_paterno) . ' ' . utf8_decode($data_colegiado->ape_materno) . " " . utf8_decode($data_colegiado->nom_colegiado);
 
-$direccion = "direccion del colegiado";
+$direccion = $data_colegiado->direccion;
 
-$codigo_colegiado = $data_colegiado->codigo;
+$codigo_colegiado = $data_colegiado->dni;
 
   $sqlpagoServ = "SELECT `idPagoServ`, 
                  `fecha_pago_serv`, 

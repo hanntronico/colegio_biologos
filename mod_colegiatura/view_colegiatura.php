@@ -76,14 +76,9 @@
                       </button>
                     </div>
 
-                    <div class="col-md-2 ml-4">
-                      <label for="fecha_pago_colegiatura">Fecha de colegiatura:</label>
-                      <input type="date" class="form-control" name="fecha_pago_colegiatura" id="fecha_pago_colegiatura" required>
-<!--                       <label for="validationServer02">Nro </label>
-                      <input type="text" class="form-control" id="validationServer02" placeholder="Last name" required> -->
-<!--                       <button type="button" class="btn btn-primary mt-2" style="margin-left: 25px;" onclick="buscarPagos()">
-                        Buscar Pagos
-                      </button> -->
+                    <div class="col-md-2 ml-3">
+                      <label for="txtCodigoColegiado">CBP Asignado:</label>
+                      <input type="text" class="form-control" name="txtCodigoColegiado" id="txtCodigoColegiado" required>
                     </div>
 
 <!-- 
@@ -92,28 +87,26 @@
 • Sector Profesional
 • Universidad/Instituto
 • Especialidad
-                                        • Documentos adjuntos
-                                        • Región
-                                        • Documento de Identidad
-                                        • Concepto de Pagos 
+• Documentos adjuntos
+• Región
+• Documento de Identidad
+• Concepto de Pagos 
 -->
 
 
-                    <div class="col-md-3">
-<!--                       <label for="optServicio">Servicios:</label>
-                      <select class="form-control" name="optServicio" id="optServicio">
-                        <option value="0">Selecciona Servicio</option>
-                      </select> -->
+                    <div class="col-md-2">
+                      <label for="fecha_pago_colegiatura">Fecha de colegiatura:</label>
+                      <input type="date" class="form-control" name="fecha_pago_colegiatura" id="fecha_pago_colegiatura" required>
+                    </div>
+
+
+                    <div class="col-md-2">
                       <label for="optSector">Sector profesional:</label>
                       <select class="form-control" name="optSector" id="optSector" required>
                         <option value="0">Selecciona sector</option>
                         <option value="publico">Sector público</option>
                         <option value="privado">Sector privado</option>
-                      </select>                      
-                    </div>
-
-
-                    <div class="col-md-4">
+                      </select>                          
                     </div>
                   </div>
 
@@ -464,7 +457,22 @@
 
   function seleccionarColegiado(idColegiado) {
     
-    alert("Colegiado seleccionado!");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Agregado correctamente'
+      })
 
       $.ajax({
         url: '<?php echo ENLACE_WEB?>mod_pagos/controller_pagos.php',
@@ -507,7 +515,7 @@
     $.ajax({
       url: '<?php echo ENLACE_WEB?>mod_colegiados/controller_colegiados.php',
       type: 'POST',
-      data: {accion: 'carga_busqueda_colegiados', dni_codigo: $("#dni_codigo").val()},
+      data: {accion: 'colegiados_sin_colegiatura', dni_codigo: $("#dni_codigo").val()},
     })
     .done(function(data) {
       // console.log(data);

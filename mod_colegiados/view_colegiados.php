@@ -63,7 +63,7 @@
                   <tr>
                     <th>ID</th>
                     <th>DNI</th>
-                    <th>CODIGO</th>
+                    <th>CBP</th>
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th width="5%">Teléfono</th>
@@ -80,7 +80,7 @@
                   <tr>
                     <th>ID</th>
                     <th>DNI</th>
-                    <th>CODIGO</th>
+                    <th>CBP</th>
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Teléfono</th>

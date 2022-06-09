@@ -406,6 +406,12 @@
               // mostrarform(false);
               // tabla.ajax.reload();
           console.log(datos);
+          Swal.fire(
+                'Exito!',
+                'Colegiado registrado correctamente!',
+                'success'
+          ) 
+          
           location.href="<?php echo ENLACE_WEB;?>mod_colegiados/view_colegiados.php";
         }
 

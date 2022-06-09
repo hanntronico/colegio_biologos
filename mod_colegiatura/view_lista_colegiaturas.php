@@ -34,7 +34,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Listado de Colegiados Exonerados</h1>
+            <h1 class="m-0">Listado de colegiaturas registradas</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -54,19 +54,20 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Colegiados exonerados en el SISTEMA al <?php echo date("d/m/Y") ?></h3>
+								<h3 class="card-title">Colegiaturas en el SISTEMA al <?php echo date("d/m/Y") ?></h3>
+								<a href="<?php echo ENLACE_WEB;?>mod_colegiatura/" class="btn btn-primary btn-xl ml-4">Registrar Colegiatura</a>
               </div>
               <!-- /.card-header -->
-              <div class="card-body">
-                <table id="lista_colegiados_id" class="table table-bordered table-striped">
+              <div class="card-body" style="overflow: auto;">
+                <table id="lista_colegiaturas_id" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>ID</th>
-                    <th style="text-align: center;">DNI</th>
-                    <th style="text-align: center;">CBP</th>
+                    <th>DNI</th>
+                    <th>CBP</th>
                     <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th style="text-align: center;">Estado</th>
+                    <th>Fecha colegiatura</th>
+                    <th>Estado</th>
                   </tr>
                   </thead>
                   <tbody id="lista_colegiados">
@@ -80,7 +81,7 @@
                     <th>DNI</th>
                     <th>CBP</th>
                     <th>Nombres</th>
-                    <th>Apellidos</th>
+                    <th>Fecha colegiatura</th>
                     <th>Estado</th>
                   </tr>
                   </tfoot>
@@ -99,7 +100,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="#">Grupo Alcedo</a>.</strong>
+    <strong>Copyright &copy; 2022 <a href="#">Grupo Alcedo</a>.</strong>
     Todos los derechos reservados.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 1.0.0
@@ -143,22 +144,26 @@
 
 function listar()
 {
-  tabla=$('#lista_colegiados_id').dataTable(
+  tabla=$('#lista_colegiaturas_id').dataTable(
   {
-    "lengthMenu": [ 5, 10, 25, 75, 100],//mostramos el menú de registros a revisar
-    "aProcessing": true,//Activamos el procesamiento del datatables
-    "aServerSide": true,//Paginación y filtrado realizados por el servidor
+    "lengthMenu": [ 5, 10, 25, 75, 100],
+    "aProcessing": true,
+    "aServerSide": true,
     "autoWidth": true,
     "dom": 'Blfrtip',
     "buttons": ["copy", "csv", "excel", "pdf", "print"],
     "ajax":
         {
-          url: 'controller_colegiados.php?op=listar_exonerados',
+          url: '<?php echo ENLACE_WEB;?>mod_colegiatura/controller_colegiatura.php?op=listar_colegiaturas',
           type : "get",
           dataType : "json",            
           error: function(e){
             console.log(e.responseText);  
-          }
+					}
+//					,
+//					success: function(e){
+//						console.log('exito msn: ' + e);
+//					},
         },
       "language": {
         url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
@@ -174,7 +179,8 @@ function listar()
          },
          {
             "targets": 1,
-            "className": "dt-body-center"
+						"className": "dt-body-center",
+						"className": "dt-head-center"
             ,"width": "4%"
          },
          {
@@ -184,12 +190,18 @@ function listar()
          },
          {
             "targets": 3,
-            "className": "dt-body-left",            
+						"className": "dt-body-left",
+						"className": "dt-head-left"						
          },
          {
             "targets": 4,
-            "className": "dt-body-left",            
-         },
+						"className": "dt-body-center"
+						,"width": "16%"	
+				 },
+				 {
+						"targets": 4,
+						"className": "dt-head-center"
+				 },	
          {
             "targets": 5,
             "className": "dt-body-center"
@@ -198,10 +210,6 @@ function listar()
     }).DataTable();
 
 }
-
-
-
-
 
    //    function cargaListadoColegios() {
 

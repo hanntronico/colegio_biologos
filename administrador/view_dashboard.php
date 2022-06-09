@@ -56,14 +56,14 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3 id="totalColegiados">50</h3>
+                <h3 id="totalColegiados"></h3>
 
                 <p>Colegiados Registrados</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">Ver detalle <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="<?php echo ENLACE_WEB;?>mod_colegiados/" class="small-box-footer">Ver detalle <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

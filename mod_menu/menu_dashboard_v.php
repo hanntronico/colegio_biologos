@@ -38,32 +38,33 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Mantenimientos
+                Operaciones
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="<?php echo ENLACE_WEB;?>mod_colegiados/" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="far fa-check-square nav-icon"></i>
                   <p>Registro colegiados</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo ENLACE_WEB;?>mod_colegiatura/" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Registrar colegiatura</p>
+                <!-- <a href="<?php //echo ENLACE_WEB;?>mod_colegiatura/" class="nav-link"> -->
+                <a href="<?php echo ENLACE_WEB;?>mod_colegiatura/view_lista_colegiaturas.php" class="nav-link">
+                  <i class="far fa-check-square nav-icon"></i>
+                  <p>Procesar colegiatura</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="<?php echo ENLACE_WEB;?>mod_certificados/view_certificados.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="far fa-check-square nav-icon"></i>
                   <p>Emitir certificados</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="javascript:void(0);" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="far fa-check-square nav-icon"></i>
                   <p>Gestión de estado</p>
                 </a>
               </li>

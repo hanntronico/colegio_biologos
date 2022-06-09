@@ -176,8 +176,7 @@ $codigo_col      = $_SESSION['codigo_col'];
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <script src="vendors/js/vendor.bundle.addons.js"></script>
 
-	http://127.0.0.1/colegio_biologos/mod_usuarios/%3Cbr%20/%3E%3Cb%3EWarning%3C/b%3E:%20%20Use%20of%20undefined%20constant%20ENLACE_WEB%20-%20assumed%20'ENLACE_WEB'%20(this%20will%20throw%20an%20Error%20in%20a%20future%20version%20of%20PHP)%20in%20%3Cb%3EC:/laragon/www/colegio_biologos/mod_usuarios/view_dashboard.php%3C/b%3E%20on%20line%20%3Cb%3E186%3C/b%3E%3Cbr%20/%3EENLACE_WEBmod_usuarios/js/off-canvas.js
-  
+ 
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->

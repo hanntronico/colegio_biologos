@@ -156,13 +156,13 @@
                   <div class="form-row">
                     <div class="form-group col-md-4">
                       <label for="departamento">Departamento</label>
-                      <select id="departamento" class="form-control" onchange="cargaProvin(this.value)">
+                      <select name="departamento" id="departamento" class="form-control" onchange="cargaProvin(this.value)">
                           <option value="0">Seleccione departamento</option>
                       </select>
                     </div>                    
                     <div class="form-group col-md-4">
                       <label for="provincia">Provincia</label>
-                      <select id="provincia" class="form-control" onchange="cargaDistrito(this.value)">
+                      <select name="provincia" id="provincia" class="form-control" onchange="cargaDistrito(this.value)">
                         <option value="0">Seleccione provincia</option>
                       </select>
                     </div>                    
@@ -261,6 +261,21 @@
 
 <script type="text/javascript">
 
+  $( document ).ready(function() {
+    $.get('controller_departamentos.php', function(data) {
+      $('#departamento').empty().html(data);
+    });
+
+    $.get('controller_departamentos.php', function(data) {
+      $('#departamento_lab').empty().html(data);
+    });
+
+
+    mostrar();
+
+  });
+
+
   $( "#input_btn" ).click(function(event) {
     event.preventDefault();
     $( "#input_file" ).click();
@@ -276,35 +291,6 @@
     }
   });
   
-  // "paging": true,
-  // "processing": true,
-  // "serverSide": true,
-  // "ajax": {
-  //     "url" : "controlador_listado_tablas.php",
-  //     "type": "GET"
-  // },
-  // "language": {
-  //   url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
-  // },
-  // // "dom": 'Bfrtip',
-  // "dom": 'Blfrtip',
-  // "buttons": [
-  //     'csv', 'excel', 'pdf', 'print'
-  // ]
-
-  $( document ).ready(function() {
-    $.get('controller_departamentos.php', function(data) {
-      $('#departamento').empty().html(data);
-    });
-
-    $.get('controller_departamentos.php', function(data) {
-      $('#departamento_lab').empty().html(data);
-    });
-
-
-    mostrar();
-
-  });
 
   function cargaProvin(arg) {
     $.ajax({
@@ -413,11 +399,17 @@
 
         success: function(datos)
         {                    
-              // bootbox.alert(datos);
-              // mostrarform(false);
-              // tabla.ajax.reload();
-          console.log(datos);
-          // location.href="<?php //echo ENLACE_WEB;?>mod_colegiados/view_colegiados.php";
+          // bootbox.alert(datos);
+          // mostrarform(false);
+          // tabla.ajax.reload();
+          // console.log(datos);
+          Swal.fire(
+            'Exito!',
+            'Colegiado editado correctamente!',
+            'success'
+          ) 
+          
+          location.href="<?php echo ENLACE_WEB;?>mod_colegiados/view_colegiados.php";
         }
 
     });
@@ -452,7 +444,11 @@ function mostrar(idusuario)
   {
     data = JSON.parse(data);
     // console.log(data.ape_paterno);
-    $('#idcolegiado').val(data.idColegiado);
+    // console.log(data);
+    // $('#idcolegiado').val(data.idColegiado);
+
+    // iddistrito | idprovincia | iddepartamento
+    // 1263       |         127 |             15
 
     $('#inputNombres').val(data.nom_colegiado);
     $('#inputApePaterno').val(data.ape_paterno);
@@ -463,12 +459,23 @@ function mostrar(idusuario)
     $('#inputEmail').val(data.email);
     $('#inputDireccion').val(data.direccion);
 
-    $('#departamento').val(6);
+    console.log('depart: ' + data.departamento);
+    $('#departamento').val(data.departamento);
     $('#departamento').change();
-    $('#provincia').val(5);
-    $('#provincia').change();
-    $('#distrito').val(data.lug_nacim);
-    $('#distrito').change();
+
+    // $('#provincia').val(127);
+
+    $("#provincia option[value='127']").attr("selected",true);
+    
+    // $('#provincia > option[value=127]').attr('selected', 'selected');
+
+    // $('#provincia').val('127');
+    // $('#provincia').selectpicker('render');
+
+    // $('#provincia').val(data.provincia);
+    // $('#provincia').change();
+    // $('#distrito').val(data.lug_nacim);
+    // $('#distrito').change();
 
     $("#imgColegiado").attr("src",'<?php echo ENLACE_WEB;?>dist/img/colegiados/'+data.foto);
     $('#imgFoto').val(data.foto);
