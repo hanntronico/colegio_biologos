@@ -185,6 +185,22 @@
 
 					break;
 
+					case 'obtenerDepaNac':
+						$sqlCol = "SELECT DEP.iddepartamento as departamento
+												FROM colegiados C LEFT JOIN distritos D
+												ON C.lug_nacim = D.iddistrito
+												LEFT JOIN provincias P
+												ON D.idprovincia = P.idprovincia
+												LEFT JOIN departamentos DEP
+												ON P.iddepartamento = DEP.iddepartamento
+												WHERE idColegiado = " . $_GET["idcol"];
+								    		$db = $dbh->prepare($sqlCol);
+		    		$db->execute();
+		    		$data = $db->fetch(PDO::FETCH_OBJ);
+
+		    		echo $data->departamento;
+
+					break;
 
 					case 'total_colegiados':
 						$sqlConsulta = "SELECT count(*) as total_colegiados FROM colegiados";
@@ -541,36 +557,38 @@
 
 
 																		 						 // `foto`						=:foto,
-							 	$sqlEdita = "UPDATE `colegiados` SET `nom_colegiado`	=:nom_colegiado,
-																				 						 `ape_paterno`		=:apePaterno,
-																				 						 `ape_materno`		=:apeMaterno,
-																				 						 `dni`						=:dni,
-																				 						 `fec_nac`				=:fec_nac,
-																				 						 `foto`						=:foto,
-																				 						 `telefono`				=:telefono,
-																				 						 `email`					=:email,
-																				 						 `direccion`			=:direccion,
-																				 						 `lug_nacim`			=:lug_nacim,
-																				 						 `lug_labores`		=:lug_labores,
-																				 						 `info_contacto`	=:info_contacto,
-																				 						 `estado`					=:estado 
+							 	$sqlEdita = "UPDATE `colegiados` SET `nom_colegiado`	 =:nom_colegiado,
+																				 						 `ape_paterno`		 =:apePaterno,
+																				 						 `ape_materno`		 =:apeMaterno,
+																				 						 `dni`						 =:dni,
+																				 						 `fec_nac`				 =:fec_nac,
+																				 						 `foto`						 =:foto,
+																				 						 `telefono`				 =:telefono,
+																				 						 `email`					 =:email,
+																				 						 `direccion`			 =:direccion,
+																				 						 `lug_nacim`			 =:lug_nacim,
+																				 						 `lug_labores`		 =:lug_labores,
+																				 						 `info_contacto`	 =:info_contacto,
+																				 						 `estado_exonerado`=:estado_exonerado,
+																				 						 `estado`					 =:estado 
 															WHERE `idColegiado` = " . $_POST["idcolegiado"];
 
-							  $db = $dbh->prepare($sqlEdita);
-							  $db->bindValue(':nom_colegiado' , $_POST["inputNombres"], 		PDO::PARAM_STR);
-							  $db->bindValue(':apePaterno'	  , $_POST["inputApePaterno"], 	PDO::PARAM_STR);
-							  $db->bindValue(':apeMaterno'	  , $_POST["inputApeMaterno"], 	PDO::PARAM_STR);
-							  $db->bindValue(':dni'					  , $_POST["inputDni"], 				PDO::PARAM_STR);
-							  $db->bindValue(':fec_nac'			  , $_POST["inputFecNac"], 			PDO::PARAM_STR);
-							  $db->bindValue(':foto'				  , $imagen,	 									PDO::PARAM_STR);
-							  $db->bindValue(':telefono'		  , $_POST["inputTelefono"], 		PDO::PARAM_STR);
-							  $db->bindValue(':email'				  , $_POST["inputEmail"], 			PDO::PARAM_STR);
-							  $db->bindValue(':direccion'		  , $_POST["inputDireccion"], 	PDO::PARAM_STR);
-							  $db->bindValue(':lug_nacim'		  , ($_POST["distrito"]==0) ? null : $_POST["distrito"], 				PDO::PARAM_INT);
-							  $db->bindValue(':lug_labores'	  , ($_POST["distrito_lab"]==0) ? null : $_POST["distrito_lab"], 		PDO::PARAM_INT);
-							  $db->bindValue(':info_contacto' , 'info', 										PDO::PARAM_STR);
-							  $db->bindValue(':estado'				, 1, 													PDO::PARAM_INT);
-							  $result = $db->execute();
+							  $db33 = $dbh->prepare($sqlEdita);
+							  $db33->bindValue(':nom_colegiado' 		, $_POST["inputNombres"], 		PDO::PARAM_STR);
+							  $db33->bindValue(':apePaterno'	  		, $_POST["inputApePaterno"], 	PDO::PARAM_STR);
+							  $db33->bindValue(':apeMaterno'	  		, $_POST["inputApeMaterno"], 	PDO::PARAM_STR);
+							  $db33->bindValue(':dni'					  		, $_POST["inputDni"], 				PDO::PARAM_STR);
+							  $db33->bindValue(':fec_nac'			  		, $_POST["inputFecNac"], 			PDO::PARAM_STR);
+							  $db33->bindValue(':foto'				  		, $imagen,	 									PDO::PARAM_STR);
+							  $db33->bindValue(':telefono'		  		, $_POST["inputTelefono"], 		PDO::PARAM_STR);
+							  $db33->bindValue(':email'				  		, $_POST["inputEmail"], 			PDO::PARAM_STR);
+							  $db33->bindValue(':direccion'		  		, $_POST["inputDireccion"], 	PDO::PARAM_STR);
+							  $db33->bindValue(':lug_nacim'		  		, ($_POST["distrito"]==0) 		? null : $_POST["distrito"], 				PDO::PARAM_INT);
+							  $db33->bindValue(':lug_labores'	  		, ($_POST["distrito_lab"]==0) ? null : $_POST["distrito_lab"], 		PDO::PARAM_INT);
+							  $db33->bindValue(':info_contacto' 		, 'info', 										PDO::PARAM_STR);
+							  $db33->bindValue(':estado_exonerado'	, 0, 													PDO::PARAM_INT);
+							  $db33->bindValue(':estado'						, 1, 													PDO::PARAM_INT);
+							  $result = $db33->execute();
 
 						    if ($result) {
 						    	echo $result;
