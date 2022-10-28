@@ -1,7 +1,7 @@
 <?php 
 
 if( empty($_POST["usuario"]) && empty($_POST["password"]) ){
-	echo "vacios ambos ";
+	echo "vacios ambos";
 }else{
 	// echo "entro al login php : " . $_POST["usuario"] . " - " . $_POST["password"];
 
