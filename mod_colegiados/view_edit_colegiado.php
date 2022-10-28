@@ -188,6 +188,9 @@
                       <label for="provincia_lab">Provincia</label>
                       <select id="provincia_lab" class="form-control" onchange="cargaDistritoLab(this.value)">
                         <option value="0">Seleccione provincia</option>
+                        <option value="1">Primero</option>
+                        <option value="2">Segundo</option>
+                        <option value="3">Tercero</option>
                       </select>
                     </div>                    
                     <div class="form-group col-md-4">
@@ -242,12 +245,15 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="#">Grupo Alcedo</a>.</strong>
+    <strong>Copyright &copy; 2022 <a href="#">Grupo Alcedo</a>.</strong>
     Todos los derechos reservados.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 1.0.0
     </div>
   </footer>
+
+
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -259,9 +265,14 @@
 
   <?php include_once "../foot.php"; ?>
 
-<script type="text/javascript">
+<!--         $.get('controller_colegiados.php?op=obtenerDepaNac&idcol=' + "<?php //echo $_GET['idcol']?>", function(data) {
+            console.log(data);
+        }); -->
 
+<script type="text/javascript">
+  
   $( document ).ready(function() {
+
     $.get('controller_departamentos.php', function(data) {
       $('#departamento').empty().html(data);
     });
@@ -270,8 +281,10 @@
       $('#departamento_lab').empty().html(data);
     });
 
-
+    // cargaProvin(15);
     mostrar();
+
+
 
   });
 
@@ -300,7 +313,8 @@
     })
     .done(function(data) {
       // console.log('carga provincia: ' + data);
-      $('#provincia').empty().html(data);
+      // $('#provincia').empty().html(data);
+      $('#provincia').html(data);
     })
     .fail(function() {
       console.log("error");
@@ -315,7 +329,8 @@
     })
     .done(function(data) {
       // console.log('carga provincia: ' + data);
-      $('#provincia_lab').empty().html(data);
+      // $('#provincia_lab').empty().html(data);
+      $('#provincia_lab').html(data);
     })
     .fail(function() {
       console.log("error");
@@ -330,7 +345,8 @@
     })
     .done(function(data) {
       // console.log('carga provincia: ' + data);
-      $('#distrito').empty().html(data);
+      // $('#distrito').empty().html(data);
+      $('#distrito').html(data);
     })
     .fail(function() {
       console.log("error");
@@ -345,7 +361,8 @@
     })
     .done(function(data) {
       // console.log('carga provincia: ' + data);
-      $('#distrito_lab').empty().html(data);
+      // $('#distrito_lab').empty().html(data);
+      $('#distrito_lab').html(data);
     })
     .fail(function() {
       console.log("error");
@@ -368,9 +385,6 @@
   function guardaryeditar(e) {
   
     // var datosForm = $('#frmColegiado').serialize();
-    // // var datosForm = $('#frmColegiado').serializeArray();
-
-    // // console.log(datosForm);
 
     // $.ajax({
     //   url: 'controller_colegiados.php',
@@ -402,7 +416,9 @@
           // bootbox.alert(datos);
           // mostrarform(false);
           // tabla.ajax.reload();
-          // console.log(datos);
+          
+          console.log(datos);
+
           Swal.fire(
             'Exito!',
             'Colegiado editado correctamente!',
@@ -444,12 +460,12 @@ function mostrar(idusuario)
   {
     data = JSON.parse(data);
     // console.log(data.ape_paterno);
-    // console.log(data);
-    // $('#idcolegiado').val(data.idColegiado);
+    console.log(data);
 
     // iddistrito | idprovincia | iddepartamento
     // 1263       |         127 |             15
 
+    $('#idcolegiado').val(data.idColegiado);
     $('#inputNombres').val(data.nom_colegiado);
     $('#inputApePaterno').val(data.ape_paterno);
     $('#inputApeMaterno').val(data.ape_materno);
@@ -459,19 +475,45 @@ function mostrar(idusuario)
     $('#inputEmail').val(data.email);
     $('#inputDireccion').val(data.direccion);
 
-    console.log('depart: ' + data.departamento);
-    $('#departamento').val(data.departamento);
-    $('#departamento').change();
+    // depa = data.departamento;
 
-    // $('#provincia').val(127);
 
-    $("#provincia option[value='127']").attr("selected",true);
+    // ************* OK ****************
+    // $("#provincia_lab option[value=2]").attr("selected",true);
+    // ************* OK ****************
+
+    $("#departamento option[value=" + data.departamento + "]").attr("selected",true);
+    // $('#departamento').change();
+
+    // $("#departamento option").each(function(){
+    //   // console.log('opcion '+$(this).text()+' valor '+ $(this).attr('value'))
+    // });
+
+    // $("#provincia option").each(function(){
+    //    // console.log( 'opcion '+$(this).text()+' valor '+ $(this).attr('value') + ' - ' + data.provincia );
+    //    if( $(this).attr('value') == data.provincia ){
+    //       $("#provincia option[value=" + data.provincia + "]").attr("selected",true);
+    //    }
+    // });
+
+    cargaProvin(15);
+
+
+    $("#provincia option[value=127]").attr("selected", true);
+    $('#provincia').change();
+
+    // cargaDistrito(127);
     
+    $("#distrito option[value=1263]").attr("selected", true);
+
+    // $('#provincia').val();
+
+    // $("#provincia option[value=127]").attr("selected", "selected");
+
+    // $("#provincia option[value=127]").attr("selected",true);
     // $('#provincia > option[value=127]').attr('selected', 'selected');
 
     // $('#provincia').val('127');
-    // $('#provincia').selectpicker('render');
-
     // $('#provincia').val(data.provincia);
     // $('#provincia').change();
     // $('#distrito').val(data.lug_nacim);
@@ -486,6 +528,9 @@ function mostrar(idusuario)
 
 
   });
+
+
+  
 
  //   $.post("../ajax/usuario.php?op=permisos&id="+idusuario,function(r){
   //         $("#permisos").html(r);
